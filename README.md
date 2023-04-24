@@ -1,3 +1,11 @@
+## Contributors
+
+Jasper | David  | Noel | Juan
+--- | --- | --- | ---
+*Hi, My name is Jasper, * | *Hi, my name is * | *Hi, my name is * | *Hi, my name is * |
+`Description` | `Description` | `Description` | `Description` |
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
