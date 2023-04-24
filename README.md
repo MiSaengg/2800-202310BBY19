@@ -2,7 +2,7 @@
 
 Jasper | David  | Noel | Juan
 --- | --- | --- | ---
-*Hi, My name is Jasper, Let's do this! * | *Hi, my name is David, time to harness the power of AI! * | *Hi, my name is * | *Hi, my name is * |
+*Hi, My name is Jasper, Let's do this! * | *Hi, my name is David, time to harness the power of AI :D * | *Hi, my name is * | *Hi, my name is * |
 `Description` | `Description` | `Description` | `Description` |
 
 
