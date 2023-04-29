@@ -2,7 +2,7 @@
 
 | Jasper                                   | David                                                       | Noel              | Juan                    |
 | ---------------------------------------- | ----------------------------------------------------------- | ----------------- | ----------------------- |
-| _Hi, My name is Jasper, Let's do this! _ | _Hi, my name is David, time to harness the power of AI :D _ | _Hi, my name is _ | _Hi, my name is Juan! _ |
+| _Hi, My name is Jasper, Let's do this! _ | _Hi, my name is David, time to harness the power of AI :D _ | _Hi, my name is Noel, We got this o2o _ | _Hi, my name is Juan! _ |
 | `Description`                            | `Description`                                               | `Description`     | `Description`           |
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
