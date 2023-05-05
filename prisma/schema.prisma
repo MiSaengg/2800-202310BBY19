@@ -58,3 +58,6 @@ model Thread {
   user        User @relation(fields:[userId] , references: [id])
   userId      String @db.ObjectId
 }
+
+// To do:
+// - merge branch for threads
