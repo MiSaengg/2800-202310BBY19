@@ -51,6 +51,8 @@ model User {
   threads Thread[]
 }
 
+
+//Thread should be merged with different thread.
 model Thread {
   id          String @id @default(auto()) @map("_id") @db.ObjectId
   body        String 
