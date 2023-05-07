@@ -1,6 +1,7 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 // every time we change this file, we need to run "npx prisma generate"
+// non-nullable fields are required (can define default value) - David 05/07/2023
 
 generator client {
   provider = "prisma-client-js"
@@ -55,6 +56,7 @@ model Thread {
   id          String @id @default(auto()) @map("_id") @db.ObjectId
   body        String 
   likes       Int
+  phase       Int @default(1)
   user        User @relation(fields:[userId] , references: [id])
   userId      String @db.ObjectId
 }
