@@ -1,4 +1,4 @@
-import { mergeTwoThreadsByIds } from "@/lib/prisma/threads";
+import { mergeTwoThreadsByIds } from "@/lib/prisma/mainThreads";
 
 
 /**
@@ -20,9 +20,9 @@ const handler = async (req, res) => {
       console.log(branchThreadId)
       
 
-      const {thread, error } = await mergeTwoThreadsByIds( {mainThreadId}, {branchThreadId})
+      const {updateMainThread, error } = await mergeTwoThreadsByIds( {mainThreadId}, {branchThreadId})
       if (error) throw new Error(error)
-      return res.status(200).json({thread})
+      return res.status(200).json({updateMainThread})
     }catch(error){
       return res.status(500).json({error : error.message})
     }
