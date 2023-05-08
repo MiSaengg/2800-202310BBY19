@@ -16,7 +16,7 @@ export default async function auth(req, res) {
       // need to change later.
       signIn:'/signin',
       // Uncomment after implement.
-      // newUser:'/newUser',
+      newUser:'/newUser'
 
     },
     adapter: PrismaAdapter(prisma),

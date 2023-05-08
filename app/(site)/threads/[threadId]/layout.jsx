@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function ThreadsLayout({children}) {
+export default function TreadsLayout({children}) {
   return (
     <div>{children}</div>
   )
