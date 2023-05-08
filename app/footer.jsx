@@ -1,6 +1,8 @@
 // Because we're using react thing in line 4.
 "use client";
 import { useSession } from "next-auth/react";
+import Link from 'next/link';
+import { HomeIcon, PlusCircleIcon, UserIcon } from '@heroicons/react/24/outline'
 
 const Footer = () => {
   const { data: session } = useSession();
