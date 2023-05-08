@@ -78,7 +78,7 @@ model MainThread {
 
 model BranchThread{
   id          String @id @default(auto()) @map("_id") @db.ObjectId
-  pilot        String 
+  content     String 
   votes       Int @default(0)
   userId      String @db.ObjectId
   mainThreadId String @db.ObjectId  
@@ -87,3 +87,8 @@ model BranchThread{
 
 }
 
+//Highest voted branch thread is the winner and content is added to main thread content
+//Main thread phase is incremented by 1
+//Branch thread votes are reset to 0
+//Branch thread content is reset to empty string
+//Other branch threads are deleted
