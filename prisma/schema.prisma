@@ -44,19 +44,46 @@ model Session {
 model User {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
-  email         String?   @unique
+  penName       String?    @unique
+  email         String?    @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
-  threads Thread[]
+  mainThread    MainThread[]
+  branchThread  BranchThread[]
 }
 
-model Thread {
+// model Thread {
+//   id          String @id @default(auto()) @map("_id") @db.ObjectId
+//   body        String 
+//   likes       Int
+//   phase       Int @default(1)
+//   user        User @relation(fields:[userId] , references: [id])
+//   userId      String @db.ObjectId
+// }
+
+model MainThread {
   id          String @id @default(auto()) @map("_id") @db.ObjectId
-  body        String 
+  title       String 
+  pilot        String
+  content     String 
+  genre       String[]
   likes       Int
-  phase       Int @default(1)
-  user        User @relation(fields:[userId] , references: [id])
+  phase       Int @default(1)  
   userId      String @db.ObjectId
+  user        User @relation(fields:[userId] , references: [id])
+  branchThread BranchThread[]
 }
+
+model BranchThread{
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  pilot        String 
+  votes       Int @default(0)
+  userId      String @db.ObjectId
+  mainThreadId String @db.ObjectId  
+  user        User @relation(fields:[userId] , references: [id])
+  mainThread  MainThread @relation(fields: [mainThreadId] , references: [id])
+
+}
+
