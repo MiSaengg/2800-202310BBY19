@@ -1,12 +1,15 @@
 import React from 'react';
-import ProfileCardInfo from './../../components/card/profileCardInfo';
+import BranchTreadBox from '../../components/box/branchTreadBox';
+import MainTreadBox from '../../components/box/mainTreadBox';
 
 const Page = () => {
   return (
     <div>
       <h1>Component Playground</h1>
-      <ProfileCardInfo />
-      
+      <div>
+        <MainTreadBox/>
+        <BranchTreadBox/>
+      </div>
     </div>
   );
 };
