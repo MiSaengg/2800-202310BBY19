@@ -18,28 +18,28 @@ export default function Footer(){
 
   if (session) {
     return (
-      <footer className="z-10 bg-stone-300 py-4 text-center text-white">
-        <div className="container flex items-center justify-between mx-10">
+      <footer className="z-10 bg-stone-100 py-4 text-center">
+        <div className="flex items-center justify-between mx-10">
           <Link
             href="/threads"
             className="text-stone-500 hover:text-stone-800 transition-colors"
           >
-            <HomeIcon className="w-10" />
-            <span className="uppercase font-medium text-sm">Home</span>
+            <HomeIcon className="w-9" />
+            <span className="uppercase font-mono text-xs">Home</span>
           </Link>
           <Link
             href="/createMainThread"
             className="text-stone-500 hover:text-stone-800 transition-colors"
           >
-            <PlusCircleIcon className="w-10" />
-            <span className="uppercase font-medium text-sm">START</span>
+            <PlusCircleIcon className="w-9" />
+            <span className="uppercase font-mono text-xs">Start</span>
           </Link>
           <Link
             href={`/profile/users/${userId}`}
             className="text-stone-500 hover:text-stone-800 transition-colors"
           >
-            <UserIcon className="w-10" />
-            <span className="uppercase font-medium text-sm">Profile</span>
+            <UserIcon className="w-9" />
+            <span className="uppercase font-mono text-xs">Profile</span>
           </Link>
         </div>
       </footer>
@@ -48,5 +48,3 @@ export default function Footer(){
 
   return;
 };
-
-
