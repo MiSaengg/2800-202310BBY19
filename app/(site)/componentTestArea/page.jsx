@@ -1,14 +1,12 @@
 import React from 'react';
 import StoryCard from './../../components/card/StoryCard';
 
-const Page = (props) => {
-  return (
-    <section>
+function page(props) {
+    return (
         <div>
-          <StoryCard />
+            <StoryCard />
         </div>
-    </section>
-  )
+    );
 }
 
-export default Page;
+export default page;
