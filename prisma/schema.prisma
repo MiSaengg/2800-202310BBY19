@@ -71,7 +71,7 @@ model MainThread {
   mainCharacter String
   genre       String[]
   tag         String @default("Incomplete")  
-  likes       Int
+  likes       Int @default(0)
   phase       Int @default(1)  
   userId      String @db.ObjectId
   user        User @relation(fields:[userId] , references: [id])
