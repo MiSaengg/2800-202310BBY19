@@ -1,26 +1,14 @@
-import {
-  getMainThreadById,
-  getMainThreads,
-  createMainThread,
-  getRandomMainThreads,
-} from "@/lib/prisma/mainThreads";
+import { getMainThreadById } from "@/lib/prisma/mainThreads";
 
 const handler = async (req, res) => {
   if (req.method === "GET") {
     try {
-      const getMainThread = req.query.random
-        ? getRandomMainThreads(parseInt(req.query.count) || 6)
-        : getMainThreads();
-
-      const { threads, error } = await getMainThread;
-
-      if (error) {
-        throw new Error(error);
-      }
-
-      res.status(200).json({ threads });
+      const mainThreadId = req.query.threadId;
+      const { mainThread, error } = await getMainThreadById(mainThreadId);
+      if (error) throw new Error(error);
+      return res.status(200).json({ mainThread });
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      return res.status(500).json({ error: error.message });
     }
   }
 
