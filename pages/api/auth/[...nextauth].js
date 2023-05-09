@@ -10,8 +10,21 @@ export default async function auth(req, res) {
         clientId: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET
       })
-    ],
-
+    ],    
+    callbacks:{      
+      session : async ({session, token})=>{
+        if (session?.user){
+          session.user.id = token.sub          
+        }        
+        return session
+      },
+      jwt : async ({user, token}) => {
+        if(user){
+          token.sub = user.id;
+        }
+        return token
+      }      
+    },
     pages: {
       // need to change later.
       signIn:'/signin',

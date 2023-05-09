@@ -13,7 +13,7 @@ export default function MemberLayout({ children }) {
   useEffect(() => {
     if(status !== "loading"){
       if(session){
-        console.log("seesion=true")
+        localStorage.setItem("userID" , session.user.id)
       }else{
         redirect('/')
       }

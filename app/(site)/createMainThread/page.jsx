@@ -1,21 +1,18 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import { useSession, signIn, signOut } from 'next-auth/react'
+import { useEffect, useState } from "react";
 
 
 
 export default function SubmitMainThread() {
-
-  /**
-   * This is the way how to get the userId.
-   */
   const router = useRouter();
-  const user = localStorage.getItem("user")
-  const userJSON = JSON.parse(user)
-  
-  
-  
+  const [userId, setUserId] = useState(null)
 
+  useEffect(()=> {
+    const userID = localStorage.getItem("userID") 
+    setUserId(userID)
+  })
+  
   const handleMainThreadSubmit = async (event) => {
     event.preventDefault();
     
@@ -24,11 +21,11 @@ export default function SubmitMainThread() {
       genre : [event.target.genre.value],
       mainCharacter : event.target.mainCharacter.value,
       pilot : event.target.pilot.value,
-      content : [{0: event.target.pilot.value}],
+      content : [event.target.pilot.value],
       tag: "Incomplete",
       likes : 0,
       phase : 1,
-      userId : userJSON.id
+      userId : userId
     }
 
     const JSONdata = JSON.stringify(data);

@@ -21,6 +21,7 @@ async function getUser(userId) {
 
 const Page = async ({ params }) => {
   
+  
   const { user } = await getUserById(params.userId)
   
   return <User user={user} />
