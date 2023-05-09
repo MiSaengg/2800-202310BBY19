@@ -3,7 +3,6 @@ import { getMainThreadById, getMainThreads, createMainThread } from "@/lib/prism
 const handler = async (req, res) => {
   if (req.method === "GET"){
     try {
-      console.log("alskdjfhasdfasdfwefawefawe")
       const {threads , error} = await getMainThreads()
       if (error) throw new Error(error)
       return res.status(200).json({threads})
