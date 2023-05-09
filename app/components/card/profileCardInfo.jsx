@@ -31,3 +31,4 @@ style={{ transform: 'scale(0.4)' }}x
 };
 
 export default ProfileCardInfo;
+
