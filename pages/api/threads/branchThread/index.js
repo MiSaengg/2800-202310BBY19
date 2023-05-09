@@ -13,7 +13,7 @@ const handler = async (req, res) => {
 
   if (req.method === "POST") {
     try {
-      const data = req.body;
+      const data = req.body; 
       const { threads, error } = await createBranchThread(data);
       if (error) throw new Error(error);
       return res.status(200).json({ threads });
