@@ -67,8 +67,12 @@ model MainThread {
   id          String @id @default(auto()) @map("_id") @db.ObjectId
   title       String 
   pilot       String
+<<<<<<< HEAD
   content     Json 
   mainCharacter String
+=======
+  content     String[] 
+>>>>>>> 253ef9d
   genre       String[]
   tag         String @default("Incomplete")  
   likes       Int
