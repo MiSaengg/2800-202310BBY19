@@ -12,10 +12,8 @@ const handler = async (req, res) => {
     try {
       // Should be send a req include mainThreadId
       const mainThreadId = req.body.mainThreadId;
-      console.log(mainThreadId);
       // Should be send a req include branchThreadId
       const branchThreadId = req.body.branchThreadId;
-      console.log(branchThreadId);
 
       const { updateMainThread, error } = await mergeTwoThreadsByIds(
         { mainThreadId },
