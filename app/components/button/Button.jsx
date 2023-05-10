@@ -1,4 +1,4 @@
-const Button = (props) => {
+const Button = ({onClick, text}) => {
   return (
     <button
       className="block 
@@ -9,15 +9,16 @@ const Button = (props) => {
       hover:border-opacity-0
       transform
       transition-all duration-200
-      text-gray-700
+      text-white-700
       text-sm
       text-center
       font-mono
       py-1
       px-3"
       type="button"
+      onClick={onClick}
     >
-      {props.text}
+      {text}
     </button>
   );
 };
