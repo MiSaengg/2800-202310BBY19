@@ -3,6 +3,7 @@
 import React, {useEffect, useState} from 'react';
 import { ArcherContainer, ArcherElement } from "react-archer";
 import MainThread from './mainThread';
+import Modal from '@/app/components/modal/Modal';
 
 // async function getMainThreadByIds(threadId){
 //   const { thread } = await getMainThreadById(threadId)
@@ -19,6 +20,7 @@ export default function Page({ params }) {
   // const [arrowNo, setArrowNo] = useState(0);
   const [pilot, setPilot] = useState("");
   const [title, setTitle] = useState("");
+  // const [hidden, setHidden] = useState("hidden")
 
   let arrayThing = [
     {
@@ -40,7 +42,21 @@ export default function Page({ params }) {
       style: {strokeDasharray:'5,5'},
     },
   ];
-  
+
+  const createBranchThreadWithModal = (e) => {
+    e.preventDefault();
+
+    // showing the modal in this function.
+    // setHidden("")
+
+
+    
+    
+    setTextAreaNo(textAreaNo+1)
+  }
+
+
+
   useEffect(() => {
     const endpoint = `/api/threads/${params.threadId}`
       
@@ -68,9 +84,9 @@ export default function Page({ params }) {
                 </div>                                 
               </ArcherElement>
             
-            <div style={{height:"150px" , textAlign:"center" , display:"flex" ,justifyContent:"center" , alignItems:"center"}}>
-              <button style={{width:"40px", marginLeft:"70px", height:"40px"}} onClick={() => setTextAreaNo(textAreaNo+1)}>+</button> 
-            </div>       
+            
+              <Modal/>              
+            
             <div style={{display: "flex", justifyContent: "space-evenly", textAlign:"center"}}>
               {[...Array(textAreaNo)].map((a, i) => (
                 <ArcherElement

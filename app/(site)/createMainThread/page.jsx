@@ -22,6 +22,10 @@ export default function SubmitMainThread() {
       mainCharacter : event.target.mainCharacter.value,
       pilot : event.target.pilot.value,
       content : {},
+<<<<<<< HEAD
+=======
+      phaseStage :{},
+>>>>>>> Jasper_Oh_Frontend_Create_Branch_Thread_mode1
       tag: "Incomplete",
       likes : 0,
       phase : 1,
