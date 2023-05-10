@@ -1,11 +1,12 @@
-import { getMainThreadById, getMainThreads, createMainThread } from "@/lib/prisma/mainThreads"
+import { getMainThreadById } from "@/lib/prisma/mainThreads"
 
 const handler = async (req, res) => {
   if (req.method === "GET"){
     try {
-      const {threads , error} = await getMainThreads()
+      const mainThreadId = req.query.threadId;
+      const {mainThread , error} = await getMainThreadById(mainThreadId)
       if (error) throw new Error(error)
-      return res.status(200).json({threads})
+      return res.status(200).json({mainThread})
     } catch(error){
       return res.status(500).json({error: error.message})
     }
