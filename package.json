@@ -15,7 +15,9 @@
     "clsx": "^1.2.1",
     "next": "^13.4.2-canary.3",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-archer": "^4.2.3",
+    "react-dom": "18.2.0",
+    "react-xarrows": "^2.0.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",
