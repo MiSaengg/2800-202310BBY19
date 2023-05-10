@@ -21,7 +21,7 @@ export default function SubmitMainThread() {
       genre : [event.target.genre.value],
       mainCharacter : event.target.mainCharacter.value,
       pilot : event.target.pilot.value,
-      content : [event.target.pilot.value],
+      content : {},
       tag: "Incomplete",
       likes : 0,
       phase : 1,

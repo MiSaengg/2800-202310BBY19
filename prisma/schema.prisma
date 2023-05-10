@@ -67,7 +67,8 @@ model MainThread {
   id          String @id @default(auto()) @map("_id") @db.ObjectId
   title       String 
   pilot       String
-  content     Json 
+  content     Json
+  phaseStage  Json
   mainCharacter String
   genre       String[]
   tag         String @default("Incomplete")  
@@ -80,7 +81,7 @@ model MainThread {
 
 model BranchThread{
   id          String @id @default(auto()) @map("_id") @db.ObjectId
-  content     String 
+  body        String 
   votes       Int @default(0)
   userId      String @db.ObjectId
   mainThreadId String @db.ObjectId  
