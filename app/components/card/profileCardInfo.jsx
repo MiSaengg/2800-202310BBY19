@@ -11,8 +11,7 @@ style={{ transform: 'scale(0.4)' }}x
     height={300}
   className="w-full"/>
 <div className="flex justify-center -mt-8">
-<img src="https://dummyimage.com/500x300/000/fff" style={{ width: '30%' }} className="rounded-full border-solid border-white border-2 -mt-3" />
-</div>
+<img src="https://dummyimage.com/500x300/000/fff" style={{ width: '30%' }} className="rounded-full border-solid border-white border-2 -mt-3" /></div>
 <div className="text-center px-3 pb-6 pt-2">
 <h3 className="text-black text-sm font-bold font-sans">{userid}</h3>
 </div>

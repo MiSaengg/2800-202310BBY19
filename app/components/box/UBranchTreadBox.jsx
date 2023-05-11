@@ -1,6 +1,6 @@
 import React from 'react';
 
-const branchTreadBox = ({ userid, threadid, genre, penName, mainCharacter }) => {
+const UbranchTreadBox = ({ userid, threadid, genre, penName, mainCharacter }) => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="w-full max-w-xs border border-black p-4 rounded-md relative">
@@ -11,7 +11,7 @@ const branchTreadBox = ({ userid, threadid, genre, penName, mainCharacter }) => 
         </label>
         <div className="absolute bottom-2 left-2">
           <select className="border rounded-md bg-white p-1">
-            <option value="delete">Merge</option>
+            <option value="delete">Select</option>
             <option value="delete">Merge</option>
             <option value="accepted">Delete</option>
           </select>
@@ -21,4 +21,4 @@ const branchTreadBox = ({ userid, threadid, genre, penName, mainCharacter }) => 
   );
 };
 
-export default branchTreadBox;
+export default UbranchTreadBox;
