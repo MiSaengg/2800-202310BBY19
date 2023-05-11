@@ -6,8 +6,6 @@ const SimpleProfileCardInfo = ({userId , branchText , branchThreadIdParam , main
     const [userImg , setUserImg] = useState("");
     const [penName, setPenName] = useState("");
     const [showModal, setShowModal] = useState(false);
-    
-
     const clickBranchCard = (e) => {
       e.preventDefault()
 
@@ -55,37 +53,35 @@ const SimpleProfileCardInfo = ({userId , branchText , branchThreadIdParam , main
   }
 
     useEffect(()=> {
-    const endpoint = `/api/users/${userId}`
+    const fetchUserData = async () => {
+    const endpoint = `/api/users/${userId}`;
+      try{
+        const response = await fetch(endpoint);
+        const {user} = await response.json();
 
-    fetch(endpoint, {
-      method:"GET"
-    }).then(
-      res => res.json()
-    ).then(
-      ({user}) => {
-        setUserImg(user.image)
-        setPenName(user.penName)
+        setUserImg(user.image);
+        setPenName(user.penName);
+      } catch (error) {
+        console.error("Failed to fetch user data:", error);
       }
-    )
-    })
-  
-return (
-  <>
-  <div className="rounded-3xl overflow-hidden shadow-xl max-w-[120px] my-3 bg-white mx-auto flex flex-col items-center"                  
-                      style={{ transform: 'scale(0.9)' }} onClick={clickBranchCard}>
-    <Image src={userImg}  
-        width={400}
-        height={300}
-        alt='userImg'
-      className="w-full"/>
-    <div className="text-center px-3 pb-6 pt-2">
-      <h3 className="text-black text-sm font-bold font-sans">{penName}</h3>
-    </div>  
-    <div className="flex justify-center pb-3 text-black">
+    };
 
+    fetchUserData();
+    }, [userId]);
 
-    </div>
-  </div>
+  const cardWidth = 135;
+
+  return (
+    <>
+    <div className="rounded-3xl overflow-hidden shadow-xl bg-white mx-auto flex flex-col items-center" style={{ width: `${cardWidth}px`, transform: 'scale(0.9)' }} onClick={clickBranchCard}>
+      <Image src={userImg} width={500} height={300} className="w-full" />
+      <div className="text-center px-3 pb-6 pt-2">
+        <h3 className="text-black text-sm font-bold font-sans">{penName}</h3>
+      </div>
+      <div className="flex justify-center pb-3 text-black">
+        
+      </div>
+    </div>    
   { showModal ? (
     <div tabIndex="-1" aria-hidden="true" className="fixed top-0 left-0 right-0 z-50 p-4 overflow-x-hidden overflow-y-auto max-h-full">
         <div className="relative max-w-full max-h-full">            
@@ -126,4 +122,3 @@ return (
 };
 
 export default SimpleProfileCardInfo;
-
