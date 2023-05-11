@@ -2,11 +2,9 @@
 // import { getMainThreadById } from "@/lib/prisma/mainThreads";
 import React, {useEffect, useState} from 'react';
 import { ArcherContainer, ArcherElement } from "react-archer";
-import MainThread from './mainThread';
 import Modal from '@/app/components/modal/Modal';
 import SimpleProfileCardInfo from '@/app/components/card/SimpleProfileCard';
 import ProfileCardInfo from '@/app/components/card/profileCardInfo';
-import Image from 'next/image';
 
 // async function getMainThreadByIds(threadId){
 //   const { thread } = await getMainThreadById(threadId)
@@ -17,11 +15,10 @@ import Image from 'next/image';
 // }
 
 export default function Page({ params }) {    
-    
+
   const [branchThread , setBranchThread] = useState([]);
-  const [pilot, setPilot] = useState("");
-  const [title, setTitle] = useState("");
-  
+  const [mainThread, setMainThread] = useState({});
+  const [userId, setUserId] = useState("")
 
   let arrayThing = [
     {
@@ -44,21 +41,6 @@ export default function Page({ params }) {
     },
   ];
 
-  // const getUserIdByBranchThreadUserId = (id) =>{
-  //   const endpoint = `/api/users/${id}`
-
-  //   fetch(endpoint, {
-  //     method:"GET"
-  //   }).then(
-  //     res => res.json()
-  //   ).then(
-  //     ({user}) => {
-  //       console.log(user)
-  //     }
-  //   )
-  // }
-
-
   useEffect(() => {
     const endpoint = `/api/threads/${params.threadId}`
       
@@ -70,15 +52,15 @@ export default function Page({ params }) {
         const data = mainThread.phaseStage
         var values = Object.values(data)          
         setBranchThread(values)                
-        setPilot(mainThread.pilot)
-        setTitle(mainThread.title)
+        setMainThread(mainThread)                  
+        setUserId(mainThread.userId)    
         
       })
   }, [])
 
   return (
       <>
-        <h3>{title}</h3>
+        <h3>{mainThread.title}</h3>
         <div style={{display: "flex", flexDirection:"column", justifyContent: "space-evenly", width: "100%" , textAlign:"center" ,alignItems:"center",padding:"4px"}}>                  
         <ArcherContainer strokeColor="black">     
             
@@ -87,22 +69,26 @@ export default function Page({ params }) {
                 relations={arrayThing}
                 > 
                   <div style={{display:"flex",flexDirection:"row", width:"100%"}}>
-                    <div style={{border: "grey solid 2px", borderRadius: "10px", padding: "5px" , width:"60%"}}>{pilot}</div>
-                    <ProfileCardInfo threadId={123} genre={"some"} penName={"some"} mainCharacter={"some"}/>
-                  </div>
-                  {/* <MainThread threadId={params.threadId} pilot={pilot}/> */}
+                    <div style={{border: "grey solid 2px", borderRadius: "10px", padding: "5px" , width:"60%"}}>{mainThread.pilot}</div>
+                    { userId ? 
+                    (<ProfileCardInfo genre={mainThread.genre} userId={userId} mainCharacter={mainThread.mainCharacter}/>) : null
+                  }
+                  </div>                  
                                             
               </ArcherElement>
-              
+              <div style={{backgroundColor : "black" , color:"white"}}>
+                <h2>phase {mainThread.phase}</h2>
+              </div>
               <Modal mainThreadId={params}/>    
 
             <div style={{display: "flex", height: "150px" ,justifyContent: "space-evenly", textAlign:"center"}}>              
                 {branchThread.map((a,i) => (                                    
                   <ArcherElement
                   id={"element" + i}
+                  key={i}
                   >
                     <div>
-                      <SimpleProfileCardInfo userId={a.userId}/>
+                      <SimpleProfileCardInfo userId={a.userId} branchText={a.body} branchThreadIdParam={a.id} mainThreadIdParam={a.mainThreadId}/>
                     </div>                  
                   </ArcherElement>              
               ))}                                                           

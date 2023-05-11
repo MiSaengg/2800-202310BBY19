@@ -31,7 +31,7 @@ const submitBranchThread = async (e) => {
         userId: userId,
         mainThreadId: mainThreadId.threadId
     }
-    console.log(data)
+    
 
     const JSONdata = JSON.stringify(data);
 
