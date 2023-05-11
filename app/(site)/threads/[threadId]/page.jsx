@@ -4,6 +4,8 @@ import React, {useEffect, useState} from 'react';
 import { ArcherContainer, ArcherElement } from "react-archer";
 import MainThread from './mainThread';
 import Modal from '@/app/components/modal/Modal';
+import BranchThreadBox from '@/app/components/box/branchTreadBox';
+import ProfileCardInfo from '@/app/components/card/profileCardInfo';
 
 // async function getMainThreadByIds(threadId){
 //   const { thread } = await getMainThreadById(threadId)
@@ -16,11 +18,10 @@ import Modal from '@/app/components/modal/Modal';
 export default function Page({ params }) {    
 
   const [textAreaNo, setTextAreaNo] = useState(0);
-  // const [uploadNo , setUploadNo] = useState(0);
-  // const [arrowNo, setArrowNo] = useState(0);
+  const [branchThread , setBranchThread] = useState([]);
   const [pilot, setPilot] = useState("");
   const [title, setTitle] = useState("");
-  // const [hidden, setHidden] = useState("hidden")
+  
 
   let arrayThing = [
     {
@@ -43,20 +44,6 @@ export default function Page({ params }) {
     },
   ];
 
-  const createBranchThreadWithModal = (e) => {
-    e.preventDefault();
-
-    // showing the modal in this function.
-    // setHidden("")
-
-
-    
-    
-    setTextAreaNo(textAreaNo+1)
-  }
-
-
-
   useEffect(() => {
     const endpoint = `/api/threads/${params.threadId}`
       
@@ -65,37 +52,58 @@ export default function Page({ params }) {
     })
       .then(res => res.json())
       .then(({ mainThread }) => {
+        const data = mainThread.phaseStage
+        var values = Object.values(data)          
+        setBranchThread(values)                
         setPilot(mainThread.pilot)
         setTitle(mainThread.title)
+        
       })
   }, [])
 
   return (
       <>
-       <div style={{display: "flex", flexDirection:"column", justifyContent: "space-evenly", width: "50%" , textAlign:"center" ,alignItems:"center"}}>                  
-       <h3>{title}</h3>
-        <ArcherContainer strokeColor="red">        
+        <h3>{title}</h3>
+        <div style={{display: "flex", flexDirection:"column", justifyContent: "space-evenly", width: "100%" , textAlign:"center" ,alignItems:"center",padding:"4px"}}>                  
+        <ArcherContainer strokeColor="black">     
+            
               <ArcherElement
                 id="root"
                 relations={arrayThing}
                 > 
-                <div>
-                  <MainThread threadId={params.threadId} pilot={pilot}/>
-                </div>                                 
+                  <div style={{display:"flex",flexDirection:"row", width:"100%"}}>
+                    <div style={{border: "grey solid 2px", borderRadius: "10px", padding: "5px" , width:"60%"}}>{pilot}</div>
+                    <ProfileCardInfo threadId={123} genre={"some"} penName={"some"} mainCharacter={"some"}/>
+                  </div>
+                  {/* <MainThread threadId={params.threadId} pilot={pilot}/> */}
+                                            
               </ArcherElement>
-            
-            
-              <Modal/>              
-            
-            <div style={{display: "flex", justifyContent: "space-evenly", textAlign:"center"}}>
-              {[...Array(textAreaNo)].map((a, i) => (
-                <ArcherElement
-                id={"element" + i}
-                >
-                  {/* This Componenent should be replace to branchComponent */}
-                  <div>element2</div>
-                </ArcherElement>              
-              ))}                            
+              
+              <Modal mainThreadId={params}/>    
+
+            <div style={{display: "flex", height: "150px" ,justifyContent: "space-evenly", textAlign:"center"}}>              
+                {branchThread.map((a,i) => (                                    
+                  <ArcherElement
+                  id={"element" + i}
+                  >
+                    <div className="flex items-center justify-center bg-gray-100">
+                      <div className="w-full max-w-xs border border-black p-4 rounded-md relative">
+                        <label className="block">
+                          <span className="text-gray-700">
+                            {a.body}
+                          </span>
+                        </label>
+                        <div className="absolute bottom-2 left-2">
+                          <select className="border rounded-md bg-white p-1">
+                            <option value="delete">Merge</option>
+                            <option value="delete">Merge</option>
+                            <option value="accepted">Delete</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </ArcherElement>              
+              ))}                                                           
               </div>                
         </ArcherContainer>
       </div>

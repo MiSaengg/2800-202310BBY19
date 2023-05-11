@@ -1,4 +1,4 @@
-const Button = ({onClick, text}) => {
+const Button = ({onClick, text, type}) => {
   return (
     <button
       className="block 
@@ -15,7 +15,7 @@ const Button = ({onClick, text}) => {
       font-mono
       py-1
       px-3"
-      type="button"
+      type={type}
       onClick={onClick}
     >
       {text}
