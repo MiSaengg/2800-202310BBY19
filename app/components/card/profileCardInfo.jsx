@@ -7,21 +7,20 @@ const ProfileCardInfo = ({ genre, userId, mainCharacter }) => {
   const [user , setUser] = useState({});
   
   
-
-
 useEffect(()=> {
-  const endpoint = `/api/users/${userId}`
+  const endpoint = `/api/user/${userId}`
 
   fetch(endpoint, {
     method:"GET"
   }).then(
-    res => res.json()
+    (res) => res.json()
   ).then(
     ({user}) => {
       setUser(user)            
     }
   )
-  })
+  },[])
+
 return (
 
 <div className="rounded-3xl overflow-hidden shadow-xl max-w-xs bg-white mx-auto flex flex-col items-center h-40"

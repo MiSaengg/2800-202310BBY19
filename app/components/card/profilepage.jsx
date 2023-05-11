@@ -21,7 +21,7 @@ useEffect(()=> {
       setUser(user)            
     }
   )
-  });
+  },[]);
   
 return (
 
