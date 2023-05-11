@@ -59,40 +59,6 @@ export default function Page({ params }) {
   }, [])
 
   return (
-<<<<<<< HEAD
-      <>
-        <h3>{mainThread.title}</h3>
-        <div style={{display: "flex", flexDirection:"column", justifyContent: "space-evenly", width: "100%" , textAlign:"center" ,alignItems:"center",padding:"4px"}}>                  
-        <ArcherContainer strokeColor="black">     
-            
-              <ArcherElement
-                id="root"
-                relations={arrayThing}
-                > 
-                  <div style={{display:"flex",flexDirection:"row", width:"100%"}}>
-                    <div style={{border: "grey solid 2px", borderRadius: "10px", padding: "5px" , width:"60%"}}>{mainThread.pilot}</div>
-                    { userId ? 
-                    (<ProfileCardInfo genre={mainThread.genre} userId={userId} mainCharacter={mainThread.mainCharacter}/>) : null
-                  }
-                  </div>                  
-                                            
-              </ArcherElement>
-              <div style={{backgroundColor : "black" , color:"white"}}>
-                <h2>phase {mainThread.phase}</h2>
-              </div>
-              <Modal mainThreadId={params}/>    
-
-            <div style={{display: "flex", height: "150px" ,justifyContent: "space-evenly", textAlign:"center"}}>              
-                {branchThread.map((a,i) => (                                    
-                  <ArcherElement
-                  id={"element" + i}
-                  key={i}
-                  >
-                    <div>
-                      <SimpleProfileCardInfo userId={a.userId} branchText={a.body} branchThreadIdParam={a.id} mainThreadIdParam={a.mainThreadId}/>
-                    </div>                  
-                  </ArcherElement>              
-=======
     <>
     <h3 style={{ textAlign: "center" }}>{mainThread.title}</h3>
     <div style={{display: "flex", flexDirection:"column", justifyContent: "center", width: "100%" , textAlign:"center" ,alignItems:"center",padding:"4px"}}>                  
@@ -127,7 +93,6 @@ export default function Page({ params }) {
                     <SimpleProfileCardInfo userId={a.userId} branchText={a.body} branchThreadIdParam={a.id} mainThreadIdParam={a.mainThreadId}/>
                   </div>                  
                 </ArcherElement>                            
->>>>>>> 51c292b
               ))}                                                           
               </div>                
               </ArcherContainer>
