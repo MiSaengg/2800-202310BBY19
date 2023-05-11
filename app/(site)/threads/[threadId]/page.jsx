@@ -19,6 +19,7 @@ export default function Page({ params }) {
   const [branchThread , setBranchThread] = useState([]);
   const [mainThread, setMainThread] = useState({});
   const [userId, setUserId] = useState("")
+  const [branchThreadNo, setBranchThreadNo] = useState(0)
 
   let arrayThing = [
     {
@@ -50,10 +51,12 @@ export default function Page({ params }) {
       .then(res => res.json())
       .then(({ mainThread }) => {
         const data = mainThread.phaseStage
-        var values = Object.values(data)          
-        setBranchThread(values)                
+        var values = Object.values(data)   
+
+        setBranchThread(values)     
         setMainThread(mainThread)                  
-        setUserId(mainThread.userId)    
+        setUserId(mainThread.userId)   
+        setBranchThreadNo(Object.keys(data).length) 
         
       })
   }, [])
@@ -81,7 +84,7 @@ export default function Page({ params }) {
             <div style={{backgroundColor : "black" , color:"white",marginTop :4, position: "relative", zIndex: 10}}>
               <h2>{mainThread.phase}</h2>
             </div>
-            <Modal mainThreadId={params}/>    
+            <Modal branchThread={branchThread} mainThreadId={params} phaseStage={branchThreadNo}/>    
   
           <div style={{display: "flex", height: "150px" ,justifyContent: "space-evenly", textAlign:"center"}}>              
               {branchThread.map((a,i) => (                                    
