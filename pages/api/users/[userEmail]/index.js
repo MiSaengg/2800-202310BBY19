@@ -3,7 +3,6 @@ import { getUserById, updateUserPenName } from "@/lib/prisma/users";
 const handler = async (req, res) => {
   if (req.method === 'GET') {
     const userId = req.query.userEmail
-    console.log(userId)
     try {
       const { user, error } = await getUserById(userId)
       if (error) throw new Error(error)

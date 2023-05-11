@@ -21,6 +21,7 @@ export default function Page({ params }) {
   const [branchThread , setBranchThread] = useState([]);
   const [pilot, setPilot] = useState("");
   const [title, setTitle] = useState("");
+  const [phase, setPhase] = useState("");
   
 
   let arrayThing = [
@@ -72,36 +73,39 @@ export default function Page({ params }) {
         setBranchThread(values)                
         setPilot(mainThread.pilot)
         setTitle(mainThread.title)
-        
+        setPhase(mainThread.phase)
       })
   }, [])
 
   return (
-      <>
-        <h3>{title}</h3>
-        <div style={{display: "flex", flexDirection:"column", justifyContent: "space-evenly", width: "100%" , textAlign:"center" ,alignItems:"center",padding:"4px"}}>                  
-        <ArcherContainer strokeColor="black">     
-            
-              <ArcherElement
-                id="root"
-                relations={arrayThing}
-                > 
-                  <div style={{display:"flex",flexDirection:"row", width:"100%"}}>
-                    <div style={{border: "grey solid 2px", borderRadius: "10px", padding: "5px" , width:"60%"}}>{pilot}</div>
-                    <ProfileCardInfo threadId={123} genre={"some"} penName={"some"} mainCharacter={"some"}/>
-                  </div>
-                  {/* <MainThread threadId={params.threadId} pilot={pilot}/> */}
-                                            
-              </ArcherElement>
-              
-              <Modal mainThreadId={params}/>    
-
-            <div style={{display: "flex", height: "150px" ,justifyContent: "space-evenly", textAlign:"center"}}>              
-                {branchThread.map((a,i) => (                                    
-                  <ArcherElement
-                  id={"element" + i}
-                  >
-                    <div>
+    <>
+       <h3 style={{ textAlign: "center" }}>{title}</h3>
+    <div style={{display: "flex", flexDirection:"column", justifyContent: "center", width: "100%" , textAlign:"center" ,alignItems:"center",padding:"4px"}}>                  
+    <ArcherContainer strokeColor="black">     
+          
+            <ArcherElement
+              id="root"
+              relations={arrayThing}
+              > 
+                <div style={{display:"flex",flexDirection:"row", width:"100%"}}>
+                  <div style={{border: "grey solid 2px", borderRadius: "10px", padding: "5px" , width:"60%"}}>{pilot}</div>
+                  <ProfileCardInfo threadId={123} genre={"genreeeeeee"} penName={"pennnn"} mainCharacter={"3"}/>
+                </div>
+                {/* <MainThread threadId={params.threadId} pilot={pilot}/> */}
+                                          
+            </ArcherElement>
+          {/*  */}
+            <div style={{backgroundColor : "black" , color:"white",marginTop :4, position: "relative", zIndex: 10}}>
+              <h2>phase{phase}</h2>
+            </div>
+            <Modal mainThreadId={params}/>    
+  
+          <div style={{display: "flex", height: "150px" ,justifyContent: "space-evenly", textAlign:"center"}}>              
+              {branchThread.map((a,i) => (                                    
+                <ArcherElement
+                id={"element" + i}
+                >
+                  <div>
                       <SimpleProfileCardInfo userId={a.userId}/>
                     </div>                  
                   </ArcherElement>              
