@@ -29,7 +29,7 @@ export default function SubmitMainThread() {
       userId : userId
     }
 
-    const JSONdata = JSON.stringify(daa);
+    const JSONdata = JSON.stringify(data);
 
     const endpoint = "api/threads/mainThread"
 

@@ -2,11 +2,9 @@
 // import { getMainThreadById } from "@/lib/prisma/mainThreads";
 import React, {useEffect, useState} from 'react';
 import { ArcherContainer, ArcherElement } from "react-archer";
-import MainThread from './mainThread';
 import Modal from '@/app/components/modal/Modal';
 import SimpleProfileCardInfo from '@/app/components/card/SimpleProfileCard';
 import ProfileCardInfo from '@/app/components/card/profileCardInfo';
-import Image from 'next/image';
 
 // async function getMainThreadByIds(threadId){
 //   const { thread } = await getMainThreadById(threadId)
@@ -17,12 +15,10 @@ import Image from 'next/image';
 // }
 
 export default function Page({ params }) {    
-    
+
   const [branchThread , setBranchThread] = useState([]);
-  const [pilot, setPilot] = useState("");
-  const [title, setTitle] = useState("");
-  const [phase, setPhase] = useState("");
-  
+  const [mainThread, setMainThread] = useState({});
+  const [userId, setUserId] = useState("")
 
   let arrayThing = [
     {
@@ -45,21 +41,6 @@ export default function Page({ params }) {
     },
   ];
 
-  // const getUserIdByBranchThreadUserId = (id) =>{
-  //   const endpoint = `/api/users/${id}`
-
-  //   fetch(endpoint, {
-  //     method:"GET"
-  //   }).then(
-  //     res => res.json()
-  //   ).then(
-  //     ({user}) => {
-  //       console.log(user)
-  //     }
-  //   )
-  // }
-
-
   useEffect(() => {
     const endpoint = `/api/threads/${params.threadId}`
       
@@ -71,15 +52,15 @@ export default function Page({ params }) {
         const data = mainThread.phaseStage
         var values = Object.values(data)          
         setBranchThread(values)                
-        setPilot(mainThread.pilot)
-        setTitle(mainThread.title)
-        setPhase(mainThread.phase)
+        setMainThread(mainThread)                  
+        setUserId(mainThread.userId)    
+        
       })
   }, [])
 
   return (
     <>
-       <h3 style={{ textAlign: "center" }}>{title}</h3>
+    <h3 style={{ textAlign: "center" }}>{mainThread.title}</h3>
     <div style={{display: "flex", flexDirection:"column", justifyContent: "center", width: "100%" , textAlign:"center" ,alignItems:"center",padding:"4px"}}>                  
     <ArcherContainer strokeColor="black">     
           
@@ -88,15 +69,17 @@ export default function Page({ params }) {
               relations={arrayThing}
               > 
                 <div style={{display:"flex",flexDirection:"row", width:"100%"}}>
-                  <div style={{border: "grey solid 2px", borderRadius: "10px", padding: "5px" , width:"60%"}}>{pilot}</div>
-                  <ProfileCardInfo threadId={123} genre={"genreeeeeee"} penName={"pennnn"} mainCharacter={"3"}/>
+                  <div style={{border: "grey solid 2px", borderRadius: "10px", padding: "5px" , width:"60%"}}>{mainThread.pilot}</div>
+                  { userId ? 
+                    (<ProfileCardInfo genre={mainThread.genre} userId={userId} mainCharacter={mainThread.mainCharacter}/>) : null
+                  }
                 </div>
                 {/* <MainThread threadId={params.threadId} pilot={pilot}/> */}
                                           
             </ArcherElement>
           {/*  */}
             <div style={{backgroundColor : "black" , color:"white",marginTop :4, position: "relative", zIndex: 10}}>
-              <h2>phase{phase}</h2>
+              <h2>{mainThread.phase}</h2>
             </div>
             <Modal mainThreadId={params}/>    
   
@@ -104,15 +87,16 @@ export default function Page({ params }) {
               {branchThread.map((a,i) => (                                    
                 <ArcherElement
                 id={"element" + i}
+                key={i}
                 >
                   <div>
-                      <SimpleProfileCardInfo userId={a.userId}/>
-                    </div>                  
-                  </ArcherElement>              
+                    <SimpleProfileCardInfo userId={a.userId} branchText={a.body} branchThreadIdParam={a.id} mainThreadIdParam={a.mainThreadId}/>
+                  </div>                  
+                </ArcherElement>                            
               ))}                                                           
               </div>                
-        </ArcherContainer>
-      </div>
+              </ArcherContainer>
+          </div>
     </>
   )
 }
