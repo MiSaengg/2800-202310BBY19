@@ -1,15 +1,17 @@
-import { updateUserPenName } from "@/lib/prisma/users";
+import { getUserById, updateUserPenName } from "@/lib/prisma/users";
 
 const handler = async (req, res) => {
-  // if (req.method === 'GET') {
-  //   try {
-  //     const { users, error } = await getUsers()
-  //     if (error) throw new Error(error)
-  //     return res.status(200).json({ users })
-  //   } catch (error) {
-  //     return res.status(500).json({ error: error.message })
-  //   }
-  // }
+  if (req.method === 'GET') {
+    const userId = req.query.userEmail
+    console.log(userId)
+    try {
+      const { user, error } = await getUserById(userId)
+      if (error) throw new Error(error)
+      return res.status(200).json({ user })
+    } catch (error) {
+      return res.status(500).json({ error: error.message })
+    }
+  }
 
   if (req.method === 'POST') {
     try {

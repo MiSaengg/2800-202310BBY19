@@ -4,8 +4,9 @@ import React, {useEffect, useState} from 'react';
 import { ArcherContainer, ArcherElement } from "react-archer";
 import MainThread from './mainThread';
 import Modal from '@/app/components/modal/Modal';
-import BranchThreadBox from '@/app/components/box/branchTreadBox';
+import SimpleProfileCardInfo from '@/app/components/card/SimpleProfileCard';
 import ProfileCardInfo from '@/app/components/card/profileCardInfo';
+import Image from 'next/image';
 
 // async function getMainThreadByIds(threadId){
 //   const { thread } = await getMainThreadById(threadId)
@@ -16,8 +17,7 @@ import ProfileCardInfo from '@/app/components/card/profileCardInfo';
 // }
 
 export default function Page({ params }) {    
-
-  const [textAreaNo, setTextAreaNo] = useState(0);
+    
   const [branchThread , setBranchThread] = useState([]);
   const [pilot, setPilot] = useState("");
   const [title, setTitle] = useState("");
@@ -43,6 +43,21 @@ export default function Page({ params }) {
       style: {strokeDasharray:'5,5'},
     },
   ];
+
+  // const getUserIdByBranchThreadUserId = (id) =>{
+  //   const endpoint = `/api/users/${id}`
+
+  //   fetch(endpoint, {
+  //     method:"GET"
+  //   }).then(
+  //     res => res.json()
+  //   ).then(
+  //     ({user}) => {
+  //       console.log(user)
+  //     }
+  //   )
+  // }
+
 
   useEffect(() => {
     const endpoint = `/api/threads/${params.threadId}`
@@ -86,22 +101,9 @@ export default function Page({ params }) {
                   <ArcherElement
                   id={"element" + i}
                   >
-                    <div className="flex items-center justify-center bg-gray-100">
-                      <div className="w-full max-w-xs border border-black p-4 rounded-md relative">
-                        <label className="block">
-                          <span className="text-gray-700">
-                            {a.body}
-                          </span>
-                        </label>
-                        <div className="absolute bottom-2 left-2">
-                          <select className="border rounded-md bg-white p-1">
-                            <option value="delete">Merge</option>
-                            <option value="delete">Merge</option>
-                            <option value="accepted">Delete</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
+                    <div>
+                      <SimpleProfileCardInfo userId={a.userId}/>
+                    </div>                  
                   </ArcherElement>              
               ))}                                                           
               </div>                

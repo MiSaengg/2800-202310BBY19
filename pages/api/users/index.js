@@ -1,11 +1,12 @@
-import { createUser, getUsers } from "@/lib/prisma/users";
+import { createUser, getUserById} from "@/lib/prisma/users";
 
 const handler = async (req, res) => {
   if (req.method === "GET") {
     try {
-      const { users, error } = await getUsers();
+      const userId = req.query.userId;
+      const { user, error } = await getUserById(userId);
       if (error) throw new Error(error);
-      return res.status(200).json({ users });
+      return res.status(200).json({ user });
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
