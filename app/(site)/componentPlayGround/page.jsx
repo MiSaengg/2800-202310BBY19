@@ -1,5 +1,5 @@
 import React from 'react';
-import SimpleProfileCard from '../../components/card/SimpleProfileCard';
+import Profilepage from '../../components/card/profilepage';
 
 
 
@@ -8,7 +8,7 @@ const Page = () => {
     <div>
       <h1>Component Playground</h1>
       <div>
-        <SimpleProfileCard />
+        <Profilepage  />
         
       </div>
     </div>
