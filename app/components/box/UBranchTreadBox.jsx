@@ -1,6 +1,6 @@
 import React from 'react';
 
-const branchTreadBox = ({ userid, threadId, body, genre, penName, mainCharacter }) => {
+const UbranchTreadBox = ({ userid, threadid, genre, penName, mainCharacter }) => {
   return (
     // min-h-screen
     <div className="flex items-center justify-center bg-gray-100">
@@ -12,7 +12,7 @@ const branchTreadBox = ({ userid, threadId, body, genre, penName, mainCharacter 
         </label>
         <div className="absolute bottom-2 left-2">
           <select className="border rounded-md bg-white p-1">
-            <option value="delete">Merge</option>
+            <option value="delete">Select</option>
             <option value="delete">Merge</option>
             <option value="accepted">Delete</option>
           </select>
@@ -22,4 +22,4 @@ const branchTreadBox = ({ userid, threadId, body, genre, penName, mainCharacter 
   );
 };
 
-export default branchTreadBox;
+export default UbranchTreadBox;

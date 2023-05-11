@@ -1,6 +1,6 @@
 import React from 'react';
 
-const mainTreadBox = ({ userid, threadid, genre, penName, mainCharacter }) => {
+const MainTreadBox = ({ userid, threadid, genre, penName, mainCharacter }) => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
     <div className="w-full max-w-xs border border-black p-4 rounded-md">
@@ -15,4 +15,4 @@ const mainTreadBox = ({ userid, threadid, genre, penName, mainCharacter }) => {
   );
 };
 
-export default mainTreadBox;
+export default MainTreadBox;
