@@ -68,6 +68,7 @@ model MainThread {
   title       String 
   pilot       String
   content     Json @default("{}")
+  contentBody String
   phaseStage  Json @default("{}")
   mainCharacter String
   genre       String[]
