@@ -67,12 +67,8 @@ model MainThread {
   id          String @id @default(auto()) @map("_id") @db.ObjectId
   title       String 
   pilot       String
-<<<<<<< HEAD
   content     Json
   phaseStage  Json
-=======
-  content     Json 
->>>>>>> 9663cb0 (Frontend Create New Thread with MongoDB work done)
   mainCharacter String
   genre       String[]
   tag         String @default("Incomplete")  
