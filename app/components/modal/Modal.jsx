@@ -4,8 +4,14 @@ import Button from './../button/Button'
 import { useState, useEffect } from 'react';
 
 
-const Modal = () => {
+const Modal = ({mainThreadId}) => {
 const [showModal, setShowModal] = useState(false)
+const [userId, setUserId] = useState(null)
+
+useEffect(()=> {
+    const userID = localStorage.getItem("userID")
+    setUserId(userID)
+})
 
 const openModalEvent = (e) => {
     e.preventDefault()
@@ -17,10 +23,37 @@ const closeModalEvent = (e) => {
 
     setShowModal(false)
 }
-const submitBranchThread = (e) => {
+const submitBranchThread = async (e) => {
     e.preventDefault()
 
-    setShowModal(false)
+    const data = {
+        body: e.target.branchContext.value,        
+        userId: userId,
+        mainThreadId: mainThreadId.threadId
+    }
+    console.log(data)
+
+    const JSONdata = JSON.stringify(data);
+
+    const endpoint = "/api/threads/branchThread"
+
+    const options = {
+        method: 'POST',
+        headers : {
+          'Content-Type' : 'application/json',
+        },
+        body : JSONdata,
+      };
+    
+    const response = await fetch(endpoint, options);
+
+
+    const {thread, error} = await response.json();
+
+    if(!error){
+        setShowModal(false)
+    }
+
 }
 
   return (
@@ -48,9 +81,9 @@ const submitBranchThread = (e) => {
                     Continue the story</p>
                 </div>
 
-                <form className="mx-5">
+                <form className="mx-5" onSubmit={submitBranchThread}>
                     <label htmlFor="text-input" className="block mb-3 text-md font-mono text-gray-900 dark:text-white">
-                        <textarea id="text-input" rows="15" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                        <textarea name="branchContext" id="text-input" rows="15" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
                     </label>
 
                 <div className="flex items-stretch justify-between px-5 pt-1 pb-3 border-gray-200 rounded-b dark:border-gray-600">                   
@@ -62,7 +95,7 @@ const submitBranchThread = (e) => {
 
                 </div>
                 <div className="flex justify-end border-t p-5">
-                    <Button onClick={submitBranchThread} text="Submit"/>
+                    <Button type="submit" text="Submit"/>
                 </div>
                 </form>
             </div>
