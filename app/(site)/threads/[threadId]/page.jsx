@@ -1,10 +1,10 @@
-"use client"
+"use client";
 // import { getMainThreadById } from "@/lib/prisma/mainThreads";
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from "react";
 import { ArcherContainer, ArcherElement } from "react-archer";
-import Modal from '@/app/components/modal/Modal';
-import SimpleProfileCardInfo from '@/app/components/card/SimpleProfileCard';
-import ProfileCardInfo from '@/app/components/card/profileCardInfo';
+import Modal from "@/app/components/modal/Modal";
+import SimpleProfileCardInfo from "@/app/components/card/SimpleProfileCard";
+import ProfileCardInfo from "@/app/components/card/profileCardInfo";
 
 // async function getMainThreadByIds(threadId){
 //   const { thread } = await getMainThreadById(threadId)
@@ -14,41 +14,40 @@ import ProfileCardInfo from '@/app/components/card/profileCardInfo';
 //   return thread
 // }
 
-export default function Page({ params }) {    
-
-  const [branchThread , setBranchThread] = useState([]);
+export default function Page({ params }) {
+  const [branchThread, setBranchThread] = useState([]);
   const [mainThread, setMainThread] = useState({});
   const [userId, setUserId] = useState("")
   const [branchThreadNo, setBranchThreadNo] = useState(0)
 
   let arrayThing = [
     {
-      targetId : "element0",                    
+      targetId: "element0",
       sourceAnchor: "bottom",
-      targetAnchor : "top",
-      style: {strokeDasharray:'5,5'},
+      targetAnchor: "top",
+      style: { strokeDasharray: "5,5" },
     },
     {
-      targetId : "element1",                    
+      targetId: "element1",
       sourceAnchor: "bottom",
-      targetAnchor : "top",
-      style: {strokeDasharray:'5,5'},
+      targetAnchor: "top",
+      style: { strokeDasharray: "5,5" },
     },
     {
-      targetId : "element2",                    
+      targetId: "element2",
       sourceAnchor: "bottom",
-      targetAnchor : "top",
-      style: {strokeDasharray:'5,5'},
+      targetAnchor: "top",
+      style: { strokeDasharray: "5,5" },
     },
   ];
 
   useEffect(() => {
-    const endpoint = `/api/threads/${params.threadId}`
-      
+    const endpoint = `/api/threads/${params.threadId}`;
+
     fetch(endpoint, {
-      method: 'GET'      
+      method: "GET",
     })
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(({ mainThread }) => {
         const data = mainThread.phaseStage
         var values = Object.values(data)          
@@ -57,10 +56,12 @@ export default function Page({ params }) {
         setUserId(mainThread.userId)    
         setBranchThreadNo(Object.keys(mainThread.phaseStage).length)
       })
-  }, [])
+  }, []);
 
+  
   return (
     <>  
+    
     <h3 style={{ textAlign: "center" }}>{mainThread.title}</h3>
     <div style={{display: "flex", flexDirection:"column", justifyContent: "center", width: "100%" , textAlign:"center" ,alignItems:"center",padding:"4px"}}>                  
     <ArcherContainer strokeColor="black">     
@@ -97,5 +98,5 @@ export default function Page({ params }) {
               </ArcherContainer>
           </div>
     </>
-  )
+  );
 }

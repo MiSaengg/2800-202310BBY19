@@ -19,11 +19,8 @@ const handler = async (req, res) => {
 
   if (req.method === "POST") {
     try {      
-      console.log("kkkkakkakakakkakakakakakk")
       const data = req.body;
-      console.log(data)
       const mainThreadId = req.body.mainThreadId;  
-      console.log(mainThreadId)  
       const { threads, error } = await createBranchThread(data , mainThreadId);
       if (error) throw new Error(error);
       return res.status(200).json({ threads });
