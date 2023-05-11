@@ -12,9 +12,7 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
     const userID = localStorage.getItem("userID");
     setUserId(userID);
 
-    console.log(Object.values(branchThread).some(e=> e.userId !== userId));
-
-
+    console.log(Object.values(branchThread).some((e) => e.userId !== userId));
   });
 
   const openModalEvent = (e) => {
@@ -56,7 +54,6 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
     if (!error) {
       setShowModal(false);
     }
-    
   };
 
   return (
@@ -71,14 +68,15 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
           alignItems: "center",
         }}
       >
-        {Object.values(branchThread).some(e=> e.userId === userId) || phaseStage >= 3 ? (
-         null
-        ) :  <button
-        style={{ width: "40px", marginLeft: "70px", height: "40px" }}
-        onClick={openModalEvent}
-      >
-        +
-      </button>}
+        {Object.values(branchThread).some((e) => e.userId === userId) ||
+        phaseStage >= 3 ? null : (
+          <button
+            style={{ width: "40px", marginLeft: "70px", height: "40px" }}
+            onClick={openModalEvent}
+          >
+            +
+          </button>
+        )}
       </div>
       {showModal ? (
         <div
