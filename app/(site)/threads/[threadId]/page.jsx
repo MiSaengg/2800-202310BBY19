@@ -19,6 +19,7 @@ export default function Page({ params }) {
   const [branchThread , setBranchThread] = useState([]);
   const [mainThread, setMainThread] = useState({});
   const [userId, setUserId] = useState("")
+  const [branchThreadNo, setBranchThreadNo] = useState(0)
 
   let arrayThing = [
     {
@@ -54,12 +55,12 @@ export default function Page({ params }) {
         setBranchThread(values)                
         setMainThread(mainThread)                  
         setUserId(mainThread.userId)    
-        
+        setBranchThreadNo(Object.keys(mainThread.phaseStage).length)
       })
   }, [])
 
   return (
-    <>
+    <>  
     <h3 style={{ textAlign: "center" }}>{mainThread.title}</h3>
     <div style={{display: "flex", flexDirection:"column", justifyContent: "center", width: "100%" , textAlign:"center" ,alignItems:"center",padding:"4px"}}>                  
     <ArcherContainer strokeColor="black">     
@@ -73,15 +74,13 @@ export default function Page({ params }) {
                   { userId ? 
                     (<ProfileCardInfo genre={mainThread.genre} userId={userId} mainCharacter={mainThread.mainCharacter}/>) : null
                   }
-                </div>
-                {/* <MainThread threadId={params.threadId} pilot={pilot}/> */}
-                                          
+                </div>                                                          
             </ArcherElement>
-          {/*  */}
+          
             <div style={{backgroundColor : "black" , color:"white",marginTop :4, position: "relative", zIndex: 10}}>
-              <h2>{mainThread.phase}</h2>
+              <h2>phase {mainThread.phase}</h2>
             </div>
-            <Modal mainThreadId={params}/>    
+            <Modal mainThreadId={params} phaseStage={branchThreadNo}/>    
   
           <div style={{display: "flex", height: "150px" ,justifyContent: "space-evenly", textAlign:"center"}}>              
               {branchThread.map((a,i) => (                                    
@@ -90,7 +89,7 @@ export default function Page({ params }) {
                 key={i}
                 >
                   <div>
-                    <SimpleProfileCardInfo userId={a.userId} branchText={a.body} branchThreadIdParam={a.id} mainThreadIdParam={a.mainThreadId}/>
+                    <SimpleProfileCardInfo userId={a.userId} branchText={a.body} branchThreadIdParam={a.id} mainThreadIdParam={a.mainThreadId} ownerUserId = {userId}/>
                   </div>                  
                 </ArcherElement>                            
               ))}                                                           

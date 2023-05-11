@@ -2,10 +2,11 @@ import Image from 'next/image';
 import {useState, useEffect } from 'react';
 import Button from '../button/Button';
 
-const SimpleProfileCardInfo = ({userId , branchText , branchThreadIdParam , mainThreadIdParam}) => {
+const SimpleProfileCardInfo = ({userId , branchText , branchThreadIdParam , mainThreadIdParam , ownerUserId}) => {
     const [userImg , setUserImg] = useState("");
     const [penName, setPenName] = useState("");
     const [showModal, setShowModal] = useState(false);
+    const [currentUserId, setCurrentUserId] = useState(null)
     const clickBranchCard = (e) => {
       e.preventDefault()
 
@@ -53,6 +54,8 @@ const SimpleProfileCardInfo = ({userId , branchText , branchThreadIdParam , main
   }
 
     useEffect(()=> {
+    const currentUserId = localStorage.getItem("userID")
+    setCurrentUserId(currentUserId)
     const fetchUserData = async () => {
     const endpoint = `/api/users/${userId}`;
       try{
@@ -107,8 +110,13 @@ const SimpleProfileCardInfo = ({userId , branchText , branchThreadIdParam , main
                     </label>
 
                   <div className="flex items-stretch justify-between px-5 pt-1 pb-3 border-gray-200 rounded-b dark:border-gray-600">                   
-                  {/* Vote Button and MergeButton */}
-                    <Button type="submit" text="Merge"/>
+                  {
+                    currentUserId === userId || currentUserId === ownerUserId ?
+                    (<Button type="submit" text="Delete"/>) : null
+                  }
+                  { currentUserId === ownerUserId ?
+                    (<Button type="submit" text="Merge"/>) : null
+                  }
                   </div>
                 </form>
                 

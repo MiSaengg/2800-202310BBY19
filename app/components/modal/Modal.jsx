@@ -4,14 +4,17 @@ import Button from './../button/Button'
 import { useState, useEffect } from 'react';
 
 
-const Modal = ({mainThreadId}) => {
+const Modal = ( {mainThreadId , phaseStage} ) => {
 const [showModal, setShowModal] = useState(false)
 const [userId, setUserId] = useState(null)
+const [numOfBranchThread, setNumOfBranchThread] = useState(0)
 
 useEffect(()=> {
-    const userID = localStorage.getItem("userID")
+    const userID = localStorage.getItem("userID")    
     setUserId(userID)
+
 })
+
 
 const openModalEvent = (e) => {
     e.preventDefault()
@@ -23,6 +26,7 @@ const closeModalEvent = (e) => {
 
     setShowModal(false)
 }
+
 const submitBranchThread = async (e) => {
     e.preventDefault()
 
@@ -54,13 +58,17 @@ const submitBranchThread = async (e) => {
         setShowModal(false)
     }
 
+    
+
 }
 
   return (
     // Insert "hidden" in the className 
     <>        
         <div style={{height:"150px" , textAlign:"center" , display:"flex" ,justifyContent:"center" , alignItems:"center"}}>
+    {phaseStage < 3 ?  (
             <button style={{width:"40px", marginLeft:"70px", height:"40px"}} onClick={openModalEvent}>+</button> 
+            ) : null}
         </div>
     { showModal ? (
     <div tabIndex="-1" aria-hidden="true" className="fixed top-0 left-0 right-0 z-50 p-4 overflow-x-hidden overflow-y-auto max-h-full">
