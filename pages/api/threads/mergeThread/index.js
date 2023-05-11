@@ -1,7 +1,7 @@
 import { mergeTwoThreadsByIds } from "@/lib/prisma/mainThreads";
 
 /**
- * handler functino that diverse by the POST or GET Method.
+ * handler function that diverse by the POST or GET Method.
  *
  * @param {*} req
  * @param {*} res
@@ -18,6 +18,7 @@ const handler = async (req, res) => {
         { mainThreadId },
         { branchThreadId }
       );
+
       if (error) throw new Error(error);
       return res.status(200).json({ updateMainThread });
     } catch (error) {

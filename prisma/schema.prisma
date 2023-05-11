@@ -67,8 +67,8 @@ model MainThread {
   id          String @id @default(auto()) @map("_id") @db.ObjectId
   title       String 
   pilot       String
-  content     Json
-  phaseStage  Json
+  content     Json @default("{}")
+  phaseStage  Json @default("{}")
   mainCharacter String
   genre       String[]
   tag         String @default("Incomplete")  
