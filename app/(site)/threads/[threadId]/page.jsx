@@ -50,7 +50,8 @@ export default function Page({ params }) {
       .then((res) => res.json())
       .then(({ mainThread }) => {
         const data = mainThread.phaseStage
-        var values = Object.values(data)          
+        var values = Object.values(data)    
+        console.log(data)      
         setBranchThread(values)                
         setMainThread(mainThread)                  
         setUserId(mainThread.userId)    
@@ -81,7 +82,7 @@ export default function Page({ params }) {
             <div style={{backgroundColor : "black" , color:"white",marginTop :4, position: "relative", zIndex: 10}}>
               <h2>phase {mainThread.phase}</h2>
             </div>
-            <Modal mainThreadId={params} phaseStage={branchThreadNo}/>    
+            <Modal branchThread={branchThread} mainThreadId={params} phaseStage={branchThreadNo}/>    
   
           <div style={{display: "flex", height: "150px" ,justifyContent: "space-evenly", textAlign:"center"}}>              
               {branchThread.map((a,i) => (                                    

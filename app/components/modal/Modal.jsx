@@ -12,7 +12,6 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
     const userID = localStorage.getItem("userID");
     setUserId(userID);
 
-    console.log(Object.values(branchThread).some((e) => e.userId !== userId));
   });
 
   const openModalEvent = (e) => {
