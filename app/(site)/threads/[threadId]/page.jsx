@@ -17,8 +17,8 @@ import ProfileCardInfo from "@/app/components/card/profileCardInfo";
 export default function Page({ params }) {
   const [branchThread, setBranchThread] = useState([]);
   const [mainThread, setMainThread] = useState({});
-  const [userId, setUserId] = useState("")
-  const [branchThreadNo, setBranchThreadNo] = useState(0)
+  const [userId, setUserId] = useState("");
+  const [branchThreadNo, setBranchThreadNo] = useState(0);
 
   let arrayThing = [
     {
@@ -49,55 +49,107 @@ export default function Page({ params }) {
     })
       .then((res) => res.json())
       .then(({ mainThread }) => {
-        const data = mainThread.phaseStage
-        var values = Object.values(data)    
-        console.log(data)      
-        setBranchThread(values)                
-        setMainThread(mainThread)                  
-        setUserId(mainThread.userId)    
-        setBranchThreadNo(Object.keys(mainThread.phaseStage).length)
-      })
+        const data = mainThread.phaseStage;
+        const phase = mainThread.phase;
+        const tag = mainThread.tag;
+        var values = Object.values(data);
+        console.log(phase);
+        console.log(tag);
+        setBranchThread(values);
+        setMainThread(mainThread);
+        setUserId(mainThread.userId);
+        setBranchThreadNo(Object.keys(mainThread.phaseStage).length);
+      });
   }, []);
 
-  
   return (
-    <>  
-    
-    <h3 style={{ textAlign: "center" }}>{mainThread.title}</h3>
-    <div style={{display: "flex", flexDirection:"column", justifyContent: "center", width: "100%" , textAlign:"center" ,alignItems:"center",padding:"4px"}}>                  
-    <ArcherContainer strokeColor="black">     
-          
-            <ArcherElement
-              id="root"
-              relations={arrayThing}
-              > 
-                <div style={{display:"flex",flexDirection:"row", width:"100%"}}>
-                  <div style={{border: "grey solid 2px", borderRadius: "10px", padding: "5px" , width:"60%"}}>{mainThread.pilot}</div>
-                  { userId ? 
-                    (<ProfileCardInfo genre={mainThread.genre} userId={userId} mainCharacter={mainThread.mainCharacter}/>) : null
-                  }
-                </div>                                                          
-            </ArcherElement>
-          
-            <div style={{backgroundColor : "black" , color:"white",marginTop :4, position: "relative", zIndex: 10}}>
-              <h2>phase {mainThread.phase}</h2>
-            </div>
-            <Modal branchThread={branchThread} mainThreadId={params} phaseStage={branchThreadNo}/>    
-  
-          <div style={{display: "flex", height: "150px" ,justifyContent: "space-evenly", textAlign:"center"}}>              
-              {branchThread.map((a,i) => (                                    
-                <ArcherElement
-                id={"element" + i}
-                key={i}
+    <>
+      {mainThread.phase === 5 && mainThread.tag === "Complete" ? null : (
+        <>
+          <h3 style={{ textAlign: "center" }}>{mainThread.title}</h3>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              width: "100%",
+              textAlign: "center",
+              alignItems: "center",
+              padding: "4px",
+            }}
+          >
+            <ArcherContainer strokeColor="black">
+              <ArcherElement id="root" relations={arrayThing}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    width: "100%",
+                  }}
                 >
-                  <div>
-                    <SimpleProfileCardInfo userId={a.userId} branchText={a.body} branchThreadIdParam={a.id} mainThreadIdParam={a.mainThreadId} ownerUserId = {userId}/>
-                  </div>                  
-                </ArcherElement>                            
-              ))}                                                           
-              </div>                
-              </ArcherContainer>
+                  <div
+                    style={{
+                      border: "grey solid 2px",
+                      borderRadius: "10px",
+                      padding: "5px",
+                      width: "60%",
+                    }}
+                  >
+                    {mainThread.pilot}
+                  </div>
+                  {userId ? (
+                    <ProfileCardInfo
+                      genre={mainThread.genre}
+                      userId={userId}
+                      mainCharacter={mainThread.mainCharacter}
+                    />
+                  ) : null}
+                </div>
+              </ArcherElement>
+
+              <div
+                style={{
+                  backgroundColor: "black",
+                  color: "white",
+                  marginTop: 4,
+                  position: "relative",
+                  zIndex: 10,
+                }}
+              >
+                <h2>phase {mainThread.phase}</h2>
+              </div>
+              <Modal
+                branchThread={branchThread}
+                mainThreadId={params}
+                phaseStage={branchThreadNo}
+              />
+
+              <div
+                style={{
+                  display: "flex",
+                  height: "150px",
+                  justifyContent: "space-evenly",
+                  textAlign: "center",
+                }}
+              >
+                {branchThread.map((a, i) => (
+                  <ArcherElement id={"element" + i} key={i}>
+                    <div>
+                      <SimpleProfileCardInfo
+                        userId={a.userId}
+                        branchText={a.body}
+                        branchThreadIdParam={a.id}
+                        mainThreadIdParam={a.mainThreadId}
+                        ownerUserId={userId}
+                      />
+                    </div>
+                  </ArcherElement>
+                ))}
+              </div>
+            </ArcherContainer>
           </div>
+        </>
+      )}
     </>
   );
 }
