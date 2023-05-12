@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev && prisma generate",
+    "dev": "next dev",
     "build": "next build && prisma generate",
     "start": "next start && prisma generate",
-    "lint": "next lint"
+    "lint": "next lint",
+    "vercel-build" : "prisma generate && next build"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.17",
