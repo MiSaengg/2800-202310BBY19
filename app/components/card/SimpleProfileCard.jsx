@@ -51,7 +51,7 @@ const SimpleProfileCardInfo = ({userId , branchText , branchThreadIdParam , main
 
   if(!error){
       setShowModal(false)
-      router.push(`/threads/${mainThreadIdParam}`)
+      location.reload()
   }    
   }
 

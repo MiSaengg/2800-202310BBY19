@@ -118,7 +118,7 @@ export default function Page({ params }) {
                       width: "60%",
                     }}
                   >
-                    {mainThread.pilot}
+                    {mainThread.contentBody}
                   </div>
                   {userId ? (
                     <ProfileCardInfo
