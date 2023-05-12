@@ -1,7 +1,5 @@
-import React from 'react'
+import React from "react";
 
-export default function TreadsLayout({children}) {
-  return (
-    <div>{children}</div>
-  )
+export default function TreadsLayout({ children }) {
+  return <div>{children}</div>;
 }

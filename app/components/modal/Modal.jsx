@@ -11,7 +11,6 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
   useEffect(() => {
     const userID = localStorage.getItem("userID");
     setUserId(userID);
-
   });
 
   const openModalEvent = (e) => {

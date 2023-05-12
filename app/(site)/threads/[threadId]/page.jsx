@@ -6,6 +6,12 @@ import Modal from "@/app/components/modal/Modal";
 import SimpleProfileCardInfo from "@/app/components/card/SimpleProfileCard";
 import ProfileCardInfo from "@/app/components/card/profileCardInfo";
 
+import ConnectorLine from "@/app/components/box/ConnectorLine";
+import MainThreadBox from "@/app/components/box/mainTreadBox";
+import LReadTextBox from "@/app/components/box/LReadTextBox";
+import RReadTextBox from "@/app/components/box/RReadTextBox";
+import UbranchTreadBox from "@/app/components/box/UbranchTreadBox";
+
 // async function getMainThreadByIds(threadId){
 //   const { thread } = await getMainThreadById(threadId)
 //   if(!thread){
@@ -19,6 +25,7 @@ export default function Page({ params }) {
   const [mainThread, setMainThread] = useState({});
   const [userId, setUserId] = useState("");
   const [branchThreadNo, setBranchThreadNo] = useState(0);
+  const [bodies, setBodies] = useState([]);
 
   let arrayThing = [
     {
@@ -50,21 +57,37 @@ export default function Page({ params }) {
       .then((res) => res.json())
       .then(({ mainThread }) => {
         const data = mainThread.phaseStage;
-        const phase = mainThread.phase;
-        const tag = mainThread.tag;
+        const content = mainThread.content;
         var values = Object.values(data);
-        console.log(phase);
-        console.log(tag);
         setBranchThread(values);
         setMainThread(mainThread);
         setUserId(mainThread.userId);
         setBranchThreadNo(Object.keys(mainThread.phaseStage).length);
+        const bodies = Object.values(content).map((item) => item.body);
+        setBodies(bodies);
+        console.log(bodies);
+        console.log(mainThread.pilot);
       });
   }, []);
 
   return (
     <>
-      {mainThread.phase === 5 && mainThread.tag === "Complete" ? null : (
+      {mainThread.phase === 5 || mainThread.tag === "Complete" ? (
+        <>
+          <RReadTextBox body={mainThread.pilot} />
+          {bodies.map((body, index) => (
+            <React.Fragment key={index}>
+              <ConnectorLine />
+              {index % 2 === 0 ? (
+                <LReadTextBox body={body} />
+              ) : (
+                <RReadTextBox body={body} />
+              )}
+            </React.Fragment>
+          ))}
+          {/* <UbranchTreadBox body={body} /> */}
+        </>
+      ) : (
         <>
           <h3 style={{ textAlign: "center" }}>{mainThread.title}</h3>
           <div
