@@ -1,6 +1,7 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 // every time we change this file, we need to run "npx prisma generate"
+// non-nullable fields are required (can define default value) - David 05/07/2023
 
 generator client {
   provider = "prisma-client-js"
@@ -43,18 +44,54 @@ model Session {
 model User {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
-  email         String?   @unique
+  penName       String?    @unique
+  email         String?    @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
-  threads Thread[]
+  mainThread    MainThread[]
+  branchThread  BranchThread[]
 }
 
-model Thread {
+// model Thread {
+//   id          String @id @default(auto()) @map("_id") @db.ObjectId
+//   body        String 
+//   likes       Int
+//   phase       Int @default(1)
+//   user        User @relation(fields:[userId] , references: [id])
+//   userId      String @db.ObjectId
+// }
+
+model MainThread {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  title       String 
+  pilot       String
+  content     Json @default("{}")
+  contentBody String
+  phaseStage  Json @default("{}")
+  mainCharacter String
+  genre       String[]
+  tag         String @default("Incomplete")  
+  likes       Int @default(0)
+  phase       Int @default(1)  
+  userId      String @db.ObjectId
+  user        User @relation(fields:[userId] , references: [id])
+  branchThread BranchThread[]
+}
+
+model BranchThread{
   id          String @id @default(auto()) @map("_id") @db.ObjectId
   body        String 
-  likes       Int
-  user        User @relation(fields:[userId] , references: [id])
+  votes       Int @default(0)
   userId      String @db.ObjectId
+  mainThreadId String @db.ObjectId  
+  user        User @relation(fields:[userId] , references: [id])
+  mainThread  MainThread @relation(fields: [mainThreadId] , references: [id])
 }
+
+//Merge impact
+//Main thread phase is incremented by 1
+//Branch thread votes are reset to 0 -> 안보여 주기만 해도 되는거 아닌가.. (vote element delete when merged)
+//Branch thread content is reset to empty string 
+//Other branch threads are deleted 
