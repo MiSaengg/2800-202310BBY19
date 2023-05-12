@@ -1,5 +1,5 @@
 import React from 'react';
-import Profilepage from '../../components/card/profilepage';
+import Test from '../../components/box/test';
 
 
 
@@ -8,7 +8,7 @@ const Page = () => {
     <div>
       <h1>Component Playground</h1>
       <div>
-        <Profilepage  />
+        <Test />
         
       </div>
     </div>
