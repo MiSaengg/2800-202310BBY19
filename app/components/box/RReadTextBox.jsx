@@ -1,13 +1,13 @@
 import React from "react";
 import Image from "next/image";
 
-const RReadTextBox = ({ body }) => {
+const RReadTextBox = ({ body, image }) => {
   return (
     <div className="w-full px-0 flex flex-col justify-between">
       <div className="flex flex-col mt-2">
         <div className="flex justify-start mb-0  ml-3 mr-3">
           <Image
-            src="/gun.png"
+            src={image}
             width={500}
             height={500}
             alt="ProfilePhoto"

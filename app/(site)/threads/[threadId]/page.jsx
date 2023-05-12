@@ -26,6 +26,8 @@ export default function Page({ params }) {
   const [userId, setUserId] = useState("");
   const [branchThreadNo, setBranchThreadNo] = useState(0);
   const [bodies, setBodies] = useState([]);
+  const [user, setUser] = useState({});
+  const [users, setUsers] = useState({});
 
   let arrayThing = [
     {
@@ -65,8 +67,38 @@ export default function Page({ params }) {
         setBranchThreadNo(Object.keys(mainThread.phaseStage).length);
         const bodies = Object.values(content).map((item) => item.body);
         setBodies(bodies);
-        console.log(bodies);
-        console.log(mainThread.pilot);
+        
+      });
+  }, []);
+
+  useEffect(() => {
+    const endpoint = `/api/threads/${params.threadId}`;
+
+    fetch(endpoint, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then(({ mainThread }) => {
+        const data = mainThread.phaseStage;
+        const content = mainThread.content;
+        const contributors = Object.values(content).map((item) => item.id);
+        console.log(contributors)
+      });
+  }, []);
+
+  useEffect(() => {
+    const userID = localStorage.getItem("userID");
+    const mainThreadAuthor = mainThread.userId;
+    console.log(mainThreadAuthor)
+
+    const endpoint = `/api/users/${userID}`;
+
+    fetch(endpoint, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then(({ user }) => {
+        setUser(user);
       });
   }, []);
 
@@ -74,14 +106,14 @@ export default function Page({ params }) {
     <>
       {mainThread.phase === 5 || mainThread.tag === "Complete" ? (
         <>
-          <RReadTextBox body={mainThread.pilot} />
+          <RReadTextBox body={mainThread.pilot} image={userId.image} />
           {bodies.map((body, index) => (
             <React.Fragment key={index}>
               <ConnectorLine />
               {index % 2 === 0 ? (
-                <LReadTextBox body={body} />
+                <LReadTextBox body={body} image={user.image} />
               ) : (
-                <RReadTextBox body={body} />
+                <RReadTextBox body={body} image={user.image} />
               )}
             </React.Fragment>
           ))}
@@ -118,7 +150,7 @@ export default function Page({ params }) {
                       width: "60%",
                     }}
                   >
-                    {mainThread.pilot}
+                    {mainThread.contentBody}
                   </div>
                   {userId ? (
                     <ProfileCardInfo

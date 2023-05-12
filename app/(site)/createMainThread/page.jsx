@@ -18,11 +18,12 @@ export default function SubmitMainThread() {
     
     const data = {
       title : event.target.title.value,
-      genre : [event.target.genre.value],
-      mainCharacter : event.target.mainCharacter.value,
       pilot : event.target.pilot.value,
       content : {},
+      contentBody: event.target.pilot.value,
       phaseStage :{},
+      mainCharacter : event.target.numberOfCharacters.value,
+      genre : [event.target.genre.value],
       tag: "Incomplete",
       likes : 0,
       phase : 1,
