@@ -14,8 +14,8 @@ export default function Page() {
       method: "GET",
     })
       .then((res) => res.json())
-      .then(({ threads }) => {
-        setMainThreadMapping(threads)
+      .then(({ randomMainThreads }) => {
+        setMainThreadMapping(randomMainThreads)
       });
   }, []);
 

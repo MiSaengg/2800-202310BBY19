@@ -12,13 +12,13 @@ const handler = async (req, res) => {
         ? getRandomMainThreads(parseInt(req.query.count) || 6)
         : getMainThreads();
 
-      const { threads, error } = await getMainThread;
+      const { randomMainThreads, error } = await getMainThread;
 
       if (error) {
         throw new Error(error);
       }
 
-      res.status(200).json({ threads });
+      res.status(200).json({ randomMainThreads });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
