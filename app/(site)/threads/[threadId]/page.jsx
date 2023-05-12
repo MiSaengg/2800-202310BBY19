@@ -7,10 +7,10 @@ import SimpleProfileCardInfo from "@/app/components/card/SimpleProfileCard";
 import ProfileCardInfo from "@/app/components/card/profileCardInfo";
 
 import ConnectorLine from "@/app/components/box/ConnectorLine";
-import MainThreadBox from "@/app/components/box/mainTreadBox";
+
 import LReadTextBox from "@/app/components/box/LReadTextBox";
 import RReadTextBox from "@/app/components/box/RReadTextBox";
-import UbranchTreadBox from "@/app/components/box/UbranchTreadBox";
+
 
 // async function getMainThreadByIds(threadId){
 //   const { thread } = await getMainThreadById(threadId)
