@@ -35,7 +35,7 @@ export default function Footer(){
             <span className="uppercase font-mono text-xs">Start</span>
           </Link>
           <Link
-            href={`/profile/users/${userId}`}
+            href={`/profile`}
             className="text-stone-500 hover:text-stone-800 transition-colors"
           >
             <UserIcon className="w-9" />

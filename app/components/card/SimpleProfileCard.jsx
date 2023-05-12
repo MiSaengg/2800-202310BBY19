@@ -1,12 +1,15 @@
 import Image from 'next/image';
 import {useState, useEffect } from 'react';
 import Button from '../button/Button';
+import { useRouter } from 'next/navigation';
 
 const SimpleProfileCardInfo = ({userId , branchText , branchThreadIdParam , mainThreadIdParam , ownerUserId}) => {
     const [userImg , setUserImg] = useState("");
     const [penName, setPenName] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [currentUserId, setCurrentUserId] = useState(null)
+    const router = useRouter();
+
     const clickBranchCard = (e) => {
       e.preventDefault()
 
@@ -48,10 +51,30 @@ const SimpleProfileCardInfo = ({userId , branchText , branchThreadIdParam , main
 
   if(!error){
       setShowModal(false)
+      router.push(`/threads/${mainThreadIdParam}`)
+  }    
   }
-    
+
+  const deleteBranchThread = async (e) => {
+    e.preventDefault();
+
+
+    const endpoint = `/api/threads/branchThread?branchthreadId=${branchThreadIdParam}`
+    const options = {
+      method : 'DELETE'
+    }
+
+    const response = await fetch(endpoint,options)
+
+    const {thread , error} = await response.json();
+
+    if(!error){
+      router.push(`/threads/${mainThreadIdParam}`)
+    }
     
   }
+  
+
 
     useEffect(()=> {
     const currentUserId = localStorage.getItem("userID")
@@ -106,13 +129,13 @@ const SimpleProfileCardInfo = ({userId , branchText , branchThreadIdParam , main
                 <form onSubmit={mergeBranchThreadToMainThread}>
                   
                     <label htmlFor="text-input" className="block mb-3 text-md font-mono text-gray-900 dark:text-white">
-                        <textarea name="branchContext" id="text-input" rows="15" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{branchText}</textarea>
+                        <textarea name="branchContext" id="text-input" rows="15" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" readOnly>{branchText}</textarea>
                     </label>
 
                   <div className="flex items-stretch justify-between px-5 pt-1 pb-3 border-gray-200 rounded-b dark:border-gray-600">                   
                   {
                     currentUserId === userId || currentUserId === ownerUserId ?
-                    (<Button type="submit" text="Delete"/>) : null
+                    (<Button type="button" text="Delete" onClick={deleteBranchThread}/>) : null
                   }
                   { currentUserId === ownerUserId ?
                     (<Button type="submit" text="Merge"/>) : null

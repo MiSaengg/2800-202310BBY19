@@ -2,11 +2,14 @@
 import Image from "next/image";
 import Button from "./../button/Button";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+
 
 const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
   const [showModal, setShowModal] = useState(false);
   const [userId, setUserId] = useState(null);
   const [numOfBranchThread, setNumOfBranchThread] = useState(0);
+  const router = useRouter();
 
   useEffect(() => {
     const userID = localStorage.getItem("userID");
@@ -24,7 +27,7 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
     setShowModal(false);
   };
 
-  const submitBranchThread = async (e) => {
+  const submitBranchThread = async (e) => {    
     e.preventDefault();
 
     const data = {
@@ -51,6 +54,7 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
 
     if (!error) {
       setShowModal(false);
+      router.push(`/threads/${mainThreadId.threadId}`)
     }
   };
 

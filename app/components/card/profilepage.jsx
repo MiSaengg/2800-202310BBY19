@@ -3,30 +3,13 @@ import Image from 'next/image';
 import React from 'react';
 import {useEffect, useState} from 'react';
 
-const ProfilePage = ({ genre, userId, mainCharacter }) => {
-  const [user , setUser] = useState({});
-  
-  
+const ProfilePage = ({userId, userName, penName, userImg,userEmail}) => {
 
-
-useEffect(()=> {
-  const endpoint = `/api/users/${userId}`
-
-  fetch(endpoint, {
-    method:"GET"
-  }).then(
-    res => res.json()
-  ).then(
-    ({user}) => {
-      setUser(user)            
-    }
-  )
-  },[]);
   
 return (
 
-<div className="rounded-3xl overflow-hidden shadow-xl max-w-xs bg-white mx-auto flex flex-col items-center h-40"
-style={{ width:"35%", position: 'relative', transform: 'scale(1.2)'  }}
+<div className="rounded-3xl overflow-hidden shadow-xl max-w-xs bg-white mx-auto flex flex-col items-center h-50 mt-10"
+style={{ width:"60%", position: 'relative'}}
 >
 <Image src="/horror.png"
     width={100}
@@ -34,19 +17,15 @@ style={{ width:"35%", position: 'relative', transform: 'scale(1.2)'  }}
     alt="bookCover"
   className="w-full"/>
 <div className="flex justify-center -mt-8">
-<Image src="/gun.png" alt="user profile photo" width={50} height={100} className="rounded-full border-solid border-white border-2 " />
+<Image src={userImg} alt="user profile photo" width={50} height={100} className="rounded-full border-solid border-white border-2 " />
 </div>
   <div className="text-center px-2 pb-2 pt-2">
-    <h3 className="text-black text-sm font-bold font-sans">DAVID OH</h3>
+    <h3 className="text-black text-sm font-bold font-sans">{userName}</h3>
+      <span className="font-bold">{userEmail}</span>      
   </div>
   <div className="flex flex-col justify-center pb-2 text-black" style={{position: 'absolute', top: '25%', left: '50%', transform: 'translate(-50%, -50%)', color: 'white', fontWeight: 'bold'}}>
     <div className="text-center mb-0.1" style={{fontSize: '0.9em'}}>
-      <span className="font-bold">{genre}</span>
-    </div>
-    
-    <div className="text-center" style={{fontSize: '0.9em'}}>
-      <span className="font-bold">{mainCharacter}</span>
-      <span className="font-bold1" style={{fontSize: '0.8em'}}> characters</span>
+      <span className="font-bold">{penName}</span>
     </div>
   </div>
 </div>
