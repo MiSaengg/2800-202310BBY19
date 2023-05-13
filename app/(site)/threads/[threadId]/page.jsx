@@ -50,7 +50,7 @@ export default function Page({ params }) {
 
   useEffect(() => {
     const endpoint = `/api/threads/${params.threadId}`;
-  
+
     fetch(endpoint, {
       method: "GET",
     })
@@ -66,7 +66,7 @@ export default function Page({ params }) {
         const bodies = Object.values(content).map((item) => item.body);
         const contributors = Object.values(content).map((item) => item.userId);
         setBodies(bodies);
-  
+
         Promise.all([
           fetch(`/api/users/${mainThread.userId}`).then((res) => res.json()),
           ...contributors.map((userId) =>
@@ -89,19 +89,18 @@ export default function Page({ params }) {
     <>
       {mainThread.phase === 5 || mainThread.tag === "Complete" ? (
         <>
-        <RReadTextBox body={mainThread.pilot} image={mainUserImage} />
-        {bodies.map((body, index) => (
-          <React.Fragment key={index}>
-            <ConnectorLine />
-            {index % 2 === 0 ? (
-              <LReadTextBox body={body} image={users[index]?.image} /> 
-            ) : (
-              <RReadTextBox body={body} image={users[index]?.image} /> 
-            )}
-          </React.Fragment>
-        ))}
-      </>
-      
+          <RReadTextBox body={mainThread.pilot} image={mainUserImage} />
+          {bodies.map((body, index) => (
+            <React.Fragment key={index}>
+              <ConnectorLine />
+              {index % 2 === 0 ? (
+                <LReadTextBox body={body} image={users[index]?.image} />
+              ) : (
+                <RReadTextBox body={body} image={users[index]?.image} />
+              )}
+            </React.Fragment>
+          ))}
+        </>
       ) : (
         <>
           <h3 style={{ textAlign: "center" }}>{mainThread.title}</h3>
