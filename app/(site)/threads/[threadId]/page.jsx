@@ -7,10 +7,8 @@ import SimpleProfileCardInfo from "@/app/components/card/SimpleProfileCard";
 import ProfileCardInfo from "@/app/components/card/profileCardInfo";
 
 import ConnectorLine from "@/app/components/box/ConnectorLine";
-import MainThreadBox from "@/app/components/box/mainTreadBox";
 import LReadTextBox from "@/app/components/box/LReadTextBox";
 import RReadTextBox from "@/app/components/box/RReadTextBox";
-import UbranchTreadBox from "@/app/components/box/UbranchTreadBox";
 
 // async function getMainThreadByIds(threadId){
 //   const { thread } = await getMainThreadById(threadId)
@@ -26,8 +24,8 @@ export default function Page({ params }) {
   const [userId, setUserId] = useState("");
   const [branchThreadNo, setBranchThreadNo] = useState(0);
   const [bodies, setBodies] = useState([]);
-  const [user, setUser] = useState({});
-  const [users, setUsers] = useState({});
+  const [users, setUsers] = useState([]);
+  const [mainUserImage, setMainUserImage] = useState("");
 
   let arrayThing = [
     {
@@ -52,7 +50,7 @@ export default function Page({ params }) {
 
   useEffect(() => {
     const endpoint = `/api/threads/${params.threadId}`;
-
+  
     fetch(endpoint, {
       method: "GET",
     })
@@ -66,39 +64,24 @@ export default function Page({ params }) {
         setUserId(mainThread.userId);
         setBranchThreadNo(Object.keys(mainThread.phaseStage).length);
         const bodies = Object.values(content).map((item) => item.body);
+        const contributors = Object.values(content).map((item) => item.userId);
         setBodies(bodies);
-        
-      });
-  }, []);
-
-  useEffect(() => {
-    const endpoint = `/api/threads/${params.threadId}`;
-
-    fetch(endpoint, {
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then(({ mainThread }) => {
-        const data = mainThread.phaseStage;
-        const content = mainThread.content;
-        const contributors = Object.values(content).map((item) => item.id);
-        console.log(contributors)
-      });
-  }, []);
-
-  useEffect(() => {
-    const userID = localStorage.getItem("userID");
-    const mainThreadAuthor = mainThread.userId;
-    console.log(mainThreadAuthor)
-
-    const endpoint = `/api/users/${userID}`;
-
-    fetch(endpoint, {
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then(({ user }) => {
-        setUser(user);
+  
+        Promise.all([
+          fetch(`/api/users/${mainThread.userId}`).then((res) => res.json()),
+          ...contributors.map((userId) =>
+            fetch(`/api/users/${userId}`).then((res) => res.json())
+          ),
+        ])
+          .then(([mainUser, ...usersData]) => {
+            const mainUserImage = mainUser?.user?.image;
+            const users = usersData.map((userData) => userData.user);
+            setUsers(users);
+            setMainUserImage(mainUserImage);
+          })
+          .catch((error) => {
+            console.log("Error fetching users:", error);
+          });
       });
   }, []);
 
@@ -106,19 +89,19 @@ export default function Page({ params }) {
     <>
       {mainThread.phase === 5 || mainThread.tag === "Complete" ? (
         <>
-          <RReadTextBox body={mainThread.pilot} image={userId.image} />
-          {bodies.map((body, index) => (
-            <React.Fragment key={index}>
-              <ConnectorLine />
-              {index % 2 === 0 ? (
-                <LReadTextBox body={body} image={user.image} />
-              ) : (
-                <RReadTextBox body={body} image={user.image} />
-              )}
-            </React.Fragment>
-          ))}
-          {/* <UbranchTreadBox body={body} /> */}
-        </>
+        <RReadTextBox body={mainThread.pilot} image={mainUserImage} />
+        {bodies.map((body, index) => (
+          <React.Fragment key={index}>
+            <ConnectorLine />
+            {index % 2 === 0 ? (
+              <LReadTextBox body={body} image={users[index]?.image} /> 
+            ) : (
+              <RReadTextBox body={body} image={users[index]?.image} /> 
+            )}
+          </React.Fragment>
+        ))}
+      </>
+      
       ) : (
         <>
           <h3 style={{ textAlign: "center" }}>{mainThread.title}</h3>
