@@ -7,10 +7,8 @@ import SimpleProfileCardInfo from "@/app/components/card/SimpleProfileCard";
 import ProfileCardInfo from "@/app/components/card/profileCardInfo";
 
 import ConnectorLine from "@/app/components/box/ConnectorLine";
-
 import LReadTextBox from "@/app/components/box/LReadTextBox";
 import RReadTextBox from "@/app/components/box/RReadTextBox";
-
 
 // async function getMainThreadByIds(threadId){
 //   const { thread } = await getMainThreadById(threadId)
@@ -26,6 +24,8 @@ export default function Page({ params }) {
   const [userId, setUserId] = useState("");
   const [branchThreadNo, setBranchThreadNo] = useState(0);
   const [bodies, setBodies] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [mainUserImage, setMainUserImage] = useState("");
 
   let arrayThing = [
     {
@@ -64,9 +64,24 @@ export default function Page({ params }) {
         setUserId(mainThread.userId);
         setBranchThreadNo(Object.keys(mainThread.phaseStage).length);
         const bodies = Object.values(content).map((item) => item.body);
+        const contributors = Object.values(content).map((item) => item.userId);
         setBodies(bodies);
-        console.log(bodies);
-        console.log(mainThread.pilot);
+
+        Promise.all([
+          fetch(`/api/users/${mainThread.userId}`).then((res) => res.json()),
+          ...contributors.map((userId) =>
+            fetch(`/api/users/${userId}`).then((res) => res.json())
+          ),
+        ])
+          .then(([mainUser, ...usersData]) => {
+            const mainUserImage = mainUser?.user?.image;
+            const users = usersData.map((userData) => userData.user);
+            setUsers(users);
+            setMainUserImage(mainUserImage);
+          })
+          .catch((error) => {
+            console.log("Error fetching users:", error);
+          });
       });
   }, []);
 
@@ -74,18 +89,17 @@ export default function Page({ params }) {
     <>
       {mainThread.phase === 5 || mainThread.tag === "Complete" ? (
         <>
-          <RReadTextBox body={mainThread.pilot} />
+          <RReadTextBox body={mainThread.pilot} image={mainUserImage} />
           {bodies.map((body, index) => (
             <React.Fragment key={index}>
               <ConnectorLine />
               {index % 2 === 0 ? (
-                <LReadTextBox body={body} />
+                <LReadTextBox body={body} image={users[index]?.image} />
               ) : (
-                <RReadTextBox body={body} />
+                <RReadTextBox body={body} image={users[index]?.image} />
               )}
             </React.Fragment>
           ))}
-          {/* <UbranchTreadBox body={body} /> */}
         </>
       ) : (
         <>
