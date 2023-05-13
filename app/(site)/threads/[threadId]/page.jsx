@@ -87,7 +87,7 @@ export default function Page({ params }) {
 
   return (
     <>
-      {mainThread.phase === 5 || mainThread.tag === "Complete" ? (
+      {mainThread.phase === 6 || mainThread.tag === "Complete" ? (
         <>
           <RReadTextBox body={mainThread.pilot} image={mainUserImage} />
           {bodies.map((body, index) => (
