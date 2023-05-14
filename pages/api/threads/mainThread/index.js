@@ -8,11 +8,11 @@ import {
 const handler = async (req, res) => {
   if (req.method === "GET") {
     try {
-      const getMainThread = req.query.random
-        ? getRandomMainThreads(parseInt(req.query.count) || 6)
-        : getMainThreads();
+      // const getMainThread = req.query.random
+      //   ? getRandomMainThreads(parseInt(req.query.count) || 6)
+      //   : getMainThreads();
 
-      const { randomMainThreads, error } = await getMainThread;
+      const { randomMainThreads, error } = await getRandomMainThreads();
 
       if (error) throw new Error(error);      
       return res.status(200).json({ randomMainThreads });
