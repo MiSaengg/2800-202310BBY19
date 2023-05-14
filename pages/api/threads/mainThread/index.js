@@ -14,13 +14,10 @@ const handler = async (req, res) => {
 
       const { randomMainThreads, error } = await getMainThread;
 
-      if (error) {
-        throw new Error(error);
-      }
-
-      res.status(200).json({ randomMainThreads });
+      if (error) throw new Error(error);      
+      return res.status(200).json({ randomMainThreads });
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      return res.status(500).json({ error: error.message });
     }
   }
 
