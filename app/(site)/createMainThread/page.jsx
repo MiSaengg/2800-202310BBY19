@@ -21,6 +21,7 @@ export default function SubmitMainThread() {
       genre : [event.target.genre.value],
       pilot : event.target.pilot.value,
       content : {},
+      contentBody: event.target.pilot.value,
       phaseStage :{},
       contentBody : event.target.pilot.value,
       mainCharacter : event.target.numberOfCharacters.value,
