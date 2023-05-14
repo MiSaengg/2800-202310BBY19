@@ -8,7 +8,7 @@ export default function Page() {
   const [mainThreadMapping, setMainThreadMapping] = useState([]);
 
   useEffect(() => {
-    const endpoint = `/api/threads/mainThread?random=true&count=6`;
+    const endpoint = `/api/threads/mainThread`;
 
     fetch(endpoint, {
       method: "GET",
