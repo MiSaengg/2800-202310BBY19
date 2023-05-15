@@ -12,7 +12,7 @@ export default function RootLayout({ children }) {
       <body>
         <Provider>
           <Header />
-          <main>{children}</main>
+          <main class="flex-1 overflow-y-scroll">{children}</main>
           <Footer />
         </Provider>
       </body>
