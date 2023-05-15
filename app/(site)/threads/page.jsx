@@ -7,8 +7,9 @@ import Link from "next/link";
 export default function Page() {
   const [mainThreadMapping, setMainThreadMapping] = useState([]);
   // const [searchParam, setSearchParam] = useState("");
-  // const [selectedGenre, setSelectedGenre] = useState(""); 
-  // const[tag , setTag] = useState(false);
+  const [selectedGenre, setSelectedGenre] = useState(""); 
+  const [selectedTag, setSelectedTag] = useState("");
+
     
   //Get Method -> query? & Post Method
   
@@ -30,7 +31,7 @@ export default function Page() {
   const handleSearchSubmit = (event) => {    
     event.preventDefault();
     
-    const endpoint = `/api/threads/mainThread?search=${event.target.searchParam.value}`;  
+    const endpoint = `/api/threads/mainThread?search=${event.target.searchParam.value}&genre=${selectedGenre}&tag=${selectedTag}`;  
     
     fetch(endpoint, {
       method: "GET",
@@ -40,7 +41,12 @@ export default function Page() {
       setMainThreadMapping(randomMainThreads);
     });
   }
-  
+    const handleGenreChange = (event) => {
+      setSelectedGenre(event.target.value);
+  };
+  const handleTagChange = (event) => {
+    setSelectedTag(event.target.value);
+  };
   
   return (
     <div>
@@ -49,8 +55,26 @@ export default function Page() {
           <input 
           type ="text" 
           name="searchParam" 
-          placeholder="Search"                                              
+          placeholder="Search by Title"                                              
           />  
+          <select value={selectedGenre} onChange={handleGenreChange}>
+           <option value="">All Genres</option>
+           <option value="thriller">Thriller</option>
+          <option value="fantasy">Fantasy</option>
+          <option value="history">History</option>
+          <option value="horror">Horror</option>
+          <option value="crime">Crime</option>
+          <option value="romance">Romance</option>
+          <option value="psychology">Psychology</option>
+          <option value="sports">Sports</option>
+          <option value="travel">Travel</option>
+        </select>
+          <select value={selectedTag} onChange={handleTagChange}>
+          <option value="">All Tags</option>
+          <option value="complete">Complete</option>
+          <option value="incomplete">Incomplete</option>
+        </select>
+      
           <button type ="submit">Search</button>
         </form>
       </div>
