@@ -6,9 +6,15 @@ import Link from "next/link";
 
 export default function Page() {
   const [mainThreadMapping, setMainThreadMapping] = useState([]);
-
+  // const [searchParam, setSearchParam] = useState("");
+  // const [selectedGenre, setSelectedGenre] = useState(""); 
+  // const[tag , setTag] = useState(false);
+    
+  //Get Method -> query? & Post Method
+  
   useEffect(() => {
-    const endpoint = `/api/threads/mainThread`;
+    
+    const endpoint = `/api/threads/mainThread`;  
 
     fetch(endpoint, {
       method: "GET",
@@ -18,18 +24,44 @@ export default function Page() {
         setMainThreadMapping(randomMainThreads);
       });
   }, []);
-
+  
+  
+  
+  const handleSearchSubmit = (event) => {    
+    event.preventDefault();
+    
+    const endpoint = `/api/threads/mainThread?search=${event.target.searchParam.value}`;  
+    
+    fetch(endpoint, {
+      method: "GET",
+    })
+    .then((res) => res.json())
+    .then(({ randomMainThreads }) => {
+      setMainThreadMapping(randomMainThreads);
+    });
+  }
   
   
   return (
     <div>
+      <div>
+      <form onSubmit={handleSearchSubmit}>
+          <input 
+          type ="text" 
+          name="searchParam" 
+          placeholder="Search"                                              
+          />  
+          <button type ="submit">Search</button>
+        </form>
+      </div>
       {mainThreadMapping.map((item, index) => (
-        <Link href={`/threads/${item.id}`}>
-          <div className="card m-2 curor-pointer border border-gray-400 rounded-lg hover:shadow-md hover:border-opacity-0 transform hover:-translate-y-1 transition-all duration-200" key={index} >
+        <Link href={`/threads/${item.id}`} key={index}>
+          <div className="card m-2 curor-pointer border border-gray-400 rounded-lg hover:shadow-md hover:border-opacity-0 transform hover:-translate-y-1 transition-all duration-200">
             <img className="object-fill" src="/image01.jpg" alt="nature" />
             <span className="absolute top-4 right-2 text-sm text-teal-800 font-mono bg-teal-100 inline rounded-full px-2 align-top float-right">
               {item.tag}
             </span>
+            
             <div className="m-2">
               <h2 className="text-lg">{item.title}</h2>
               <h3 className="text-md mb-1">{item.genre}</h3>
@@ -42,7 +74,8 @@ export default function Page() {
       ))}
     </div>
   );
-
+};
+  
   // const displayTurtles = turtles.map((turtle, index) =>
   // <div key={turtle.name + index}>
   //     <h1>{turtle.name} ({turtle.nickName})</h1>
@@ -60,4 +93,4 @@ export default function Page() {
   //       </div>
   //   </section>
   // )
-}
+
