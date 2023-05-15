@@ -11,6 +11,7 @@ export default async function handler(req, res) {
 
   try {
 
+    console.log(process.env.OPENAI_API_KEY)
     const gptResponse = await axios.post(
       'https://api.openai.com/v1/engines/davinci-codex/completions',
       { prompt, max_tokens: 60 },
