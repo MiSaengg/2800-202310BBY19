@@ -3,14 +3,18 @@ import {
   getMainThreads,
   createMainThread,
   getRandomMainThreads,
+  getSearchMainThreads
 } from "@/lib/prisma/mainThreads";
+
 
 const handler = async (req, res) => {
   if (req.method === "GET") {
     try {
-      const getMainThread = req.query.random
-        ? getRandomMainThreads(parseInt(req.query.count) || 6)
-        : getMainThreads();
+      const searchParam = req.query.search;
+      
+      const getMainThread = searchParam
+        ? getSearchMainThreads(searchParam)
+        : getRandomMainThreads();
 
       const { randomMainThreads, error } = await getMainThread;
 
@@ -31,7 +35,7 @@ const handler = async (req, res) => {
       return res.status(500).json({ error: error.message });
     }
   }
-
+  
   res.setHeader("Allow", ["GET", "POST"]);
   res.status(425).end(`Method ${req.method} is not allowed.`);
 };

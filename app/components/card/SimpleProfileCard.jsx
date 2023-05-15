@@ -80,7 +80,8 @@ const SimpleProfileCardInfo = ({
       if (data.error) {
         console.error(`Error: ${data.error}`);
       } else {
-        router.push(`/threads/${mainThreadIdParam}`);
+        // router.push(`/threads/${mainThreadIdParam}`);
+        location.reload()
       }
     } catch (error) {
       console.error(`Fetch error: ${error}`);
