@@ -7,7 +7,7 @@
     "build": "next build && prisma generate",
     "start": "next start && prisma generate",
     "lint": "next lint",
-    "vercel-build" : "prisma generate && next build"
+    "vercel-build": "prisma generate && next build"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.17",
@@ -18,7 +18,8 @@
     "react": "18.2.0",
     "react-archer": "^4.2.3",
     "react-dom": "18.2.0",
-    "react-xarrows": "^2.0.2"
+    "react-xarrows": "^2.0.2",
+    "typewriter-effect": "^2.19.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",
