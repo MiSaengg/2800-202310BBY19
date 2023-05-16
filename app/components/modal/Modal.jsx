@@ -3,17 +3,90 @@ import Image from "next/image";
 import Button from "./../button/Button";
 import { useState, useEffect } from "react";
 
-
 const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
   const [showModal, setShowModal] = useState(false);
   const [userId, setUserId] = useState(null);
   const [numOfBranchThread, setNumOfBranchThread] = useState(0);
-  
+  const [isLoading, setIsLoading] = useState(false);
+  const [content, setContent] = useState("");
+  const [genre, setGenre] = useState("");
+  const [body, setBody] = useState("");
+  const [dots, setDots] = useState("");
+
 
   useEffect(() => {
     const userID = localStorage.getItem("userID");
     setUserId(userID);
   });
+
+  useEffect(() => {
+    if (isLoading) {
+      const timer = setInterval(() => {
+        setDots((dots) => (dots.length < 4 ? dots + "." : ""));
+      }, 300);
+
+      return () => clearInterval(timer);
+    }
+  }, [isLoading]);
+
+  const endpoint = `/api/threads/${mainThreadId.threadId}`
+
+  useEffect(() => {
+    fetch( endpoint, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then(({ mainThread }) => {
+        const content = mainThread.contentBody;
+        const genre = mainThread.genre;
+        setContent(content)
+        setGenre(genre)
+
+      })
+      .catch((error) => {
+        console.log("Error fetching users:", error);
+      });
+  });
+
+  const handleAIGenerate = async (event) => {
+    event.preventDefault();
+
+    setIsLoading(true);
+
+    const contentBody = content;
+    const storyGenre = genre;
+
+    const endpoint = "https://api.openai.com/v1/completions";
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "text-davinci-002",
+        prompt: `Given the summary: ${contentBody}, and ${storyGenre} continue the story with only three sentences.`,
+        temperature: 0.5,
+        max_tokens: 100,
+      }),
+    };
+
+    const response = await fetch(endpoint, options);
+
+    console.log(response)
+
+    const { choices, error } = await response.json();
+
+    const body = choices[0].text;
+
+    if (!error) {
+      branchThread.content = body;
+      setBody(body);
+    }
+    setIsLoading(false);
+  };
+
 
   const openModalEvent = (e) => {
     e.preventDefault();
@@ -26,7 +99,7 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
     setShowModal(false);
   };
 
-  const submitBranchThread = async (e) => {    
+  const submitBranchThread = async (e) => {
     e.preventDefault();
 
     const data = {
@@ -49,19 +122,17 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
 
     const response = await fetch(endpoint, options);
 
+    console.log(response)
+
     const { thread, error } = await response.json();
 
     if (!error) {
-      
-      
-      location.reload()
+      location.reload();
       setShowModal(false);
-      
     }
   };
 
   return (
-    // Insert "hidden" in the className
     <>
       <div
         style={{
@@ -127,21 +198,21 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
                 <label
                   htmlFor="text-input"
                   className="block mb-3 text-md font-mono text-gray-900 dark:text-white"
+                 
                 >
                   <textarea
                     name="branchContext"
                     id="text-input"
                     rows="15"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    value={isLoading ? `Generating text${dots}` : body}
+                    onChange={(e) => setBody(e.target.value)}
                   ></textarea>
                 </label>
 
-                <div className="flex items-stretch justify-between px-5 pt-1 pb-3 border-gray-200 rounded-b dark:border-gray-600">
-                  {/* < Button text="AI Check" />
-                    < Button text="AI Generate" />
-                    < Button text="Text-to-Speech" />                    
-                    < Button text="Font Size" />
-                < Button text="Translate" />      */}
+                <div className="flex items-stretch justify-between px-5 pt-1 pb-3 border-gray-200 rounded-b dark:border-gray-600"></div>
+                <div className="absolute my-5 left-3 px-3">
+                  <Button text="AI Generate" onClick={handleAIGenerate} />
                 </div>
                 <div className="flex justify-end border-t p-5">
                   <Button type="submit" text="Submit" />
