@@ -1,13 +1,15 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useEffect, useState, useRef  } from "react";
+import { useEffect, useState, useRef } from "react";
 import Button from "./../../components/button/Button";
 import mainThread from "../threads/[threadId]/mainThread";
 
 export default function SubmitMainThread() {
   const router = useRouter();
   const [userId, setUserId] = useState(null);
-  const [pilot, setPilot] = useState(''); 
+  const [pilot, setPilot] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [dots, setDots] = useState("");
   const formRef = useRef();
 
   useEffect(() => {
@@ -15,8 +17,20 @@ export default function SubmitMainThread() {
     setUserId(userID);
   });
 
+  useEffect(() => {
+    if (isLoading) {
+      const timer = setInterval(() => {
+        setDots((dots) => (dots.length < 4 ? dots + "." : ""));
+      }, 300);
+
+      return () => clearInterval(timer);
+    }
+  }, [isLoading]);
+
   const handleAIGenerate = async (event) => {
     event.preventDefault();
+
+    setIsLoading(true);
 
     const title = formRef.current.title.value;
     const genre = formRef.current.genre.value;
@@ -28,15 +42,15 @@ export default function SubmitMainThread() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
       },
       body: JSON.stringify({
-        model: "text-davinci-003",
+        model: "text-davinci-002",
         prompt: `Given title: ${title} , genre: ${genre} , and number of main characters: ${numberOfCharacters} , write a paragraph of only three sentences to start the story.`,
-        temperature: 0.3,
+        temperature: 0.5,
         max_tokens: 100,
       }),
-    };    
+    };
 
     const response = await fetch(endpoint, options);
 
@@ -48,6 +62,7 @@ export default function SubmitMainThread() {
       mainThread.pilot = body;
       setPilot(body);
     }
+    setIsLoading(false);
   };
 
   const handleMainThreadSubmit = async (event) => {
@@ -92,7 +107,11 @@ export default function SubmitMainThread() {
   return (
     <section>
       <div className="flex px-4 py-4">
-        <form ref={formRef} onSubmit={handleMainThreadSubmit} className="w-full">
+        <form
+          ref={formRef}
+          onSubmit={handleMainThreadSubmit}
+          className="w-full"
+        >
           <div className="">
             <div className="max-w-50 px-3 mb-6">
               <label className="pl-1 block uppercase tracking-wide text-gray-700 text-xs font-mono mb-2">
@@ -171,7 +190,7 @@ export default function SubmitMainThread() {
               rows="15"
               className="mb-5 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
               placeholder="Write your thoughts here..."
-              value={pilot}
+              value={isLoading ? `Generating text${dots}` : pilot}
               onChange={(e) => setPilot(e.target.value)}
             ></textarea>
           </div>
@@ -183,7 +202,6 @@ export default function SubmitMainThread() {
           <div className="absolute right-3 px-3">
             <Button text="Upload" />
           </div>
-
         </form>
       </div>
     </section>
