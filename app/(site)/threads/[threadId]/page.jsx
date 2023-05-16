@@ -9,6 +9,9 @@ import ProfileCardInfo from "@/app/components/card/profileCardInfo";
 import ConnectorLine from "@/app/components/box/ConnectorLine";
 import LReadTextBox from "@/app/components/box/LReadTextBox";
 import RReadTextBox from "@/app/components/box/RReadTextBox";
+import Contributors from "@/app/components/ui/Contributors";
+import LikesCompleteButton from "@/app/components/button/LikesCompleteButton";
+
 
 // async function getMainThreadByIds(threadId){
 //   const { thread } = await getMainThreadById(threadId)
@@ -26,6 +29,7 @@ export default function Page({ params }) {
   const [bodies, setBodies] = useState([]);
   const [users, setUsers] = useState([]);
   const [mainUserImage, setMainUserImage] = useState("");
+  const [loginUserId, setLoginUserId] = useState("")
 
   let arrayThing = [
     {
@@ -49,6 +53,10 @@ export default function Page({ params }) {
   ];
 
   useEffect(() => {
+
+    const userIdLogin = localStorage.getItem("userID")
+    setLoginUserId(userIdLogin)
+
     const endpoint = `/api/threads/${params.threadId}`;
 
     fetch(endpoint, {
@@ -89,6 +97,14 @@ export default function Page({ params }) {
     <>
       {mainThread.phase === 6 || mainThread.tag === "complete" ? (
         <>
+          <div className="flex flex-row justify-between">
+            <div className="basis-1/2">
+              <h3 style={{ textAlign: "left" , fontSize: "20px" }}>{mainThread.title}</h3>
+            </div>
+            <div className="basis-1/2 flex justify-center">
+              <Contributors mainUserImage={mainUserImage} contributorsImg={users}/>
+            </div>
+          </div>
           <RReadTextBox body={mainThread.pilot} image={mainUserImage} />
           {bodies.map((body, index) => (
             <React.Fragment key={index}>
@@ -100,6 +116,7 @@ export default function Page({ params }) {
               )}
             </React.Fragment>
           ))}
+          <LikesCompleteButton mainThreadId={mainThread.id} loginUserId={loginUserId} mainThread={mainThread}/>
         </>
       ) : (
         <>

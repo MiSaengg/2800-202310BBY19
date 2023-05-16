@@ -13,6 +13,8 @@
 
   body {
     @apply flex h-full flex-col;    
+    
+    
   }
 
   main {

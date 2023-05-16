@@ -7,9 +7,12 @@ import Image from 'next/image'
 
 const Header = () => {
   return (
-    <header className='bg-stone-100 py-2'>
+    <header className='bg-stone-100 py-1 px-2'>
       <nav className='container flex items-center text-sm font-mono tracking-wider uppercase text-stone-500'>
       {/* <Image src="/SAM_Logo_Final.png" alt='logo' width={97} height={83}/> */}
+      <Link href="/threads">
+        <span className='text-4xl'>SAM</span>
+      </Link>
         {/* <ul className='ml-auto flex justify-center gap-8'>
           <li>
             <Link href='/'>Home</Link>
