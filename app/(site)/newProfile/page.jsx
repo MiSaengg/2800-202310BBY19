@@ -4,10 +4,6 @@ import Image from 'next/image';
 // penName, emailAddress
 // like > title, genre, status
 
-useEffect(() => {
-  const userId = 
-}
-
 const page = () => {
   return (
     <div>

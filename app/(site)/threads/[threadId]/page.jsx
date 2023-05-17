@@ -120,18 +120,30 @@ export default function Page({ params }) {
         </>
       ) : (
         <>
-          <h3 style={{ textAlign: "center" }}>{mainThread.title}</h3>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              width: "100%",
-              textAlign: "center",
-              alignItems: "center",
-              padding: "4px",
-            }}
-          >
+          <div style={{ display: "flex",flexDirection: "column", justifyContent: "center", width: "100%", textAlign: "center", alignItems: "center", padding: "4px"}}>
+            <div style={{display: "flex", justifyContent:"space-evenly", marginBottom:"15px", marginTop:"15px"}}>
+                {userId ? (
+                  <ProfileCardInfo
+                  genre={mainThread.genre}
+                  userId={userId}
+                  mainCharacter={mainThread.mainCharacter}
+                  />
+                  ) : null}
+                  <div style={{display:"flex", flexDirection:"column", justifyContent:"space-evenly"}}>
+                    <div
+                      style={{
+                        backgroundColor: "black",
+                        color: "white",
+                        marginTop: 4,                        
+                      }}
+                      >
+                      <div>
+                        <h2>phase {mainThread.phase}</h2>
+                      </div>
+                    </div>
+                  <h3 style={{ textAlign: "center" }}>{mainThread.title}</h3>
+                </div>
+              </div>
             <ArcherContainer strokeColor="black">
               <ArcherElement id="root" relations={arrayThing}>
                 <div
@@ -139,39 +151,21 @@ export default function Page({ params }) {
                     display: "flex",
                     flexDirection: "row",
                     width: "100%",
+                    justifyContent:"center"
                   }}
-                >
+                  >
                   <div
                     style={{
                       border: "grey solid 2px",
                       borderRadius: "10px",
-                      padding: "5px",
-                      width: "60%",
+                      padding: "5px",                      
                     }}
-                  >
+                    >
                     {mainThread.contentBody}
                   </div>
-                  {userId ? (
-                    <ProfileCardInfo
-                      genre={mainThread.genre}
-                      userId={userId}
-                      mainCharacter={mainThread.mainCharacter}
-                    />
-                  ) : null}
                 </div>
               </ArcherElement>
 
-              <div
-                style={{
-                  backgroundColor: "black",
-                  color: "white",
-                  marginTop: 4,
-                  position: "relative",
-                  zIndex: 10,
-                }}
-              >
-                <h2>phase {mainThread.phase}</h2>
-              </div>
               <Modal
                 branchThread={branchThread}
                 mainThreadId={params}

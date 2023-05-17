@@ -23,7 +23,7 @@ useEffect(()=> {
 
 return (
 
-<div className="rounded-3xl overflow-hidden shadow-xl max-w-xs bg-white mx-auto flex flex-col items-center h-40"
+<div className="rounded-3xl overflow-hidden shadow-xl max-w-xs bg-white flex flex-col items-center h-40"
 style={{ width:"35%", position: 'relative' }}
 >
 <Image src="/sifi.png"
