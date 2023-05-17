@@ -47,7 +47,7 @@ export default function SubmitMainThread() {
       body: JSON.stringify({
         model: "text-davinci-002",
         prompt: `Given title: ${title} , genre: ${genre} , and number of main characters: ${numberOfCharacters} , write a paragraph of only three sentences to start the story.`,
-        temperature: 0.5,
+        temperature: 0.7,
         max_tokens: 100,
       }),
     };
@@ -190,8 +190,8 @@ export default function SubmitMainThread() {
               rows="15"
               className="mb-5 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
               placeholder="Write your thoughts here..."
-              value={isLoading ? `Generating text${dots}` : pilot}
               onChange={(e) => setPilot(e.target.value)}
+              value={isLoading ? `Generating text${dots}` : pilot}
             ></textarea>
           </div>
 

@@ -13,7 +13,6 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
   const [body, setBody] = useState("");
   const [dots, setDots] = useState("");
 
-
   useEffect(() => {
     const userID = localStorage.getItem("userID");
     setUserId(userID);
@@ -29,19 +28,18 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
     }
   }, [isLoading]);
 
-  const endpoint = `/api/threads/${mainThreadId.threadId}`
+  const endpoint = `/api/threads/${mainThreadId.threadId}`;
 
   useEffect(() => {
-    fetch( endpoint, {
+    fetch(endpoint, {
       method: "GET",
     })
       .then((res) => res.json())
       .then(({ mainThread }) => {
         const content = mainThread.contentBody;
         const genre = mainThread.genre;
-        setContent(content)
-        setGenre(genre)
-
+        setContent(content);
+        setGenre(genre);
       })
       .catch((error) => {
         console.log("Error fetching users:", error);
@@ -66,15 +64,15 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
       },
       body: JSON.stringify({
         model: "text-davinci-002",
-        prompt: `Given the summary: ${contentBody}, and ${storyGenre} continue the story with only three sentences.`,
-        temperature: 0.5,
+        prompt: `Given the summary: ${contentBody}, and ${storyGenre} continue the story by writing a paragraph of only three sentences.`,
+        temperature: 0.7,
         max_tokens: 100,
       }),
     };
 
     const response = await fetch(endpoint, options);
 
-    console.log(response)
+    console.log(response);
 
     const { choices, error } = await response.json();
 
@@ -86,7 +84,6 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
     }
     setIsLoading(false);
   };
-
 
   const openModalEvent = (e) => {
     e.preventDefault();
@@ -122,7 +119,7 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
 
     const response = await fetch(endpoint, options);
 
-    console.log(response)
+    console.log(response);
 
     const { thread, error } = await response.json();
 
@@ -198,7 +195,6 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
                 <label
                   htmlFor="text-input"
                   className="block mb-3 text-md font-mono text-gray-900 dark:text-white"
-                 
                 >
                   <textarea
                     name="branchContext"
