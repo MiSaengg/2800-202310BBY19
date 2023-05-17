@@ -10,7 +10,7 @@ export default function EasterEggBBY19Trigger() {
         <Image src="/fireworks.gif" width={500} height={500} alt="fireworks" />
       </div>
       <Image
-        src={"/bbynineteen.gif"}
+        src={"/nineteenbby.gif"}
         width={500}
         height={500}
         alt={"TEAM PHOTO"}
@@ -22,6 +22,7 @@ export default function EasterEggBBY19Trigger() {
           <li>Frontend: Noel Kim</li>
           <li>Backend: David Cho</li>
           <li>Design Lead: Alisha Seo</li>
+          <li>Best Client: Maryam Khezrzadeh</li>
         </ul>
       </p>
 
