@@ -3,6 +3,9 @@
 import React, { use, useEffect, useState } from "react";
 import StoryCard from "./../../components/card/StoryCard";
 import Link from "next/link";
+import PenNameCard from "@/app/components/card/PenNameCard";
+import Image from "next/image";
+50
 
 export default function Page() {
   const [mainThreadMapping, setMainThreadMapping] = useState([]);
@@ -18,14 +21,14 @@ export default function Page() {
       
       const endpoint = `/api/threads/mainThread`;  
 
-    fetch(endpoint, {
-      method: "GET",
-    })
+      fetch(endpoint, {
+        method: "GET",
+      })
       .then((res) => res.json())
       .then(({ randomMainThreads }) => {
         setMainThreadMapping(randomMainThreads);
       });
-  }, []);
+    }, []);
   
   
   
@@ -68,7 +71,7 @@ export default function Page() {
       <form onSubmit={handleSearchSubmit}>
       <div className="relative mx-2 mt-2">
         <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <svg aria-hidden="true" className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            <svg aria-hidden="true" className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
         </div>
         <input type ="search" name="searchParam" placeholder="Search by Title" className="block w-full font-mono p-4 pl-10 text-sm text-stone-500 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none"/>
         <button type="submit" className="px-4 py-2 absolute right-2.5 bottom-2.5 text-gray-900 bg-gray-200 font-mono rounded-lg text-sm">Search</button>
@@ -87,8 +90,8 @@ export default function Page() {
           </select>
           <select value={selectedTag} onChange={handleTagChange} className="p-2.5 m-2 font-mono border border-gray-300 bg-gray-50 text-gray-900 text-sm border border-gray-300 rounded-lg focus:outline-none">
             <option value="">All Tags</option>
-            <option value="complete">Complete</option>
-            <option value="incomplete">Incomplete</option>
+            <option value="Complete">Complete</option>
+            <option value="Incomplete">Incomplete</option>
         </select>
         </form>
       </div>
@@ -97,7 +100,7 @@ export default function Page() {
             <Link href={`/threads/${item.id}`} key={index}>
 
             <div className="sm:h-60 overflow-hidden curor-pointer border border-gray-400 rounded-lg hover:shadow-md hover:border-opacity-0 transform hover:-translate-y-1 transition-all duration-200">
-              <img className="object-cover" src="/image01.jpg" alt="nature" />
+              <Image className="object-cover" src="/image01.jpg" alt="nature" width={200} height={50} />
               <span className="absolute top-4 right-2 text-sm text-teal-800 font-mono bg-teal-100 inline rounded-full px-2 align-top float-right">
                 {item.tag}
               </span>
@@ -106,7 +109,7 @@ export default function Page() {
               <h2 className="text-lg">{item.title}</h2>
               <h3 className="text-md">{item.genre}</h3>
               <p className="font-light font-mono text-sm text-gray-700 hover:text-gray-900 transition-all duration-200">
-                {item.pilot}
+                <PenNameCard mainThreadOwnerId={item.userId}/>                
               </p>
             </div>
 

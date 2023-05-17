@@ -5,7 +5,7 @@ import {useState, useEffect } from "react";
 
 const Page = () => {
   const [user, setUser] = useState({})
-
+  
   useEffect(()=> {
     const userID = localStorage.getItem("userID");
 
@@ -19,12 +19,16 @@ const Page = () => {
     ({user}) => {
       setUser(user)            
     }
+
   )
   },[]);
 
   return (
     <div>
-      <ProfilePage userId={user.id} penName={user.penName} userImg={user.image} userName={user.name} userEmail={user.email}/>
+      <div>
+        <ProfilePage userId={user.id} penName={user.penName} userImg={user.image} userName={user.name} userEmail={user.email}/>
+      </div>
+      
     </div>
   )
 }

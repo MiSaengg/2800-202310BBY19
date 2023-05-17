@@ -14,7 +14,7 @@ const handler = async (req, res) => {
       const searchParam = req.query.search;
       const genreParam = req.query.genre;
       const tagParam = req.query.tag;
-
+      
       const getMainThread = searchParam || genreParam || tagParam
         ? getSearchMainThreads(searchParam, genreParam, tagParam)
         : getRandomMainThreads();
