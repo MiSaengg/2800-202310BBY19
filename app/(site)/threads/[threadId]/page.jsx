@@ -189,6 +189,7 @@ export default function Page({ params }) {
                         branchThreadIdParam={a.id}
                         mainThreadIdParam={a.mainThreadId}
                         ownerUserId={userId}
+                        loginUserId = {loginUserId}
                       />
                     </div>
                   </ArcherElement>

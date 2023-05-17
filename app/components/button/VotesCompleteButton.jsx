@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-export default function VotesCompleteButton({ mainThreadId, branchThreadId, votedBranchThread , currentUserId , numVotes}) {
+export default function VotesCompleteButton({ mainThreadId, branchThreadId, votedBranchThread , currentUserId , numVotes}) {  
   const [votes, setVotes] = useState(numVotes);
   const [voted, setVoted] = useState(votedBranchThread.includes(branchThreadId));    
 

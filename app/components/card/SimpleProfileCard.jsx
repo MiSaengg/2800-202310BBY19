@@ -9,6 +9,7 @@ const SimpleProfileCardInfo = ({
   branchThreadIdParam,
   mainThreadIdParam,
   ownerUserId,
+  loginUserId
 }) => {
   const [userImg, setUserImg] = useState("");
   const [penName, setPenName] = useState("");
@@ -41,7 +42,9 @@ const SimpleProfileCardInfo = ({
     e.preventDefault();
 
     const fetchUserData = async () => {      
-      const endpoint = `/api/users/${userId}`;
+      
+
+      const endpoint = `/api/users/${loginUserId}`;
       try {
         const response = await fetch(endpoint);
         const { user } = await response.json();        
@@ -116,9 +119,8 @@ const SimpleProfileCardInfo = ({
     
   
   
-  useEffect(() => {        
-    const currentUserId = localStorage.getItem("userID");
-    setCurrentUserId(currentUserId);
+  useEffect(() => {            
+    setCurrentUserId(loginUserId)
     const fetchUserData = async () => {
       const endpoint = `/api/users/${userId}`;
       try {
@@ -127,13 +129,26 @@ const SimpleProfileCardInfo = ({
 
         setUserImg(user.image);
         setPenName(user.penName);
+      } catch (error) {
+        console.error("Failed to fetch user data:", error);
+      }      
+    };
+
+    const fetchCurrentUserData = async() => {
+      const endpoint = `/api/users/${loginUserId}`;
+      try {
+        const response = await fetch(endpoint);
+        const { user } = await response.json();
+
         setVotedBranchThread(user.voteBranchThreads)
+        
       } catch (error) {
         console.error("Failed to fetch user data:", error);
       }
-    };
+    }
 
     fetchUserData();
+    fetchCurrentUserData();
   }, [userId]);
 
   const cardWidth = 135;
