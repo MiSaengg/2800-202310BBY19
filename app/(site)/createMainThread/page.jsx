@@ -136,10 +136,8 @@ export default function SubmitMainThread() {
                 id="grid-first-name"
                 type="text"
                 placeholder="Title of your story"
-              />
-              <p className="text-red-500 text-xs italic">
-                Please fill out this field.
-              </p>
+                required
+              />              
             </div>
           </div>
 
@@ -189,6 +187,7 @@ export default function SubmitMainThread() {
                 min="1"
                 max="10"
                 placeholder="10"
+                required
               />
             </div>
           </div>
@@ -199,16 +198,17 @@ export default function SubmitMainThread() {
             </label>
             
             <textarea
-        name="pilot"
-        id="message"
-        rows="15"
-      className="mb-5 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-    placeholder="Write your thoughts here..."
-  value={isLoading ? `Generating text${dots}` : body}
-    onChange={(e) => setBody(e.target.value)}
-        readOnly={isLoading}
-          >
-          </textarea>
+                name="pilot"
+                id="message"
+                rows="15"
+                className="mb-5 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Write your thoughts here..."
+                required
+                value={isLoading ? `Generating text${dots}` : body}
+                onChange={(e) => setBody(e.target.value)}
+                readOnly={isLoading}
+            >
+            </textarea>
           </div>
           <div className="absolute left-3 px-3">
             <Button text="AI Generate" onClick={handleAIGenerate} />

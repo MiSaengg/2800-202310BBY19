@@ -84,7 +84,7 @@ export default function Page() {
             <div className="relative mx-2 mt-2">
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                 <svg
-                  aria-hidden="true"
+                  ariaHidden="true"
                   className="w-5 h-5 text-gray-500 dark:text-gray-400"
                   fill="none"
                   stroke="currentColor"
@@ -145,17 +145,17 @@ export default function Page() {
               <div className="sm:h-60 overflow-hidden curor-pointer border border-gray-400 rounded-lg hover:shadow-md hover:border-opacity-0 transform hover:-translate-y-1 transition-all duration-200">
                 <Image
                   className="object-cover"
-                  src="/image01.jpg"
+                  src={`/bookCover/${item.genre}.png`}
                   alt="nature"
                   width={200}
                   height={50}
                 />
                 {item.tag === "Complete" ? (
-                  <span className="absolute top-4 right-2 text-sm text-teal-800 font-mono bg-amber-400 inline rounded-full px-2 align-top float-right">
+                  <span className="absolute top-4 right-2 text-sm text-teal-800 font-mono bg-sky-300 inline rounded-full px-2 align-top float-right">
                     {item.tag}
                   </span>
                 ) : (
-                  <span className="absolute top-4 right-2 text-sm text-teal-800 font-mono bg-teal-100 inline rounded-full px-2 align-top float-right">
+                  <span className="absolute top-4 right-2 text-sm text-teal-800 font-mono bg-rose-300 inline rounded-full px-2 align-top float-right">
                     {item.tag}
                   </span>
                 )}

@@ -10,18 +10,19 @@ export default function EasterEggBBY19Trigger() {
         <Image src="/fireworks.gif" width={500} height={500} alt="fireworks" />
       </div>
       <Image
-        src={"/bbynineteene.gif"}
+        src={"/nineteenbby.gif"}
         width={500}
         height={500}
         alt={"TEAM PHOTO"}
       />
       <p>
         <ul>
-          <li>Team Lead: Jasper Oh</li>
-          <li>QA Lead: Juan Chung</li>
-          <li>Frontend: Noel Kim</li>
-          <li>Backend: David Cho</li>
-          <li>Design Lead: Alisha Seo</li>
+          <li><b>Team Lead</b>: Jasper Oh</li>
+          <li><b>Full Stack</b>: Juan Chung</li>
+          <li><b>Full Stack</b>: Noel Kim</li>
+          <li><b>Full Stack</b>: David Cho</li>
+          <li><b>Graphic Designer</b>: Alisha Seo</li>
+          <li><b>Best Client</b>: Maryam Khezrzadeh</li>
         </ul>
       </p>
 

@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Button from "./../button/Button";
+import Image from 'next/image';
 
 const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
   const [showModal, setShowModal] = useState(false);
@@ -153,19 +154,17 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
     height: "150px",
     textAlign: "center",
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "right",
     alignItems: "center",
     }}
     >
+    {/* Plus Sign to add a branch thread */}
     {Object.values(branchThread).some((e) => e.userId === userId) ||
       phaseStage >= 3 ? null : (
-      <button
-        style={{ width: "40px", height: "40px" }}
-        onClick={openModalEvent}
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-    </svg>
+      <button onClick={openModalEvent} type="button" className="z-50 text-gray-500 border border-gray-300 hover:bg-gray-300 hover:text-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-sm p-2.5 text-center inline-flex items-center">
+        <svg aria-hidden="true" width="25px" height="25px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+          <path fill-rule="evenodd" d="M9 17a1 1 0 102 0v-6h6a1 1 0 100-2h-6V3a1 1 0 10-2 0v6H3a1 1 0 000 2h6v6z"/>
+        </svg>
       </button>
       )}
       </div>

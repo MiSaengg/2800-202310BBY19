@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 // like > title, genre, status
 // owned > title, genre, status
 
-export default function Profile(userImg) {
+export default function Profile() {
   const [user, setUser] = useState({});
   const [penName, setPenName] = useState("");
   const [email, setEmail] = useState("");
@@ -14,14 +14,10 @@ export default function Profile(userImg) {
   const [likeThreads, setlikeThreads] = useState([]);
   const [mainThreads, setMainThreads] = useState([]);
   
-  const [title, setTitle] = useState("");
-  const [genre, setGenre] = useState([]);
-  const [tag, setTag] = useState("");
+  const [numOwnedThread, setNumOwnedThread] = useState(0);
+  const [numLikedThread, setNumLikedThread] = useState(0);
   
 
-  // const [like, setLike] = useState([]);
-  // const [owned, setOwned] = useState([]);
-  // const [collaborated, setCollaborated] = useState([]);
 
   useEffect(() => {
     const userId = localStorage.getItem("userID")
@@ -37,24 +33,21 @@ export default function Profile(userImg) {
         setEmail(user.email);
         const data = user.likeThreads;
         const value = Object.values(data);
+        setNumLikedThread(value.length);
         setlikeThreads(value);
       })
   }, []);
 
   useEffect(() => {
     const userId = localStorage.getItem("userID")
-    const endpoint = `/api/profile?userId=${userId}`;
-    console.log(endpoint);
+    const endpoint = `/api/profile?userId=${userId}`;    
 
     fetch(endpoint, {
       method: "GET"
     })
       .then((res) => res.json())
-      .then(({ mainThreads }) => {
-        console.log(mainThreads)
-        setTitle(mainThreads.title);
-        setGenre(mainThreads.genre);
-        setTag(mainThreads.tag);
+      .then(({ mainThreads }) => {                
+        setNumOwnedThread(Object.keys(mainThreads).length)        
         setMainThreads(mainThreads);
       })
     }, []);
@@ -75,28 +68,17 @@ export default function Profile(userImg) {
             <p className="font-mono text-gray-600 mt-3">{email}</p>
           </div>
 
-          <div className="grid grid-cols-3 text-center">
+          <div className="grid grid-cols-2 text-center">
                 <div>
-                <p className="font-bold text-gray-700 text-xl">22</p>
-                <p className="text-gray-400 font-mono">Owned</p>
-                </div>
+                  <p className="font-bold text-gray-700 text-xl">{numLikedThread}</p>
+                  <p className="text-gray-400 font-mono">Likes</p>
+                </div>                
                 <div>
-                <p className="font-bold text-gray-700 text-xl">10</p>
-                <p className="text-gray-400 font-mono">Likes</p>
-                </div>
-                <div>
-                <p className="font-bold text-gray-700 text-xl">89</p>
-                <p className="text-gray-400 font-mono">Collaborated</p>
+                  <p className="font-bold text-gray-700 text-xl">{numOwnedThread}</p>
+                  <p className="text-gray-400 font-mono">Owned</p>
                 </div>
           </div>
-
-          <fieldset className="mt-10 grid grid-cols-2 justify-items-start">
-            <legend className="mb-2 font-lg font-bold">Thread status</legend>
-            <label for="complete" class="peer-checked/complete:text-sky-500">Complete</label>
-            <input id="complete" class="peer/complete" type="radio" name="status" checked />
-            <label for="incomplete" class="peer-checked/completed:text-sky-500">Incomplete</label>
-            <input id="incomplete" class="peer/incompleted" type="radio" name="status" />
-          </fieldset>
+          
 
           <div className="mt-10 pb-5">
               <h1 className="text-xl font-mono text-gray-700">Likes Thread</h1>
