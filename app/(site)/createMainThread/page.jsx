@@ -2,7 +2,6 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import Button from "./../../components/button/Button";
-import mainThread from "../threads/[threadId]/mainThread";
 
 export default function SubmitMainThread() {
   const router = useRouter();
@@ -11,6 +10,8 @@ export default function SubmitMainThread() {
   const [isLoading, setIsLoading] = useState(false);
   const [dots, setDots] = useState("");
   const formRef = useRef();
+  const [body, setBody] = useState(""); 
+  const bodyRef = useRef(''); 
 
   useEffect(() => {
     const userID = localStorage.getItem("userID");
@@ -29,7 +30,8 @@ export default function SubmitMainThread() {
 
   const handleAIGenerate = async (event) => {
     event.preventDefault();
-
+    bodyRef.current = '';
+    setBody('');
     setIsLoading(true);
 
     const title = formRef.current.title.value;
@@ -59,8 +61,19 @@ export default function SubmitMainThread() {
     const body = choices[0].text;
 
     if (!error) {
-      mainThread.pilot = body;
-      setPilot(body);
+      // mainThread.pilot = body; 
+      // setPilot(body); 
+      let index = 0;
+      const typingTimer = setInterval(() => {
+        bodyRef.current = bodyRef.current + body.charAt(index);
+        setBody(bodyRef.current);
+        index++;
+
+        if (index >= body.length) {
+          clearInterval(typingTimer);
+          setPilot(body);  
+        }
+      }, 10);
     }
     setIsLoading(false);
   };
@@ -184,7 +197,9 @@ export default function SubmitMainThread() {
             <label className="pl-1 mb-2 block uppercase tracking-wide text-xs font-mono text-gray-700">
               Main Thread
             </label>
+            
             <textarea
+<<<<<<< HEAD
               name="pilot"
               id="message"
               rows="15"
@@ -193,12 +208,22 @@ export default function SubmitMainThread() {
               onChange={(e) => setPilot(e.target.value)}
               value={isLoading ? `Generating text${dots}` : pilot}
             ></textarea>
+=======
+        name="pilot"
+        id="message"
+        rows="15"
+      className="mb-5 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+    placeholder="Write your thoughts here..."
+  value={isLoading ? `Generating text${dots}` : body}
+    onChange={(e) => setBody(e.target.value)}
+        readOnly={isLoading}
+          >
+          </textarea>
+>>>>>>> Noel_Kim_OpenAI2
           </div>
-
           <div className="absolute left-3 px-3">
             <Button text="AI Generate" onClick={handleAIGenerate} />
           </div>
-
           <div className="absolute right-3 px-3">
             <Button text="Upload" />
           </div>
