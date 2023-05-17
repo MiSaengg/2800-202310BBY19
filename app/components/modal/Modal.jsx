@@ -1,19 +1,103 @@
 "use client";
-import Image from "next/image";
+import { useState, useEffect, useRef } from "react";
 import Button from "./../button/Button";
-import { useState, useEffect } from "react";
-
+import Image from "next/image";
 
 const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
   const [showModal, setShowModal] = useState(false);
   const [userId, setUserId] = useState(null);
   const [numOfBranchThread, setNumOfBranchThread] = useState(0);
-  
+  const [isLoading, setIsLoading] = useState(false);
+  const [content, setContent] = useState("");
+  const [genre, setGenre] = useState("");
+  const [body, setBody] = useState("");
+  const [dots, setDots] = useState("");
+  const bodyRef = useRef("");
 
   useEffect(() => {
     const userID = localStorage.getItem("userID");
     setUserId(userID);
   });
+
+  useEffect(() => {
+    const userID = localStorage.getItem("userID");
+    setUserId(userID);
+  });
+
+  useEffect(() => {
+    if (isLoading) {
+      const timer = setInterval(() => {
+        setDots((dots) => (dots.length < 4 ? dots + "." : ""));
+      }, 300);
+
+      return () => clearInterval(timer);
+    }
+  }, [isLoading]);
+
+  const endpoint = `/api/threads/${mainThreadId.threadId}`;
+
+  useEffect(() => {
+    fetch(endpoint, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then(({ mainThread }) => {
+        const content = mainThread.contentBody;
+        const genre = mainThread.genre;
+        setContent(content);
+        setGenre(genre);
+      })
+      .catch((error) => {
+        console.log("Error fetching users:", error);
+      });
+  });
+
+  const handleAIGenerate = async (event) => {
+    event.preventDefault();
+
+    bodyRef.current = "";
+    setIsLoading(true);
+
+    const contentBody = content;
+    const storyGenre = genre;
+
+    const endpoint = "https://api.openai.com/v1/completions";
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "text-davinci-002",
+        prompt: `Given the summary: ${contentBody}, and ${storyGenre} continue the story by writing a paragraph of only three sentences.`,
+        temperature: 1.0,
+        max_tokens: 100,
+      }),
+    };
+
+    const response = await fetch(endpoint, options);
+
+    const { choices, error } = await response.json();
+
+    const body = choices[0].text;
+
+    if (!error) {
+      branchThread.content = body;
+      let index = 0;
+      const typingTimer = setInterval(() => {
+        bodyRef.current = bodyRef.current + body.charAt(index);
+        setBody(bodyRef.current);
+        index++;
+
+        if (index >= body.length) {
+          clearInterval(typingTimer);
+        }
+      }, 10);
+    }
+    setIsLoading(false);
+  };
 
   const openModalEvent = (e) => {
     e.preventDefault();
@@ -26,7 +110,7 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
     setShowModal(false);
   };
 
-  const submitBranchThread = async (e) => {    
+  const submitBranchThread = async (e) => {
     e.preventDefault();
 
     const data = {
@@ -49,36 +133,49 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
 
     const response = await fetch(endpoint, options);
 
-    const { thread, error } = await response.json();
+    const { thread, phaseStage, error } = await response.json();
 
     if (!error) {
-      
-      
-      location.reload()
+      location.reload();
       setShowModal(false);
-      
+    } else {
+      location.reload();
+      return;
     }
   };
 
   return (
-    // Insert "hidden" in the className
     <>
       <div
         style={{
           height: "150px",
           textAlign: "center",
           display: "flex",
-          justifyContent: "center",
+          justifyContent: "right",
           alignItems: "center",
         }}
       >
+        {/* Plus Sign to add a branch thread */}
         {Object.values(branchThread).some((e) => e.userId === userId) ||
         phaseStage >= 3 ? null : (
           <button
-            style={{ width: "40px", marginLeft: "70px", height: "40px" }}
             onClick={openModalEvent}
+            type="button"
+            className="z-50 text-gray-500 border border-gray-300 hover:bg-gray-300 hover:text-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-sm p-2.5 text-center inline-flex items-center"
           >
-            +
+            <svg
+              aria-hidden="true"
+              width="25px"
+              height="25px"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M9 17a1 1 0 102 0v-6h6a1 1 0 100-2h-6V3a1 1 0 10-2 0v6H3a1 1 0 000 2h6v6z"
+              />
+            </svg>
           </button>
         )}
       </div>
@@ -100,6 +197,7 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
                   class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
                   data-modal-hide="defaultModal"
                 >
+                  {" "}
                   <svg
                     aria-hidden="true"
                     class="w-5 h-5"
@@ -133,15 +231,15 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
                     id="text-input"
                     rows="15"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    value={isLoading ? `Generating text${dots}` : body}
+                    onChange={(e) => setBody(e.target.value)}
+                    readOnly={isLoading}
                   ></textarea>
                 </label>
 
-                <div className="flex items-stretch justify-between px-5 pt-1 pb-3 border-gray-200 rounded-b dark:border-gray-600">
-                  {/* < Button text="AI Check" />
-                    < Button text="AI Generate" />
-                    < Button text="Text-to-Speech" />                    
-                    < Button text="Font Size" />
-                < Button text="Translate" />      */}
+                <div className="flex items-stretch justify-between px-5 pt-1 pb-3 border-gray-200 rounded-b dark:border-gray-600"></div>
+                <div className="absolute  left-3 px-3 border-t p-5">
+                  <Button text="AI Generate" onClick={handleAIGenerate} />
                 </div>
                 <div className="flex justify-end border-t p-5">
                   <Button type="submit" text="Submit" />

@@ -9,6 +9,8 @@ import ProfileCardInfo from "@/app/components/card/profileCardInfo";
 import ConnectorLine from "@/app/components/box/ConnectorLine";
 import LReadTextBox from "@/app/components/box/LReadTextBox";
 import RReadTextBox from "@/app/components/box/RReadTextBox";
+import Contributors from "@/app/components/ui/Contributors";
+import LikesCompleteButton from "@/app/components/button/LikesCompleteButton";
 
 // async function getMainThreadByIds(threadId){
 //   const { thread } = await getMainThreadById(threadId)
@@ -26,6 +28,7 @@ export default function Page({ params }) {
   const [bodies, setBodies] = useState([]);
   const [users, setUsers] = useState([]);
   const [mainUserImage, setMainUserImage] = useState("");
+  const [loginUserId, setLoginUserId] = useState("");
 
   let arrayThing = [
     {
@@ -49,6 +52,9 @@ export default function Page({ params }) {
   ];
 
   useEffect(() => {
+    const userIdLogin = localStorage.getItem("userID");
+    setLoginUserId(userIdLogin);
+
     const endpoint = `/api/threads/${params.threadId}`;
 
     fetch(endpoint, {
@@ -89,21 +95,51 @@ export default function Page({ params }) {
     <>
       {mainThread.phase === 6 || mainThread.tag === "complete" ? (
         <>
-          <RReadTextBox body={mainThread.pilot} image={mainUserImage} />
+          <div className="flex flex-row justify-between">
+            <div className="basis-1/2"></div>
+            <div className="basis-1/3 flex justify-center mr-2">
+              <Contributors
+                mainUserImage={mainUserImage}
+                contributorsImg={users}
+              />
+            </div>
+          </div>
+          <h4 style={{ textAlign: "center", fontSize: "20px", margin: "20px" }}>
+            {"< "}
+            {mainThread.title}
+            {" >"}
+          </h4>
+          <RReadTextBox
+            body={mainThread.pilot}
+            image={mainUserImage}
+            phase={"0"}
+          />
           {bodies.map((body, index) => (
             <React.Fragment key={index}>
               <ConnectorLine />
               {index % 2 === 0 ? (
-                <LReadTextBox body={body} image={users[index]?.image} />
+                <LReadTextBox
+                  body={body}
+                  image={users[index]?.image}
+                  phase={index + 1}
+                />
               ) : (
-                <RReadTextBox body={body} image={users[index]?.image} />
+                <RReadTextBox
+                  body={body}
+                  image={users[index]?.image}
+                  phase={index + 1}
+                />
               )}
             </React.Fragment>
           ))}
+          <LikesCompleteButton
+            mainThreadId={mainThread.id}
+            loginUserId={loginUserId}
+            mainThread={mainThread}
+          />
         </>
       ) : (
         <>
-          <h3 style={{ textAlign: "center" }}>{mainThread.title}</h3>
           <div
             style={{
               display: "flex",
@@ -115,46 +151,32 @@ export default function Page({ params }) {
               padding: "4px",
             }}
           >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-evenly",
+                marginBottom: "15px",
+              }}
+            >
+              {userId ? (
+                <ProfileCardInfo
+                  genre={mainThread.genre}
+                  userId={userId}
+                  mainCharacter={mainThread.mainCharacter}
+                  title={mainThread.title}
+                  phase={mainThread.phase}
+                />
+              ) : null}
+
+            </div>
+
             <ArcherContainer strokeColor="black">
               <ArcherElement id="root" relations={arrayThing}>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    width: "100%",
-                  }}
-                >
-                  <div
-                    style={{
-                      border: "grey solid 2px",
-                      borderRadius: "10px",
-                      padding: "5px",
-                      width: "60%",
-                    }}
-                  >
+                  <div className="mx-10 px-6 py-4 rounded-lg text-base text-neutral-600 bg-white border-b-2 leading-relaxed border-neutral-100 shadow-xl">
                     {mainThread.contentBody}
                   </div>
-                  {userId ? (
-                    <ProfileCardInfo
-                      genre={mainThread.genre}
-                      userId={userId}
-                      mainCharacter={mainThread.mainCharacter}
-                    />
-                  ) : null}
-                </div>
               </ArcherElement>
 
-              <div
-                style={{
-                  backgroundColor: "black",
-                  color: "white",
-                  marginTop: 4,
-                  position: "relative",
-                  zIndex: 10,
-                }}
-              >
-                <h2>phase {mainThread.phase}</h2>
-              </div>
               <Modal
                 branchThread={branchThread}
                 mainThreadId={params}
@@ -178,6 +200,7 @@ export default function Page({ params }) {
                         branchThreadIdParam={a.id}
                         mainThreadIdParam={a.mainThreadId}
                         ownerUserId={userId}
+                        loginUserId = {loginUserId}
                       />
                     </div>
                   </ArcherElement>

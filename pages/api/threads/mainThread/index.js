@@ -7,13 +7,16 @@ import {
 } from "@/lib/prisma/mainThreads";
 
 
+
 const handler = async (req, res) => {
   if (req.method === "GET") {
     try {
       const searchParam = req.query.search;
+      const genreParam = req.query.genre;
+      const tagParam = req.query.tag;
       
-      const getMainThread = searchParam
-        ? getSearchMainThreads(searchParam)
+      const getMainThread = searchParam || genreParam || tagParam
+        ? getSearchMainThreads(searchParam, genreParam, tagParam)
         : getRandomMainThreads();
 
       const { randomMainThreads, error } = await getMainThread;

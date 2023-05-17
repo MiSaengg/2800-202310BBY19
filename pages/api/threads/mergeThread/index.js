@@ -10,9 +10,7 @@ import { mergeTwoThreadsByIds } from "@/lib/prisma/mainThreads";
 const handler = async (req, res) => {
   if (req.method === "POST") {
     try {
-      // Should be send a req include mainThreadId
       const mainThreadId = req.body.mainThreadId;
-      // Should be send a req include branchThreadId
       const branchThreadId = req.body.branchThreadId;
       const { updateMainThread, error } = await mergeTwoThreadsByIds(
         { mainThreadId },

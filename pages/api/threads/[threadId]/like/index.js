@@ -1,14 +1,17 @@
-import { likeThread } from "@/lib/prisma/threads";
+import { likeThread } from "@/lib/prisma/mainThreads";
+
 
 const handler = async (req, res) => {
   if (req.method === "PATCH") {
     try {
       const { threadId } = req.query;
+      const loginUserId  = req.query.userId;
+          
 
-      const { thread, error } = await likeThread({ threadId });
+      const { mainThread, error } = await likeThread({ threadId, loginUserId});
       if (error) throw new Error(error);
 
-      return res.status(200).json({ thread });
+      return res.status(200).json({ mainThread });
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

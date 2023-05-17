@@ -10,14 +10,16 @@ const SignInButton = () => {
   if (session) {
     return (
       <>
-      <div className='relative h-12 w-12'>
+      <div className='flex flex-col justify-center items-center'>
         {session?.user?.image ? (
-          <Image
-            src={session.user.image}
-            alt={session.user.name}
-            className='inline-block rounded-full'
-            fill
-          />
+          <div className='relative h-12 w-12'>
+            <Image
+              src={session.user.image}
+              alt={session.user.name}
+              className='inline-block rounded-full'
+              fill
+            />
+          </div>
         ) : (
           <span className='inline-block h-12 w-12 overflow-hidden rounded-full bg-gray-100'>
             <svg
@@ -29,21 +31,26 @@ const SignInButton = () => {
             </svg>
           </span>
         )}
+        <div>
+          <button
+            className='text-sm font-medium tracking-wider uppercase text-stone-500'
+            onClick={() => {
+              signOut(({ redirect : true, callbackUrl: "/"}))
+              localStorage.removeItem("userID")
+            }}
+          >
+            Sign Out
+          </button>
+        </div>
       </div>
 
-      <button
-        className='text-sm font-medium tracking-wider uppercase text-stone-500'
-        onClick={() => signOut(({ redirect : true, callbackUrl: "/"}))}
-      >
-        Sign Out
-      </button>
       </>
     )
   }
 
   return (
     <button
-      className='text-sm font-medium tracking-wider uppercase text-stone-500'
+      className='text-sm font-medium tracking-wider uppercase text-stone-500 text-center'
       onClick={() => signIn()}
     >
       Sign In
