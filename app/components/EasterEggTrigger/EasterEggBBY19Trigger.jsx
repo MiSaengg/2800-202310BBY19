@@ -17,12 +17,12 @@ export default function EasterEggBBY19Trigger() {
       />
       <p>
         <ul>
-          <li>Team Lead: Jasper Oh</li>
-          <li>QA Lead: Juan Chung</li>
-          <li>Frontend: Noel Kim</li>
-          <li>Backend: David Cho</li>
-          <li>Design Lead: Alisha Seo</li>
-          <li>Best Client: Maryam Khezrzadeh</li>
+          <li><b>Team Lead</b>: Jasper Oh</li>
+          <li><b>Full Stack</b>: Juan Chung</li>
+          <li><b>Full Stack</b>: Noel Kim</li>
+          <li><b>Full Stack</b>: David Cho</li>
+          <li><b>Graphic Designer</b>: Alisha Seo</li>
+          <li><b>Best Client</b>: Maryam Khezrzadeh</li>
         </ul>
       </p>
 
