@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import Button from "../button/Button";
-import { useRouter } from "next/navigation";
 import VotesCompleteButton from "../button/VotesCompleteButton";
 
 const SimpleProfileCardInfo = ({
@@ -14,10 +13,7 @@ const SimpleProfileCardInfo = ({
   const [userImg, setUserImg] = useState("");
   const [penName, setPenName] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [currentUserId, setCurrentUserId] = useState(null);
-  const [vote, setVote] = useState(0);
-  const [voted, setVoted] = useState(false);
-  const router = useRouter();
+  const [currentUserId, setCurrentUserId] = useState(null);  
 
   const clickBranchCard = (e) => {
     e.preventDefault();
@@ -83,7 +79,6 @@ const SimpleProfileCardInfo = ({
       if (data.error) {
         console.error(`Error: ${data.error}`);
       } else {
-        // router.push(`/threads/${mainThreadIdParam}`);
         location.reload();
       }
     } catch (error) {
@@ -91,48 +86,7 @@ const SimpleProfileCardInfo = ({
     }
   };
 
-  const fetchVoteState = async () => {
-    const endpoint = `/api/threads/${branchThreadIdParam}`;
-
-    try {
-      const response = await fetch(endpoint, { method: "GET" });
-      const { branchThread } = await response.json();
-
-      setVote(branchThread?.votes);
-      setVoted(branchThread?.userLikes.includes(userId));
-    } catch (error) {
-      console.error("Error fetching vote state:", error);
-    }
-  };
-
-  const votesSubmit = async () => {
-    const endpoint = `/api/threads/branchThread`;
-    const method = "PATCH";
-
-    const body = {
-      branchThreadId: branchThreadIdParam,
-      vote: !voted,
-    };
-
-    try {
-      const response = await fetch(endpoint, {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      });
-      const { branchThread } = await response.json();
-
-      setVote(branchThread?.votes);
-      setVoted(!voted);
-    } catch (error) {
-      console.error("Error updating vote:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchVoteState();
+  useEffect(() => {    
     const currentUserId = localStorage.getItem("userID");
     setCurrentUserId(currentUserId);
     const fetchUserData = async () => {

@@ -2,85 +2,60 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function VotesCompleteButton({ mainThreadId, branchThreadId }) {
-  const [vote, setVote] = useState(0);
-  const [voted, setVoted] = useState(false);
-  const [thread, setThread] = useState("");
-  const [mainThread, setMainThread] = useState(null);
+  const [votes, setVotes] = useState(0);
+  const [voted, setVoted] = useState(false);  
 
-  useEffect(() => {
-    const endpoint = `/api/threads/${mainThreadId}`;
-
+  useEffect(()=> {
+    const endpoint = `/api/threads/${mainThreadId}`
     fetch(endpoint, {
-      method: "GET",
+      method: "GET"
+    }).then((res) => res.json())
+    .then(({mainThread}) => {
+      const mainThreadPhaseStage = mainThread.phaseStage
+      const targetBranchThread = mainThreadPhaseStage[branchThreadId]
+      const votesData = targetBranchThread["votes"]
+      setVotes(votesData)
     })
-      .then((res) => res.json())
-      .then(({ mainThread }) => {
-        setMainThread(mainThread);
-        const phaseStage = mainThread.phaseStage;
-        const branchThread = Object.values(phaseStage).find(
-          (thread) => thread.id === branchThreadId
-        );
-        setThread(branchThread);
-      })
-      .catch((error) => {
-        console.error("Error fetching threads:", error);
-      });
-  }, []);
 
-  const voteBranchThread = () => {
-    const endpoint = `/api/threads/branchThread`;
-    const method = "PATCH";
-    const body = {
-      branchthreadId: branchThreadId,
-      vote: true,
-    };
-
-    return fetch(endpoint, {
-      method,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-  };
-
-  const unVoteBranchThread = () => {
-    const endpoint = `/api/threads/branchThread`;
-    const method = "PATCH";
-    const body = {
-      branchthreadId: branchThreadId,
-      vote: false,
-    };
-
-    return fetch(endpoint, {
-      method,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-  };
+  })
 
   const votesSubmit = () => {
-    const voteAction = voted ? unVoteBranchThread : voteBranchThread;
-
-    voteAction()
-      .then((res) => res.json())
-      .then((data) => {
-        if (data) {
-          setVote(data.votes);
-          setVoted(!voted);
+    setVoted(voted => !voted)    
+    // vote function
+    if(voted === false){
+      const endpoint = `/api/threads/mainThread/vote?mainThreadId=${mainThreadId}&branchThreadId=${branchThreadId}`  
+      fetch(endpoint, {
+        method : 'PATCH',
+        headers:{
+          'Content-Type': 'application/json'
         }
-        if (mainThread) {
-          const updatedBranchThread = Object.values(mainThread.phaseStage).find(
-            (thread) => thread.id === branchThreadId
-          );
-          setThread(updatedBranchThread);
-        }
+      }).then(res => res.json())
+      .then(({votedMainThread}) => {
+        const votedMainThreadPhaseStage = votedMainThread.phaseStage
+        const targetBranchThread = votedMainThreadPhaseStage[branchThreadId]
+        const voteData = targetBranchThread["votes"]
+        setVotes(voteData)
       })
-      .catch((error) => {
-        console.error("Error updating vote:", error);
-      });
+      
+      
+      
+      // unvote function  
+    }else{
+      const endpoint = `/api/threads/mainThread/unvote?mainThreadId=${mainThreadId}&branchThreadId=${branchThreadId}`  
+      fetch(endpoint, {
+        method : 'PATCH',
+        headers:{
+          'Content-Type': 'application/json'
+        }
+      }).then(res => res.json())
+      .then(({unvotedMainThread}) => {
+        const unvotedMainThreadPhaseStage = unvotedMainThread.phaseStage
+        const targetBranchThread = unvotedMainThreadPhaseStage[branchThreadId]
+        const unvoteData = targetBranchThread["votes"]
+        setVotes(unvoteData)
+      })
+    }
+
   };
 
   return (
@@ -106,7 +81,7 @@ export default function VotesCompleteButton({ mainThreadId, branchThreadId }) {
             className="w-12 h-12 mr-2"
           />
         )}
-        <span>{vote}</span>
+        <span>{votes}</span>
       </button>
     </>
   );
