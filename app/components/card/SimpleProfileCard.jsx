@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import Button from "../button/Button";
 import { useRouter } from "next/navigation";
 import VotesCompleteButton from "../button/VotesCompleteButton";
-import mainThread from "@/app/(site)/threads/[threadId]/mainThread";
 
 const SimpleProfileCardInfo = ({
   userId,

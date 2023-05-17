@@ -1,4 +1,3 @@
-import { data } from "autoprefixer";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -22,7 +21,6 @@ export default function VotesCompleteButton({ mainThreadId, branchThreadId }) {
           (thread) => thread.id === branchThreadId
         );
         setThread(branchThread);
-        console.log(branchThread);
       })
       .catch((error) => {
         console.error("Error fetching threads:", error);
