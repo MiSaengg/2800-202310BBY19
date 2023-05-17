@@ -180,7 +180,8 @@ const SimpleProfileCardInfo = ({
                   Title
                 </h3>
                 <VotesCompleteButton
-                  mainThreadId={mainThreadIdParam} branchThreadId={branchThreadIdParam}
+                  mainThreadId={mainThreadIdParam}
+                  branchThreadId={branchThreadIdParam}
                 />
                 <button
                   onClick={closeModalEvent}
