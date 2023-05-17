@@ -2,8 +2,7 @@ import { getMainThreadsById } from "@/lib/prisma/mainThreads";
 
 const handler = async (req, res) => {
   if (req.method === "GET") {
-    try {
-      console.log("ffffffff");
+    try {    
       const userId = req.query.userId;
       const { mainThreads, error } = await getMainThreadsById(userId);
       if (error) throw new Error(error);
