@@ -3,7 +3,7 @@ import { useState } from "react"
 
 
 export default function LikesCompleteButton({mainThread, mainThreadId , loginUserId}) {
-  // 나중에 변경해서 삽입. useState 에 총 likes 들고 오기.
+  
   const [like, setLike] = useState(mainThread?.likes);
   const [liked, setLiked] = useState(mainThread?.userLikes.includes(loginUserId));
   
