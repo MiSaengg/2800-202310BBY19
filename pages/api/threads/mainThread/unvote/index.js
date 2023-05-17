@@ -5,8 +5,9 @@ const handler = async (req, res) => {
     try {      
       const mainThreadId = req.query.mainThreadId;
       const branchThreadId = req.query.branchThreadId;
-    
-      const { unvotedMainThread, error } = await updateUnVotedBranchThreadInMainThread(mainThreadId, branchThreadId);
+      const userId = req.query.userId;
+
+      const { unvotedMainThread, error } = await updateUnVotedBranchThreadInMainThread(mainThreadId, branchThreadId, userId);
       
       if (error) throw new Error(error);      
       return res.status(200).json({ unvotedMainThread });
