@@ -21,9 +21,9 @@ const handler = async (req, res) => {
     try {
       const data = req.body;
       const mainThreadId = req.body.mainThreadId;
-      const { threads, error } = await createBranchThread(data, mainThreadId);
+      const { thread, phaseStage , error } = await createBranchThread(data, mainThreadId);
       if (error) throw new Error(error);
-      return res.status(200).json({ threads });
+      return res.status(200).json({ thread, phaseStage });
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
