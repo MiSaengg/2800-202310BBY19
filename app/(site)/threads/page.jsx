@@ -114,10 +114,14 @@ export default function Page() {
 
             <div className="sm:h-60 overflow-hidden curor-pointer border border-gray-400 rounded-lg hover:shadow-md hover:border-opacity-0 transform hover:-translate-y-1 transition-all duration-200">
               <Image className="object-cover" src="/image01.jpg" alt="nature" width={200} height={50} />
-              <span className="absolute top-4 right-2 text-sm text-teal-800 font-mono bg-teal-100 inline rounded-full px-2 align-top float-right">
-                {item.tag}
-              </span>
-            
+              {(item.tag === "Complete") ?
+                (<span className="absolute top-4 right-2 text-sm text-teal-800 font-mono bg-amber-400 inline rounded-full px-2 align-top float-right">
+                  {item.tag}
+                </span>) :
+                (<span className="absolute top-4 right-2 text-sm text-teal-800 font-mono bg-teal-100 inline rounded-full px-2 align-top float-right">
+                  {item.tag}
+                </span>)
+              }
             <div className="m-2">
               <h2 className="text-lg">{item.title}</h2>
               <h3 className="text-md">{item.genre}</h3>
@@ -133,6 +137,8 @@ export default function Page() {
     <button onClick={handleRefreshChange} className="button float-right fixed bottom-28 right-2.5 z-50 hover:opacity-25">
       <img src="/refresh.svg" alt="refresh" className="w-12 h-12 mr-2" />
     </button>
+
+    {/* EasterEGG Implementaion Section */}
     {easterEggModal ? (
     <div
           tabIndex="-1"
