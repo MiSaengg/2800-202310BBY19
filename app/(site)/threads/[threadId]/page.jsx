@@ -99,12 +99,12 @@ export default function Page({ params }) {
         <>
           <div className="flex flex-row justify-between">
             <div className="basis-1/2">
-              <h3 style={{ textAlign: "left" , fontSize: "20px" }}>{mainThread.title}</h3>
             </div>
             <div className="basis-1/2 flex justify-center">
               <Contributors mainUserImage={mainUserImage} contributorsImg={users}/>
             </div>
           </div>
+          <h4 style={{ textAlign: "center" , fontSize: "20px" , margin:"10px"}}>{mainThread.title}</h4>
           <RReadTextBox body={mainThread.pilot} image={mainUserImage} />
           {bodies.map((body, index) => (
             <React.Fragment key={index}>
