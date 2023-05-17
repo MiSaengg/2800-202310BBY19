@@ -10,7 +10,7 @@ export default function EasterEggBBY19Trigger() {
         <Image src="/fireworks.gif" width={500} height={500} alt="fireworks" />
       </div>
       <Image
-        src={"/bbynineteen.gif"}
+        src={"/bbynineteene.gif"}
         width={500}
         height={500}
         alt={"TEAM PHOTO"}

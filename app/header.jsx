@@ -1,26 +1,35 @@
 'use client'
 
-import Link from 'next/link'
-import LoginButton from './components/auth/SignInButton'
-import Image from 'next/image'
-
+import { useState } from 'react';
+import LoginButton from './components/auth/SignInButton';
+import Image from 'next/image';
+import EasterEggPop from './components/EasterEggTrigger/EasterEggPop';
+import Link from 'next/link';
 
 const Header = () => {
+  const headerColor = 'stone-100'; 
+  const [noelVisible, setNoelVisible] = useState(true);
+  const handleNoelClick = () => {
+  };
   return (
-    <header className='bg-stone-100 py-1 px-2'>
+    <header className={`bg-${headerColor} py-1 px-2`}>
       <nav className='container flex items-center text-sm font-mono tracking-wider uppercase text-stone-500'>
-      {/* <Image src="/SAM_Logo_Final.png" alt='logo' width={97} height={83}/> */}
-      <Link href="/threads">
-        <span className='text-4xl'>SAM</span>
-      </Link>
-        {/* <ul className='ml-auto flex justify-center gap-8'>
-          <li>
-            <Link href='/'>Home</Link>
-          </li>
-          <li>
-            <Link href='/users'>Books</Link>
-          </li>
-        </ul> */}
+        {/* <Image src="/SAM_Logo_Final.png" alt='logo' width={97} height={83}/> */}
+        <div className="flex items-center">
+          <Link href ="/threads">
+            <span className="text-4xl mr-2">SAM</span>
+          </Link>
+          {noelVisible && (
+            <EasterEggPop>
+            <button
+              className={`bg-${headerColor} ml-10 hover:bg-gray-300 py-1 px-2 rounded-md`}
+              onClick={handleNoelClick}
+            >
+              ㅤ
+            </button>
+            </EasterEggPop>
+          )}
+        </div>
         <ul className='ml-auto'>
           <li>
             <LoginButton />
@@ -28,7 +37,7 @@ const Header = () => {
         </ul>
       </nav>
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
