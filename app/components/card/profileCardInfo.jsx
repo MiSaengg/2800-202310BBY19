@@ -24,10 +24,10 @@ return (
 <>
 <div className="flex flex-col">
 
-  <div className="relative mb-5 flex flex-col overflow-hidden shadow-xl bg-white items-center h-40">
-    <Image src="/sifi.png"
-        width={100}
-        height={200}
+  <div className="relative mb-5 flex flex-col overflow-hidden shadow-xl bg-white items-center h-40 w-screen">
+    <Image src={`/bookCover/${genre}.png`}
+        fill={true}
+        sizes="100vw"
         alt="bookCover"
         className="w-full"
         />
@@ -41,7 +41,7 @@ return (
       </div>
 
       <div className="text-center mb-1">
-        <span className="font-bold text-sm">{genre}</span>
+        <span className="font-bold text-sm">{genre} / </span>
         <span className="font-bold text-sm">{mainCharacter}</span>
         <span className="font-bold"> characters</span>
       </div>
