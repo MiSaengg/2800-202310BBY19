@@ -5,7 +5,8 @@ import StoryCard from "./../../components/card/StoryCard";
 import Link from "next/link";
 import PenNameCard from "@/app/components/card/PenNameCard";
 import Image from "next/image";
-50
+import EasterEggBBY19Trigger from "@/app/components/EasterEggTrigger/EasterEggBBY19Trigger";
+
 
 export default function Page() {
   const [mainThreadMapping, setMainThreadMapping] = useState([]);
@@ -13,7 +14,8 @@ export default function Page() {
   const [selectedGenre, setSelectedGenre] = useState(""); 
   const [selectedTag, setSelectedTag] = useState("");
   const [user, setUser] = useState(null);
-
+  const [easterEggModal, setEasterEggModal] = useState(false)
+  const [easterEggTrigger , setEasterEggTrigger] = useState("")
       
     //Get Method -> query? & Post Method
     
@@ -35,15 +37,22 @@ export default function Page() {
   const handleSearchSubmit = (event) => {    
     event.preventDefault();
     
-    const endpoint = `/api/threads/mainThread?search=${event.target.searchParam.value}&genre=${selectedGenre}&tag=${selectedTag}`;  
-    
-    fetch(endpoint, {
-      method: "GET",
-    })
-    .then((res) => res.json())
-    .then(({ randomMainThreads }) => {
-      setMainThreadMapping(randomMainThreads);
-    });
+    //Easter Egg Implement Section
+    if(event.target.searchParam.value === "*BBY19*"){
+      setEasterEggModal(true)
+      setEasterEggTrigger(event.target.searchParam.value)
+      
+    }else{
+      const endpoint = `/api/threads/mainThread?search=${event.target.searchParam.value}&genre=${selectedGenre}&tag=${selectedTag}`;  
+      
+      fetch(endpoint, {
+        method: "GET",
+      })
+      .then((res) => res.json())
+      .then(({ randomMainThreads }) => {
+        setMainThreadMapping(randomMainThreads);
+      });
+    }
   }
     const handleGenreChange = (event) => {
       setSelectedGenre(event.target.value);
@@ -62,10 +71,14 @@ export default function Page() {
       .then(({ randomMainThreads }) => {
         setMainThreadMapping(randomMainThreads);
       });
-
   };
 
+  const closeModalEvent = (event) => {
+    setEasterEggModal(false)
+  }
+
   return (
+    <div>
     <div>
       <div>
       <form onSubmit={handleSearchSubmit}>
@@ -120,6 +133,65 @@ export default function Page() {
     <button onClick={handleRefreshChange} className="button float-right fixed bottom-28 right-2.5 z-50 hover:opacity-25">
       <img src="/refresh.svg" alt="refresh" className="w-12 h-12 mr-2" />
     </button>
+    {easterEggModal ? (
+    <div
+          tabIndex="-1"
+          aria-hidden="true"
+          className="fixed top-0 left-0 right-0 z-50 p-4 overflow-x-hidden overflow-y-auto max-h-full"
+        >
+          <div className="relative max-w-full max-h-full">
+            <div className="relative bg-white rounded-lg shadow">
+              <div className="flex items-start justify-between p-5 border-b rounded-t">
+                <h3 className="text-xl font-mono text-gray-900">
+                  YEAHH YOU FOUND OUR EASTER EGG!
+                </h3>         
+                <button
+                  onClick={closeModalEvent}
+                  type="button"
+                  class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                  data-modal-hide="defaultModal"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="w-5 h-5"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                  <span class="sr-only">Close modal</span>
+                </button>                       
+              </div>
+              
+              <div>
+                {(easterEggTrigger === "*BBY19*") ? 
+                (<EasterEggBBY19Trigger/>) :
+                (null)
+                }
+                {(easterEggTrigger === "*CAT*") ? 
+                (<EasterEggBBY19Trigger/>) :
+                (null)
+                }
+                {(easterEggTrigger === "*JUAN*") ? 
+                (<EasterEggBBY19Trigger/>) :
+                (null)
+                }
+                {(easterEggTrigger === "*NOEL*") ? 
+                (<EasterEggBBY19Trigger/>) :
+                (null)
+                }
+              </div>
+            </div>
+          </div>
+    </div>) : 
+      null    
+    }
+    </div>
     </div>
   );
 };  
