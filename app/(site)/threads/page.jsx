@@ -122,23 +122,5 @@ export default function Page() {
     </button>
     </div>
   );
-};
-  
-  // const displayTurtles = turtles.map((turtle, index) =>
-  // <div key={turtle.name + index}>
-  //     <h1>{turtle.name} ({turtle.nickName})</h1>
-  //     <p>Weapon of choice: {turtle.weapon}</p>
-  //     <img src={turtle.imgUrl} alt={`${turtle.name}`} width="200"/>
-  //     <hr/>
-  // </div>
-
-  // return (
-  //   <section>
-  //       <div>
-  //         {mainThread.map(item => (
-  //           <StoryCard threadId={params.threadId} title={title} pilot={pilot} genre={genre} tag={tag} />
-  //         ))}
-  //       </div>
-  //   </section>
-  // )
+};  
 

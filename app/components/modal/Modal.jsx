@@ -3,6 +3,8 @@ import Image from "next/image";
 import Button from "./../button/Button";
 import { useState, useEffect } from "react";
 
+
+
 const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
   const [showModal, setShowModal] = useState(false);
   const [userId, setUserId] = useState(null);
@@ -146,10 +148,12 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
         {Object.values(branchThread).some((e) => e.userId === userId) ||
         phaseStage >= 3 ? null : (
           <button
-            style={{ width: "40px", marginLeft: "70px", height: "40px" }}
+            style={{ width: "40px", height: "40px" }}
             onClick={openModalEvent}
-          >
-            +
+          >            
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>            
           </button>
         )}
       </div>
