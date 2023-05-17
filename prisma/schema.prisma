@@ -48,6 +48,7 @@ model User {
   email         String?    @unique
   emailVerified DateTime?
   image         String?
+  voteBranchThreads String[] @default([])
   likeThreads   Json @default("{}")
   accounts      Account[]
   sessions      Session[]

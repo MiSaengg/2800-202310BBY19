@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-export default function VotesCompleteButton({ mainThreadId, branchThreadId }) {
-  const [votes, setVotes] = useState(0);
-  const [voted, setVoted] = useState(false);  
+export default function VotesCompleteButton({ mainThreadId, branchThreadId, votedBranchThread , currentUserId , numVotes}) {
+  const [votes, setVotes] = useState(numVotes);
+  const [voted, setVoted] = useState(votedBranchThread.includes(branchThreadId));    
 
   useEffect(()=> {
     const endpoint = `/api/threads/${mainThreadId}`
@@ -23,7 +23,7 @@ export default function VotesCompleteButton({ mainThreadId, branchThreadId }) {
     setVoted(voted => !voted)    
     // vote function
     if(voted === false){
-      const endpoint = `/api/threads/mainThread/vote?mainThreadId=${mainThreadId}&branchThreadId=${branchThreadId}`  
+      const endpoint = `/api/threads/mainThread/vote?mainThreadId=${mainThreadId}&branchThreadId=${branchThreadId}&userId=${currentUserId}`  
       fetch(endpoint, {
         method : 'PATCH',
         headers:{
@@ -41,7 +41,7 @@ export default function VotesCompleteButton({ mainThreadId, branchThreadId }) {
       
       // unvote function  
     }else{
-      const endpoint = `/api/threads/mainThread/unvote?mainThreadId=${mainThreadId}&branchThreadId=${branchThreadId}`  
+      const endpoint = `/api/threads/mainThread/unvote?mainThreadId=${mainThreadId}&branchThreadId=${branchThreadId}&userId=${currentUserId}`  
       fetch(endpoint, {
         method : 'PATCH',
         headers:{
