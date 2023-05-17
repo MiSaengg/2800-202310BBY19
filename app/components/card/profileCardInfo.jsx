@@ -26,7 +26,7 @@ return (
 <div className="rounded-3xl overflow-hidden shadow-xl max-w-xs bg-white flex flex-col items-center h-40"
 style={{ width:"35%", position: 'relative' }}
 >
-<Image src="/sifi.png"
+<Image src={`/bookCover/${genre}.png`}
     width={100}
     height={200}
     alt="bookCover"
