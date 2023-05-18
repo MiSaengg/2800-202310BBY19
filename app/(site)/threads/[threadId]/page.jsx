@@ -47,9 +47,7 @@ export default function Page({ params }) {
     const userIdLogin = localStorage.getItem("userID");
     setLoginUserId(userIdLogin);
 
-    const endpoint = `/api/threads/${params.threadId}`;
-
-    console.log("Something happens here")
+    const endpoint = `/api/threads/${params.threadId}`;    
     
     fetch(endpoint, {
       method: "GET",
