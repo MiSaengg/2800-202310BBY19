@@ -44,12 +44,11 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="flex justify-center items-center h-full">
-          <h1 className="mb-4 mt-4 text-4xl font-extrabold leading-none tracking-tight text-black-100 md:text-5xl lg:text-6xl dark:text-black">
-            <span className="underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-400">
-              Create, Collaborate, Harness AI
-            </span>{" "}
-            <br></br>to build a story
+
+        
+        <div className="flex px-5 justify-center items-center h-full">
+          <h1 className="mb-4 mt-4 text-4xl underline decoration-8 decoration-blue-400 font-extrabold text-center leading-none tracking-tight text-black-100 md:text-5xl lg:text-6xl">
+              Create, Collaborate, Harness AI to build a story
           </h1>
         </div>
         <div>
@@ -69,26 +68,26 @@ export default function Home() {
           </div>
           <div>
             <ul>
-              <li>1. Create (character, title, genre, body) & AI generate</li>
+              <li>1. Create Your Own Story (character, title, genre, body) & AI generate</li>
               <Image
-                src="/catjamled.gif"
+                src="/CreateYourOwnStory2.gif"
                 width={500}
                 height={500}
-                alt=":catjam:"
+                alt="Create your own story"
               />
               <li>2. Collaborate (make new branch) </li>
               <Image
-                src="/catjamled.gif"
+                src="/CollaborateWithOthers2.gif"
                 width={500}
                 height={500}
-                alt=":catjam:"
+                alt="Collaborate with others"
               />
               <li>3. Merge it (merge the story) </li>
               <Image
-                src="/catjamled.gif"
+                src="/MergeStory2.gif"
                 width={500}
                 height={500}
-                alt=":catjam:"
+                alt="Merge story"
               />
             </ul>
           </div>
