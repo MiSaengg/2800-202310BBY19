@@ -16,7 +16,7 @@ export default function SubmitMainThread() {
   useEffect(() => {
     const userID = localStorage.getItem("userID");
     setUserId(userID);
-  });
+  }, [userId]);
 
   useEffect(() => {
     if (isLoading) {

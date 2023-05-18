@@ -4,7 +4,6 @@ import Typewriter from "typewriter-effect";
 const inter = Inter({ subsets: ["latin"] });
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import Image from "next/image";
 
 export default function Home() {

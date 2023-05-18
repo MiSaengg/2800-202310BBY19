@@ -1,12 +1,10 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Button from "./../button/Button";
-import Image from "next/image";
 
 const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
   const [showModal, setShowModal] = useState(false);
   const [userId, setUserId] = useState(null);
-  const [numOfBranchThread, setNumOfBranchThread] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [content, setContent] = useState("");
   const [genre, setGenre] = useState("");
@@ -17,12 +15,7 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
   useEffect(() => {
     const userID = localStorage.getItem("userID");
     setUserId(userID);
-  });
-
-  useEffect(() => {
-    const userID = localStorage.getItem("userID");
-    setUserId(userID);
-  });
+  }, [userId]);
 
   useEffect(() => {
     if (isLoading) {
@@ -34,9 +27,8 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
     }
   }, [isLoading]);
 
-  const endpoint = `/api/threads/${mainThreadId.threadId}`;
-
   useEffect(() => {
+    const endpoint = `/api/threads/${mainThreadId.threadId}`;
     fetch(endpoint, {
       method: "GET",
     })
@@ -50,7 +42,7 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
       .catch((error) => {
         console.log("Error fetching users:", error);
       });
-  });
+  }, [mainThreadId]);
 
   const handleAIGenerate = async (event) => {
     event.preventDefault();
