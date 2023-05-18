@@ -218,13 +218,7 @@ export default function Page() {
                   ) : null}
                   {easterEggTrigger === ":catjam:" ? (
                     <EasterEggCatTrigger />
-                  ) : null}
-                  {easterEggTrigger === "*JUAN*" ? (
-                    <EasterEggBBY19Trigger />
-                  ) : null}
-                  {easterEggTrigger === "*NOEL*" ? (
-                    <EasterEggBBY19Trigger />
-                  ) : null}
+                  ) : null}                  
                 </div>
               </div>
             </div>
