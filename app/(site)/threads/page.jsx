@@ -3,14 +3,12 @@
 import React, { use, useEffect, useState } from "react";
 import StoryCard from "./../../components/card/StoryCard";
 import Link from "next/link";
-import PenNameCard from "@/app/components/card/PenNameCard";
 import Image from "next/image";
 import EasterEggBBY19Trigger from "@/app/components/EasterEggTrigger/EasterEggBBY19Trigger";
 import EasterEggCatTrigger from "@/app/components/EasterEggTrigger/EasterEggCatTrigger";
 
 export default function Page() {
-  const [mainThreadMapping, setMainThreadMapping] = useState([]);
-  // const [searchParam, setSearchParam] = useState("");
+  const [mainThreadMapping, setMainThreadMapping] = useState([]);  
   const [selectedGenre, setSelectedGenre] = useState("");
   const [selectedTag, setSelectedTag] = useState("");
   const [user, setUser] = useState(null);
@@ -66,7 +64,7 @@ export default function Page() {
       method: "GET",
     })
       .then((res) => res.json())
-      .then(({ randomMainThreads }) => {
+      .then(({ randomMainThreads }) => {        
         setMainThreadMapping(randomMainThreads);
       });
   };
@@ -162,7 +160,7 @@ export default function Page() {
                   <h2 className="text-lg">{item.title}</h2>
                   <h3 className="text-md">{item.genre}</h3>
                   <p className="font-light font-mono text-sm text-gray-700 hover:text-gray-900 transition-all duration-200">
-                    <PenNameCard mainThreadOwnerId={item.userId} />
+                    {item.user.penName}
                   </p>
                 </div>
               </div>
