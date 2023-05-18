@@ -9,31 +9,31 @@ const SimpleProfileCardInfo = ({
   branchThreadIdParam,
   mainThreadIdParam,
   ownerUserId,
-  loginUserId
+  loginUserId,
 }) => {
   const [userImg, setUserImg] = useState("");
   const [penName, setPenName] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [votedBranchThread, setVotedBranchThread] = useState([])
+  const [votedBranchThread, setVotedBranchThread] = useState([]);
   const [numVotes, setNumVotes] = useState(0);
-  const [currentUserId, setCurrentUserId] = useState(null);  
+  const [currentUserId, setCurrentUserId] = useState(null);
 
   const clickBranchCard = (e) => {
     e.preventDefault();
-    const fetchMainThreadData = async () => {      
+    const fetchMainThreadData = async () => {
       const endpoint = `/api/threads/${mainThreadIdParam}`;
       try {
         const response = await fetch(endpoint);
-        const { mainThread } = await response.json();        
+        const { mainThread } = await response.json();
 
         const mainThreadPhaseStage = mainThread.phaseStage;
-        const targetBranchThread = mainThreadPhaseStage[branchThreadIdParam]
-        setNumVotes(targetBranchThread["votes"])
+        const targetBranchThread = mainThreadPhaseStage[branchThreadIdParam];
+        setNumVotes(targetBranchThread["votes"]);
       } catch (error) {
         console.error("Failed to fetch user data:", error);
       }
-    }
-    fetchMainThreadData()
+    };
+    fetchMainThreadData();
 
     setShowModal(true);
   };
@@ -41,86 +41,96 @@ const SimpleProfileCardInfo = ({
   const closeModalEvent = (e) => {
     e.preventDefault();
 
-    const fetchUserData = async () => {      
-      
-
+    const fetchUserData = async () => {
       const endpoint = `/api/users/${loginUserId}`;
       try {
         const response = await fetch(endpoint);
-        const { user } = await response.json();        
-        setVotedBranchThread(user.voteBranchThreads)
+        const { user } = await response.json();
+        setVotedBranchThread(user.voteBranchThreads);
       } catch (error) {
         console.error("Failed to fetch user data:", error);
       }
-    }
-    fetchUserData()
+    };
+    fetchUserData();
 
     setShowModal(false);
   };
 
   const mergeBranchThreadToMainThread = async (e) => {
     e.preventDefault();
+    const confirmed = window.confirm(
+      "Are you sure you want to merge?"
+    );
 
-    const data = {
-      mainThreadId: mainThreadIdParam,
-      branchThreadId: branchThreadIdParam,
-    };
+    if (confirmed) {
+      const data = {
+        mainThreadId: mainThreadIdParam,
+        branchThreadId: branchThreadIdParam,
+      };
 
-    const JSONdata = JSON.stringify(data);
+      const JSONdata = JSON.stringify(data);
 
-    const endpoint = "/api/threads/mergeThread";
+      const endpoint = "/api/threads/mergeThread";
 
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSONdata,
-    };
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSONdata,
+      };
 
-    const response = await fetch(endpoint, options);
+      const response = await fetch(endpoint, options);
 
-    const { updateMainThread, error } = await response.json();
+      const { updateMainThread, error } = await response.json();
 
-    if (!error) {
-      setShowModal(false);
-      location.reload();
+      if (!error) {
+        setShowModal(false);
+        location.reload();
+      }
+    } else {
+      return;
     }
   };
 
   const deleteBranchThread = async (e) => {
-    e.preventDefault();
+    const confirmed = window.confirm(
+      "Are you sure you want to delete?"
+    );
+    if (confirmed) {
+      e.preventDefault();
 
-    const endpoint = `/api/threads/branchThread?branchthreadId=${branchThreadIdParam}`;
-    const options = {
-      method: "DELETE",
-    };
+      const endpoint = `/api/threads/branchThread?branchthreadId=${branchThreadIdParam}`;
+      const options = {
+        method: "DELETE",
+      };
 
-    try {
-      const response = await fetch(endpoint, options);
+      try {
+        const response = await fetch(endpoint, options);
 
-      if (!response.ok) {
-        throw new Error(
-          `HTTP status: ${response.status} ${response.statusText}`
-        );
+        if (!response.ok) {
+          throw new Error(
+            `HTTP status: ${response.status} ${response.statusText}`
+          );
+        }
+
+        const data = await response.json();
+
+        if (data.error) {
+          console.error(`Error: ${data.error}`);
+        } else {
+          location.reload();
+        }
+      } catch (error) {
+        console.error(`Fetch error: ${error}`);
       }
-
-      const data = await response.json();
-
-      if (data.error) {
-        console.error(`Error: ${data.error}`);
-      } else {
-        location.reload();
-      }
-    } catch (error) {
-      console.error(`Fetch error: ${error}`);
+    } else {
+      return;
     }
   };
-    
-  
-  
-  useEffect(() => {            
-    setCurrentUserId(loginUserId)
+
+  useEffect(() => {
+    setCurrentUserId(loginUserId);
     const fetchUserData = async () => {
       const endpoint = `/api/users/${userId}`;
       try {
@@ -131,21 +141,20 @@ const SimpleProfileCardInfo = ({
         setPenName(user.penName);
       } catch (error) {
         console.error("Failed to fetch user data:", error);
-      }      
+      }
     };
 
-    const fetchCurrentUserData = async() => {
+    const fetchCurrentUserData = async () => {
       const endpoint = `/api/users/${loginUserId}`;
       try {
         const response = await fetch(endpoint);
         const { user } = await response.json();
 
-        setVotedBranchThread(user.voteBranchThreads)
-        
+        setVotedBranchThread(user.voteBranchThreads);
       } catch (error) {
         console.error("Failed to fetch user data:", error);
       }
-    }
+    };
 
     fetchUserData();
     fetchCurrentUserData();
@@ -181,9 +190,9 @@ const SimpleProfileCardInfo = ({
                 <VotesCompleteButton
                   mainThreadId={mainThreadIdParam}
                   branchThreadId={branchThreadIdParam}
-                  votedBranchThread = {votedBranchThread}
-                  currentUserId = {currentUserId}
-                  numVotes = {numVotes}
+                  votedBranchThread={votedBranchThread}
+                  currentUserId={currentUserId}
+                  numVotes={numVotes}
                 />
                 <button
                   onClick={closeModalEvent}
@@ -225,10 +234,8 @@ const SimpleProfileCardInfo = ({
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     readOnly
                     value={branchText}
-                  >                    
-                  </textarea>
+                  ></textarea>
                 </label>
-
                 <div className="flex items-stretch justify-between px-5 pt-1 pb-3 border-gray-200 rounded-b dark:border-gray-600">
                   {currentUserId === userId || currentUserId === ownerUserId ? (
                     <Button
