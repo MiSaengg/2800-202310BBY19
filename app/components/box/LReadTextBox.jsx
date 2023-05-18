@@ -39,8 +39,7 @@ const LReadTextBox = ({ body, image, phase }) => {
       </div>
       <div class="p-6">
         <p class="mb-4 text-base text-neutral-600">
-          {/* {body} */}
-          Lorem ipsum dolor sit amet. Et veritatis tempore non corrupti maxime qui molestias saepe ea illo magni eum quidem necessitatibus a molestiae dolor aut deserunt quia. Est quia libero sed maiores sapiente ut itaque eligendi. Quo quia laborum est vitae quia qui optio suscipit est error mollitia ut tenetur nostrum non voluptatem unde?
+          {body}          
         </p>
       </div>
     </div>
