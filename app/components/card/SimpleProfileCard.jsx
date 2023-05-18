@@ -94,12 +94,11 @@ const SimpleProfileCardInfo = ({
   };
 
   const deleteBranchThread = async (e) => {
+    e.preventDefault();
     const confirmed = window.confirm(
       "Are you sure you want to delete?"
     );
     if (confirmed) {
-      e.preventDefault();
-
       const endpoint = `/api/threads/branchThread?branchthreadId=${branchThreadIdParam}`;
       const options = {
         method: "DELETE",
