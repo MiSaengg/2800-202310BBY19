@@ -20,7 +20,7 @@ const handler = async (req, res) => {
         : getRandomMainThreads();
 
       const { randomMainThreads, error } = await getMainThread;
-
+      
       if (error) throw new Error(error);      
       return res.status(200).json({ randomMainThreads });
     } catch (error) {
