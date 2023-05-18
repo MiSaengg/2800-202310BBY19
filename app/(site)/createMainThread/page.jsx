@@ -200,7 +200,7 @@ export default function SubmitMainThread() {
             <textarea
                 name="pilot"
                 id="message"
-                rows="15"
+                rows="10"
                 className="mb-5 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Write your thoughts here..."
                 required
