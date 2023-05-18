@@ -14,7 +14,7 @@ export default function Footer(){
   useEffect(()=> {
     const userID = localStorage.getItem("userID") 
     setUserId(userID)
-  })
+  }, [userId])
 
   if (session) {
     return (

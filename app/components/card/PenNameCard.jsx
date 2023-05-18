@@ -12,7 +12,7 @@ export default function PenNameCard({mainThreadOwnerId}) {
     .then(({user}) => {
       setUserPenName(user.penName)
     })
-  })
+  }, [userPenName])
 
   return (
     <>    

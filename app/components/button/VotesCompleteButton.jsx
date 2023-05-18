@@ -17,7 +17,7 @@ export default function VotesCompleteButton({ mainThreadId, branchThreadId, vote
       setVotes(votesData)
     })
 
-  })
+  }, [votes])
 
   const votesSubmit = () => {
     setVoted(voted => !voted)    
