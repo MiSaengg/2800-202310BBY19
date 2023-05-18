@@ -40,7 +40,6 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-
 model User {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
@@ -55,15 +54,6 @@ model User {
   mainThread    MainThread[]
   branchThread  BranchThread[]
 }
-
-// model Thread {
-//   id          String @id @default(auto()) @map("_id") @db.ObjectId
-//   body        String 
-//   likes       Int
-//   phase       Int @default(1)
-//   user        User @relation(fields:[userId] , references: [id])
-//   userId      String @db.ObjectId
-// }
 
 model MainThread {
   id          String @id @default(auto()) @map("_id") @db.ObjectId

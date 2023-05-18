@@ -33,7 +33,6 @@ export default function Page() {
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
-
     //Easter Egg Implement Section
     if (event.target.searchParam.value === "*BBY19*") {
       setEasterEggModal(true);
