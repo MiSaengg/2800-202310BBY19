@@ -24,8 +24,8 @@ const LReadTextBox = ({ body, image, phase }) => {
     //     </div>
     //   </div>
     // </div>
-    <div class="mr-10 rounded-r-lg bg-white shadow-xl">
-      <div class="flex flex-cols-2 border-b-2 leading-relaxed border-neutral-100 px-6 py-2">
+    <div className="mr-10 rounded-r-lg bg-white shadow-xl">
+      <div className="flex flex-cols-2 border-b-2 leading-relaxed border-neutral-100 px-6 py-2">
         <div>
           <Image
             src={image}
@@ -37,8 +37,8 @@ const LReadTextBox = ({ body, image, phase }) => {
         </div>
         Phase {phase}
       </div>
-      <div class="p-6">
-        <p class="mb-4 text-base text-neutral-600">
+      <div className="p-6">
+        <p className="mb-4 text-base text-neutral-600">
           {body}          
         </p>
       </div>

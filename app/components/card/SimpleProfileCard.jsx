@@ -169,7 +169,7 @@ const SimpleProfileCardInfo = ({
       {showModal ? (
         <div
           tabIndex="-1"
-          ariaHidden="true"
+          aria-hidden="true"
           className="fixed top-0 left-0 right-0 z-50 p-4 overflow-x-hidden overflow-y-auto max-h-full"
         >
           <div className="relative max-w-full max-h-full">
@@ -192,7 +192,7 @@ const SimpleProfileCardInfo = ({
                   data-modal-hide="defaultModal"
                 >
                   <svg
-                    ariaHidden="true"
+                    aria-hidden="true"
                     className="w-5 h-5"
                     fill="currentColor"
                     viewBox="0 0 20 20"
@@ -204,7 +204,7 @@ const SimpleProfileCardInfo = ({
                       clipRule="evenodd"
                     ></path>
                   </svg>
-                  <span class="sr-only">Close modal</span>
+                  <span className="sr-only">Close modal</span>
                 </button>
               </div>
 

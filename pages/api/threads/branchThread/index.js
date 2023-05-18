@@ -20,10 +20,11 @@ const handler = async (req, res) => {
   if (req.method === "POST") {
     try {
       const data = req.body;
-      const mainThreadId = req.body.mainThreadId;
-      const { thread, phaseStage , error } = await createBranchThread(data, mainThreadId);
+      const mainThreadId = req.body.mainThreadId;      
+      const { threadFromDB , error } = await createBranchThread(data, mainThreadId);
+      
       if (error) throw new Error(error);
-      return res.status(200).json({ thread, phaseStage });
+      return res.status(200).json({threadFromDB});
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

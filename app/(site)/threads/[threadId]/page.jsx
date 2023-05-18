@@ -12,14 +12,6 @@ import RReadTextBox from "@/app/components/box/RReadTextBox";
 import Contributors from "@/app/components/ui/Contributors";
 import LikesCompleteButton from "@/app/components/button/LikesCompleteButton";
 
-// async function getMainThreadByIds(threadId){
-//   const { thread } = await getMainThreadById(threadId)
-//   if(!thread){
-//     throw new Error('failed to fetch data')
-//   }
-//   return thread
-// }
-
 export default function Page({ params }) {
   const [branchThread, setBranchThread] = useState([]);
   const [mainThread, setMainThread] = useState({});
@@ -55,8 +47,8 @@ export default function Page({ params }) {
     const userIdLogin = localStorage.getItem("userID");
     setLoginUserId(userIdLogin);
 
-    const endpoint = `/api/threads/${params.threadId}`;
-
+    const endpoint = `/api/threads/${params.threadId}`;    
+    
     fetch(endpoint, {
       method: "GET",
     })
