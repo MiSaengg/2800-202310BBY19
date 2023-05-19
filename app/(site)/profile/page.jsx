@@ -1,5 +1,6 @@
 'use client';
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { useEffect, useState } from "react";
 
 // penName, emailAddress
@@ -88,11 +89,11 @@ export default function Profile() {
           <div className="flex overflow-x-scroll gap-2 w-full">
 
             {likeThreads.map((a, i) => (
-              <a href="#" className="flex flex-col p-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100" key={i}>
+              <Link href={`/threads/${a.id}`} className="flex flex-col p-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100" key={i}>
                   <h5 className="mb-1 text-xs font-bold font-mono tracking-tight text-gray-700">{a.title}</h5>
                   <p className="mb-1 text-xs font-mono text-gray-700">{a.genre}</p>
                   <p className="mb-1 text-xs font-mono text-gray-700">{a.tag}</p>
-              </a>
+              </Link>
               ))}
 
           </div>
@@ -105,11 +106,11 @@ export default function Profile() {
             <div className="flex overflow-x-scroll gap-2 w-full">
 
               {mainThreads.map((b, i) => (
-                <a href="#" className="flex flex-col p-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100" key={i}>
+                <Link href={`/threads/${b.id}`} className="flex flex-col p-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100" key={i}>
                     <h5 className="mb-1 text-xs font-bold font-mono tracking-tight text-gray-700">{b.title}</h5>
                     <p className="mb-1 text-xs font-mono text-gray-700">{b.genre}</p>
                     <p className="mb-1 text-xs font-mono text-gray-700">{b.tag}</p>
-                </a>
+                </Link>
               ))}
 
             </div>
