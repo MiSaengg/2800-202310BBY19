@@ -14,10 +14,9 @@ const Header = () => {
   return (
     <header className={`bg-${headerColor} py-1 px-2`}>
       <nav className='container flex items-center text-sm font-mono tracking-wider uppercase text-stone-500'>
-        {/* <Image src="/SAM_Logo_Final.png" alt='logo' width={97} height={83}/> */}
         <div className="flex items-center">
           <Link href ="/threads">
-            <span className="text-4xl mr-2">SAM</span>
+            <Image src="/samLogo3.png" alt='SAM logo' width={97} height={83}/>
           </Link>
           {noelVisible && (
             <EasterEggPop>
