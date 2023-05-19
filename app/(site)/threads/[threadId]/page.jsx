@@ -47,8 +47,8 @@ export default function Page({ params }) {
     const userIdLogin = localStorage.getItem("userID");
     setLoginUserId(userIdLogin);
 
-    const endpoint = `/api/threads/${params.threadId}`;    
-    
+    const endpoint = `/api/threads/${params.threadId}`;
+
     fetch(endpoint, {
       method: "GET",
     })
@@ -159,14 +159,13 @@ export default function Page({ params }) {
                   phase={mainThread.phase}
                 />
               ) : null}
-
             </div>
 
             <ArcherContainer strokeColor="black">
               <ArcherElement id="root" relations={arrayThing}>
-                  <div className="mx-10 px-6 py-4 rounded-lg text-base text-neutral-600 bg-white border-b-2 leading-relaxed border-neutral-100 shadow-xl">
-                    {mainThread.contentBody}
-                  </div>
+                <div className="mx-10 px-6 py-4 rounded-lg text-base text-neutral-600 bg-white border-b-2 leading-relaxed border-neutral-100 shadow-xl">
+                  {mainThread.contentBody}
+                </div>
               </ArcherElement>
 
               <Modal
@@ -192,7 +191,7 @@ export default function Page({ params }) {
                         branchThreadIdParam={a.id}
                         mainThreadIdParam={a.mainThreadId}
                         ownerUserId={userId}
-                        loginUserId = {loginUserId}
+                        loginUserId={loginUserId}
                       />
                     </div>
                   </ArcherElement>
