@@ -11,6 +11,7 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
   const [body, setBody] = useState("");
   const [dots, setDots] = useState("");
   const bodyRef = useRef("");
+  const [showButtons, setShowButtons] = useState(true);
 
   useEffect(() => {
     const userID = localStorage.getItem("userID");
@@ -49,6 +50,7 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
 
     bodyRef.current = "";
     setIsLoading(true);
+    setShowButtons(false);
 
     const contentBody = content;
     const storyGenre = genre;
@@ -85,8 +87,11 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
 
         if (index >= body.length) {
           clearInterval(typingTimer);
+          setShowButtons(true);
         }
       }, 10);
+    } else {
+      setShowButtons(true);
     }
     setIsLoading(false);
   };
@@ -231,10 +236,12 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
 
                 <div className="flex items-stretch justify-between px-5 pt-1 pb-3 border-gray-200 rounded-b dark:border-gray-600"></div>
                 <div className="absolute  left-3 px-3 border-t p-5">
-                  <Button text="AI Generate" onClick={handleAIGenerate} />
+                  {showButtons && (
+                    <Button text="AI Generate" onClick={handleAIGenerate} />
+                  )}
                 </div>
                 <div className="flex justify-end border-t p-5">
-                  <Button type="submit" text="Submit" />
+                  {showButtons && <Button type="submit" text="Submit" />}
                 </div>
               </form>
             </div>

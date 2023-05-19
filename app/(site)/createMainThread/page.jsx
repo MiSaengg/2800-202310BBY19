@@ -10,8 +10,9 @@ export default function SubmitMainThread() {
   const [isLoading, setIsLoading] = useState(false);
   const [dots, setDots] = useState("");
   const formRef = useRef();
-  const [body, setBody] = useState(""); 
-  const bodyRef = useRef(''); 
+  const [body, setBody] = useState("");
+  const bodyRef = useRef("");
+  const [showButtons, setShowButtons] = useState(true);
 
   useEffect(() => {
     const userID = localStorage.getItem("userID");
@@ -30,9 +31,10 @@ export default function SubmitMainThread() {
 
   const handleAIGenerate = async (event) => {
     event.preventDefault();
-    bodyRef.current = '';
-    setBody('');
+    bodyRef.current = "";
+    setBody("");
     setIsLoading(true);
+    setShowButtons(false);
 
     const title = formRef.current.title.value;
     const genre = formRef.current.genre.value;
@@ -61,8 +63,6 @@ export default function SubmitMainThread() {
     const body = choices[0].text;
 
     if (!error) {
-      // mainThread.pilot = body; 
-      // setPilot(body); 
       let index = 0;
       const typingTimer = setInterval(() => {
         bodyRef.current = bodyRef.current + body.charAt(index);
@@ -71,9 +71,12 @@ export default function SubmitMainThread() {
 
         if (index >= body.length) {
           clearInterval(typingTimer);
-          setPilot(body);  
+          setPilot(body);
+          setShowButtons(true);
         }
       }, 10);
+    } else {
+      setShowButtons(true);
     }
     setIsLoading(false);
   };
@@ -137,7 +140,7 @@ export default function SubmitMainThread() {
                 type="text"
                 placeholder="Title of your story"
                 required
-              />              
+              />
             </div>
           </div>
 
@@ -196,25 +199,26 @@ export default function SubmitMainThread() {
             <label className="pl-1 mb-2 block uppercase tracking-wide text-xs font-mono text-gray-700">
               Main Thread
             </label>
-            
+
             <textarea
-                name="pilot"
-                id="message"
-                rows="10"
-                className="mb-5 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Write your thoughts here..."
-                required
-                value={isLoading ? `Generating text${dots}` : body}
-                onChange={(e) => setBody(e.target.value)}
-                readOnly={isLoading}
-            >
-            </textarea>
+              name="pilot"
+              id="message"
+              rows="10"
+              className="mb-5 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Write your thoughts here..."
+              required
+              value={isLoading ? `Generating text${dots}` : body}
+              onChange={(e) => setBody(e.target.value)}
+              readOnly={isLoading}
+            ></textarea>
           </div>
           <div className="absolute left-3 px-3">
-            <Button text="AI Generate" onClick={handleAIGenerate} />
+            {showButtons && (
+              <Button text="AI Generate" onClick={handleAIGenerate} />
+            )}{" "}
           </div>
           <div className="absolute right-3 px-3">
-            <Button text="Upload" />
+            {showButtons && <Button text="Upload" />}{" "}
           </div>
         </form>
       </div>
