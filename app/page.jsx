@@ -44,70 +44,76 @@ export default function Home() {
             </div>
           </div>
         </div>
-
         
-        <div className="flex px-5 justify-center items-center h-full">
-          <h1 className="mb-4 mt-4 text-4xl underline decoration-8 decoration-blue-400 font-extrabold text-center leading-none tracking-tight text-black-100 md:text-5xl lg:text-6xl">
-              Create, Collaborate, Harness AI to build a story
-          </h1>
-        </div>
-        <div>
+        {/* className="underline decoration-8 decoration-blue-400" */}
+        <div className="px-7 my-10 text-gray-700 text-center">
           <p>
             S.A.M (Stories A Million) is an AI-driven platform enabling users to
-            craft limitless, unique narratives. S.A.M places story creation at
-            the fingertips of its users. This fosters a collaborative
+            craft limitless, unique narratives. S.A.M places story creation at  the fingertips of its users.
+            This fosters a collaborative
             environment where creativity thrives, where anyone can write.
           </p>
         </div>
 
-        <div>
+        <div className="px-5 py-10 bg-gray-900 flex-row justify-around">
+
           <div className="flex items-center h-full">
-            <h2 className="mb-4 mt-4 text-3xl font-extrabold leading-none tracking-tight text-black-100 md:text-5xl lg:text-6xl dark:text-black">
+            <h2 className="mb-4 mt-4 text-3xl font-extrabold leading-none tracking-tight text-white md:text-5xl lg:text-6xl">
               Steps
             </h2>
           </div>
-          <div>
-            <ul>
-              <li>1. Create Your Own Story (character, title, genre, body) & AI generate</li>
-              <Image
-                src="/CreateYourOwnStory2.gif"
-                width={500}
-                height={500}
-                alt="Create your own story"
-              />
-              <li>2. Collaborate (make new branch) </li>
+
+          <div className="mb-6 text-white tracking-tight">
+            <div className="mb-4 text-xl font-bold">1. Create Your Own Story</div>
+            <p className="mb-4">Choose a title, genre, and the number of characters</p>
+            <Image
+              src="/CreateYourOwnStory2.gif"
+              width={300}
+              height={300}
+              alt="Create your own story"
+            />
+          </div>
+
+            <div className="mb-6 text-white tracking-tight">
+              <div className="mb-4 text-xl font-bold">2. Collaborate</div>
+              <p className="mb-4">Add your creative story to others' stories or invite others to contribute their stories to yours as well!</p>
               <Image
                 src="/CollaborateWithOthers2.gif"
-                width={500}
-                height={500}
+                width={300}
+                height={300}
                 alt="Collaborate with others"
               />
-              <li>3. Merge it (merge the story) </li>
+            </div>
+
+            <div className="mb-6 text-white tracking-tight">
+              <div className="mb-4 text-xl font-bold">3. Merge it</div>
+              <p className="mb-4">Let people decide which story is better by voting. You can merge the story you like.</p>
+
               <Image
                 src="/MergeStory2.gif"
-                width={500}
-                height={500}
+                width={300}
+                height={300}
                 alt="Merge story"
               />
-            </ul>
-          </div>
-          <div className="flex items-center h-full">
-            <h2 className="mb-4 mt-4 text-3xl font-extrabold leading-none tracking-tight text-black-100 md:text-5xl lg:text-6xl dark:text-black">
-              Behind the AI experience
-            </h2>
-          </div>
-          <div className="flex items-center justify-center h-full text-center" >
-            <p>
-              Utilizes the sophisticated mechanisms of an AI-driven storytelling
-              engine, powered by OpenAI's text-completion DaVinci model. The
-              model transforms users' inputs into vivid narratives, revealing
-              the intelligent design and cutting-edge algorithms that support
-              endless creativity.
-            </p>
-          </div>
+            </div>
+
         </div>
+
+            <div className="px-7 text-gray-700 flex-row justify-center text-center">
+              <h2 className="my-10 text-lg leading-relaxed font-bold text-center tracking-tight text-black-100">
+                Behind the AI experience
+              </h2>
+              <p>
+                Utilizes the sophisticated mechanisms of an AI-driven storytelling
+                engine, powered by OpenAI's text-completion DaVinci model. The
+                model transforms users' inputs into vivid narratives, revealing
+                the intelligent design and cutting-edge algorithms that support
+                endless creativity.
+              </p>
+            </div>
+
         <footer>
-          <div className="flex items-center justify-center h-full">
+          <div className="px-7 my-10 text-gray-700 text-center">
             <p>© Copyright 2023 - BBY19</p>
           </div>
         </footer>
