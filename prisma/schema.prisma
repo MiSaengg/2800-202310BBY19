@@ -43,7 +43,7 @@ model Session {
 model User {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
-  penName       String?    @unique
+  penName       String     @default("")
   email         String?    @unique
   emailVerified DateTime?
   image         String?
