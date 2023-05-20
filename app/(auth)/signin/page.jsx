@@ -1,42 +1,27 @@
-'use client'
+"use client";
 
-import { getCsrfToken, getProviders } from 'next-auth/react'
-import Button from 'app/components/ui/button'
-import TextField from 'app/components/form/TextField'
-import GoogleLoginButton from 'app/components/auth/GoogleSignInButton'
+import { getCsrfToken, getProviders } from "next-auth/react";
+import GoogleLoginButton from "app/components/auth/GoogleSignInButton";
+import Image from "next/image";
 
 const SignInPage = () => {
   return (
-    <>
-      <form>
-        <div className='space-y-2'>
-          <TextField
-            id='email'
-            name='email'
-            type='email'
-            label='Sign in with your email'
-            placeholder='hello@me.com'
-            autoComplete='email'
-            required
-          />
-        </div>
-        <Button
-          type='submit'
-          variant='outline'
-          color='gray'
-          className='mt-3 w-full'
-        >
-          Continue with email
-        </Button>
-      </form>
-      <div className='mx-auto my-10 flex w-full items-center justify-evenly before:mr-4 before:block before:h-px before:flex-grow before:bg-stone-400 after:ml-4 after:block after:h-px after:flex-grow after:bg-stone-400'>
-        or
+    <div>
+      <div className="flex flex-col items-center justify-round">
+        <Image
+          style={{ borderRadius: "20px", width: "200px", height: "200px" }}
+          src={"/SAM_Logo_Final.png"}
+          width={400}
+          height={400}
+          alt="SAM LOGO"
+        />
+      </div>
+      <div className="mx-auto my-10 flex w-full items-center justify-evenly before:mr-4 before:block before:h-px before:flex-grow before:bg-stone-400 after:ml-4 after:block after:h-px after:flex-grow after:bg-stone-400">
+        Start your story
       </div>
       <GoogleLoginButton />
-    </>
-  )
-}
+    </div>
+  );
+};
 
-export default SignInPage
-
-
+export default SignInPage;
