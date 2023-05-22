@@ -1,9 +1,14 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Button from "./../button/Button";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
+
 
 const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
   const [showModal, setShowModal] = useState(false);
+  const [showInnerModal, setShowInnerModal] = useState(false);
   const [userId, setUserId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [content, setContent] = useState("");
@@ -141,6 +146,98 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
     }
   };
 
+  const submitVoice = (e) => {
+    e.preventDefault();
+
+    const data = {
+      body: e.target.voiceGeneratedContent.value
+    };
+
+    setBody(data.body);
+    closeInnerModal();
+  };
+
+  const InnerModal = ({ setShowInnerModal }) => {
+
+    const {
+      transcript,
+      listening,
+      resetTranscript,
+      browserSupportsSpeechRecognition,
+      isMicrophoneAvailable,
+    } = useSpeechRecognition();
+
+    if (!browserSupportsSpeechRecognition) {
+      return <span>Browser doesn't support speech recognition.</span>;
+    }
+
+    if (!isMicrophoneAvailable) {
+      return <span>Microphone access is needed to begin.</span>;
+    }
+
+    return (
+      <div className="fixed -top-32 left-0 w-full h-full flex items-center justify-center z-60 bg-gray bg-opacity-40">
+        <div className="flex flex-col border-solid border-2 items-center bg-white px-10 pt-3 pb-5">
+          <button onClick={closeInnerModal}
+            type="button"
+            className="text-sm p-1.5 mb-5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg"
+            data-modal-hide="defaultModal"
+          >
+            {" "}
+            <svg
+              aria-hidden="true"
+              className="w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clipRule="evenodd"
+              ></path>
+            </svg>
+            <span className="sr-only"></span>
+          </button>
+          <div className="mb-5">microphone: {listening ? "on" : "off"}</div>
+          <div className="flex flex-row mb-5 justify-evenly">
+            <Button type="button" text="Start" onClick={() => SpeechRecognition.startListening({ continuous: true, language: 'en-CA' })}></Button>
+            <Button type="button" text="Stop" onClick={SpeechRecognition.stopListening}></Button>
+            <Button type="button" text="Reset" onClick={resetTranscript}></Button>
+          </div>
+          <form className="mx-3" onSubmit={submitVoice}>
+            <label
+              htmlFor="text-input"
+              className="block mb-3 text-md font-mono text-gray-900"
+            >
+              <textarea
+                name="voiceGeneratedContent"
+                id="text-input"
+                rows="10"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                defaultValue={transcript}
+              ></textarea>
+            </label>
+            <div className="flex justify-center py-2">
+              <Button type="submit" text="Submit" />
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  };
+
+  const openInnerModal = (e) => {
+    e.preventDefault();
+    
+    setShowInnerModal(true);
+  };
+
+  const closeInnerModal = (e) => {
+
+    setShowInnerModal(false);
+  };
+
   return (
     <>
       <div
@@ -158,7 +255,7 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
           <button
             onClick={openModalEvent}
             type="button"
-            className="z-50 text-gray-500 border border-gray-300 hover:bg-gray-300 hover:text-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-sm p-2.5 text-center inline-flex items-center"
+            className="text-gray-500 border border-gray-300 hover:bg-gray-300 hover:text-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-sm p-2.5 text-center inline-flex items-center"
           >
             <svg
               aria-hidden="true"
@@ -180,18 +277,18 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
         <div
           tabIndex="-1"
           aria-hidden="true"
-          className="fixed top-0 left-0 right-0 z-50 p-4 overflow-x-hidden overflow-y-auto max-h-full"
+          className="fixed top-0 left-0 right-0 p-4 overflow-x-hidden overflow-y-auto max-h-full"
         >
           <div className="relative max-w-full max-h-full">
-            <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-              <div className="flex items-start justify-between p-5 border-b rounded-t dark:border-gray-600">
-                <h3 className="text-xl font-mono text-gray-900 dark:text-white">
-                  Title
+            <div className="relative bg-white rounded-lg shadow">
+              <div className="flex items-start justify-between p-5 mb-8 border-b rounded-t">
+                <h3 className="text-lg font-mono text-gray-900">
+                  Continue the Story
                 </h3>
                 <button
                   onClick={closeModalEvent}
                   type="button"
-                  className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                  className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
                   data-modal-hide="defaultModal"
                 >
                   {" "}
@@ -212,35 +309,36 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
                 </button>
               </div>
 
-              <div className="p-6 space-y-6">
-                <p className="text-base font-mono text-gray-700 dark:text-gray-400">
-                  Continue the story
-                </p>
-              </div>
-
               <form className="mx-5" onSubmit={submitBranchThread}>
                 <label
                   htmlFor="text-input"
-                  className="block mb-3 text-md font-mono text-gray-900 dark:text-white"
+                  className="block mb-3 text-md font-mono text-gray-900"
                 >
                   <textarea
                     name="branchContext"
                     id="text-input"
                     rows="15"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     value={isLoading ? `Generating text${dots}` : body}
                     onChange={(e) => setBody(e.target.value)}
                     readOnly={isLoading}
                   ></textarea>
                 </label>
 
-                <div className="flex items-stretch justify-between px-5 pt-1 pb-3 border-gray-200 rounded-b dark:border-gray-600"></div>
-                <div className="absolute  left-3 px-3 border-t p-5">
-                  {showButtons && (
-                    <Button text="AI Generate" onClick={handleAIGenerate} />
-                  )}
+                <div className="flex flex-row justify-start py-3 border-b border-gray-200 rounded-b">
+                  <div className="mr-4">
+                    {showButtons && (
+                      <Button text="AI Generate" onClick={handleAIGenerate} />
+                    )}
+                  </div>
+                  <div className="mb-2">
+                    {showButtons && (
+                      <Button type="button" text="Voice-to-Text" onClick={() => setShowInnerModal(true)}/>
+                    )}
+                  </div>
                 </div>
-                <div className="flex justify-end border-t p-5">
+
+                <div className="flex justify-end py-5">
                   {showButtons && <Button type="submit" text="Submit" />}
                 </div>
               </form>
@@ -248,6 +346,9 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
           </div>
         </div>
       ) : null}
+
+      {showInnerModal && <InnerModal setShowInnerModal={setShowInnerModal} />}
+
     </>
   );
 };
