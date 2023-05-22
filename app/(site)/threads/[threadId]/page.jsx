@@ -5,7 +5,6 @@ import { ArcherContainer, ArcherElement } from "react-archer";
 import Modal from "@/app/components/modal/Modal";
 import SimpleProfileCardInfo from "@/app/components/card/SimpleProfileCard";
 import ProfileCardInfo from "@/app/components/card/profileCardInfo";
-
 import ConnectorLine from "@/app/components/box/ConnectorLine";
 import LReadTextBox from "@/app/components/box/LReadTextBox";
 import RReadTextBox from "@/app/components/box/RReadTextBox";
@@ -82,6 +81,38 @@ export default function Page({ params }) {
           });
       });
   }, []);
+
+  const handleAIGenreGenerate = async (event) => {
+    event.preventDefault();
+    setAIGenre("");
+    const contentBody = event.target.contentBody.value;
+    console.log(contentBody);
+    const endpoint = "https://api.openai.com/v1/completions";
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "ada:ft-personal-2023-05-02-07-34-38",
+        prompt: `${contentBody} \n\n###\n\n`,
+        temperature: 0.5,
+        max_tokens: 100,
+      }),
+    };
+
+    const response = await fetch(endpoint, options);
+
+    const { choices, error } = await response.json();
+
+    const body = choices[0].text;
+
+    console.log(body);  
+    
+  };
+
 
   return (
     <>
