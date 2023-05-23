@@ -20,6 +20,7 @@ export default function Page({ params }) {
   const [users, setUsers] = useState([]);
   const [mainUserImage, setMainUserImage] = useState("");
   const [loginUserId, setLoginUserId] = useState("");
+  const [AIGenre, setAIGenre] = useState(""); // This is the AI Genre
 
   let arrayThing = [
     {
@@ -85,7 +86,7 @@ export default function Page({ params }) {
   const handleAIGenreGenerate = async (event) => {
     event.preventDefault();
     setAIGenre("");
-    const contentBody = event.target.contentBody.value;
+    const contentBody = mainThread.contentBody;
     console.log(contentBody);
     const endpoint = "https://api.openai.com/v1/completions";
 
@@ -108,11 +109,40 @@ export default function Page({ params }) {
     const { choices, error } = await response.json();
 
     const body = choices[0].text;
+    const words = body.split(" ");
+    let uniqueWords = words.filter(
+      (item, pos, self) => item !== "" && self.indexOf(item) === pos
+    );
+    const firstUniqueWord = uniqueWords[0];
 
-    console.log(body);  
-    
+    console.log(firstUniqueWord);
+    console.log(uniqueWords);
+
+    const davinciEndpoint = "https://api.openai.com/v1/completions";
+
+    const davinciOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "text-davinci-003",
+        prompt: `Given the genre: ${firstUniqueWord} , only if ${firstUniqueWord} is not found in list, [thriller, fanatasy, history, horror, crime, romance, psychology, sports, travel, comedy, science-fiction], choose from the list that best matches the ${firstUniqueWord}. If ${firstUniqueWord} is found in the list, return ${firstUniqueWord} \n\n###\n\n]`,
+        temperature: 0.3,
+        max_tokens: 100,
+      }),
+    };
+
+    const davinciResponse = await fetch(davinciEndpoint, davinciOptions);
+
+    const { choices: davinciChoices, error: davinciError } =
+      await davinciResponse.json();
+
+    const davinciBody = davinciChoices[0].text;
+
+    console.log(davinciBody);
   };
-
 
   return (
     <>
@@ -160,6 +190,12 @@ export default function Page({ params }) {
             loginUserId={loginUserId}
             mainThread={mainThread}
           />
+          <button
+            onClick={handleAIGenreGenerate}
+            className="your-css-classes-here"
+          >
+            Generate AI Genre
+          </button>
         </>
       ) : (
         <>
