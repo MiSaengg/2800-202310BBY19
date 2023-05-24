@@ -1,6 +1,6 @@
 "use client";
 // import { getMainThreadById } from "@/lib/prisma/mainThreads";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { ArcherContainer, ArcherElement } from "react-archer";
 import Modal from "@/app/components/modal/Modal";
 import SimpleProfileCardInfo from "@/app/components/card/SimpleProfileCard";
@@ -83,11 +83,9 @@ export default function Page({ params }) {
       });
   }, []);
 
-  const handleAIGenreGenerate = async (event) => {
-    event.preventDefault();
+  const handleAIGenreGenerate = useCallback(async () => {
     setAIGenre("");
     const contentBody = mainThread.contentBody;
-    console.log(contentBody);
     const endpoint = "https://api.openai.com/v1/completions";
 
     const options = {
@@ -115,9 +113,6 @@ export default function Page({ params }) {
     );
     const firstUniqueWord = uniqueWords[0];
 
-    console.log(firstUniqueWord);
-    console.log(uniqueWords);
-
     const davinciEndpoint = "https://api.openai.com/v1/completions";
 
     const davinciOptions = {
@@ -139,10 +134,52 @@ export default function Page({ params }) {
     const { choices: davinciChoices, error: davinciError } =
       await davinciResponse.json();
 
-    const davinciBody = davinciChoices[0].text;
+    const davinciAIGenre = davinciChoices[0].text.trim().toLowerCase(); // Trim and lower case for case insensitive comparison
 
-    console.log(davinciBody);
-  };
+    if (
+      !mainThread.genre
+        .map((genre) => genre.toLowerCase())
+        .includes(davinciAIGenre.toLowerCase())
+    ) {
+      const newGenreList = [...mainThread.genre, davinciAIGenre];
+
+      console.log(newGenreList);
+      console.log(mainThread.genre);
+
+      const endpoint = `/api/threads/${mainThread.id}`;
+      fetch(endpoint, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ genre: davinciAIGenre }),
+      })
+        .then(async (response) => {
+          console.log(response)
+          const data = await response.json();
+          console.log(data);
+
+          if (!response.ok) {
+            throw new Error(
+              `Status: ${response.status}, Message: ${data.message}`
+            );
+          }
+
+          return data;
+        })
+        .then((data) => {
+          setMainThread(data);
+          console.log(data);
+        })
+        .catch((error) => console.error("Error:", error));
+    }
+  }, [mainThread]);
+
+  useEffect(() => {
+    if (mainThread.phase === 6) {
+      handleAIGenreGenerate();
+    }
+  }, [mainThread.phase, handleAIGenreGenerate]);
 
   return (
     <>
@@ -190,12 +227,6 @@ export default function Page({ params }) {
             loginUserId={loginUserId}
             mainThread={mainThread}
           />
-          <button
-            onClick={handleAIGenreGenerate}
-            className="your-css-classes-here"
-          >
-            Generate AI Genre
-          </button>
         </>
       ) : (
         <>
