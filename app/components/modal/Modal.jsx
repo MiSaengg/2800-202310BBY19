@@ -114,7 +114,9 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
 
   const submitBranchThread = async (e) => {
     e.preventDefault();
+    const branchThreadSumbitConfirm = confirm("Are you ready to submit?")
 
+    if (branchThreadSumbitConfirm){
     const data = {
       body: e.target.branchContext.value,
       userId: userId,
@@ -144,6 +146,9 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
       location.reload();
       return;
     }
+  }else{
+    return;
+  }
   };
 
   const submitVoice = (e) => {
@@ -176,7 +181,7 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
     }
 
     return (
-      <div className="fixed -top-32 left-0 w-full h-full flex items-center justify-center z-60 bg-gray bg-opacity-40">
+      <div className="fixed -top-32 left-0 w-full h-full flex items-center justify-center bg-gray bg-opacity-40 z-40">
         <div className="flex flex-col border-solid border-2 items-center bg-white px-10 pt-3 pb-5">
           <button onClick={closeInnerModal}
             type="button"
@@ -277,7 +282,7 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
         <div
           tabIndex="-1"
           aria-hidden="true"
-          className="fixed top-0 left-0 right-0 p-4 overflow-x-hidden overflow-y-auto max-h-full"
+          className="fixed top-0 left-0 right-0 p-4 overflow-x-hidden overflow-y-auto max-h-full z-30"
         >
           <div className="relative max-w-full max-h-full">
             <div className="relative bg-white rounded-lg shadow">
@@ -339,7 +344,7 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
                 </div>
 
                 <div className="flex justify-end py-5">
-                  {showButtons && <Button type="submit" text="Submit" />}
+                  {showButtons && <Button type="submit" text="Upload" />}
                 </div>
               </form>
             </div>

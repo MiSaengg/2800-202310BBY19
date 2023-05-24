@@ -124,8 +124,8 @@ export default function Page() {
               <option value="psychology">Psychology</option>
               <option value="sports">Sports</option>
               <option value="travel">Travel</option>
-              <option value="comedy">comedy</option>
-              <option value="sifi">sifi</option>
+              <option value="comedy">Comedy</option>
+              <option value="sifi">Science-Fiction</option>
             </select>
             <select
               value={selectedTag}
@@ -159,7 +159,12 @@ export default function Page() {
                   </span>
                 )}
                 <div className="m-2">
-                  <h2 className="text-lg">{item.title}</h2>
+                  <p className="text-lg" style={{height:"55px"}}>                    
+                    { item.title.length > 20 ?
+                      `${item.title.substring(0,20)}...`
+                      : `${item.title}`
+                    }                                       
+                  </p>
                   <h3 className="text-md">{item.genre}</h3>
                   <p className="font-light font-mono text-sm text-gray-700 hover:text-gray-900 transition-all duration-200">
                     {item.user.penName}

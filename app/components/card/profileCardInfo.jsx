@@ -25,17 +25,22 @@ return (
 <div className="flex flex-col">
 
   <div className="relative mb-5 flex flex-col overflow-hidden shadow-xl bg-white items-center h-40 w-screen">
+    
     <Image src={`/bookCover/${genre}.png`}
         fill={true}
         sizes="100vw"
         alt="bookCover"
-        className="w-full"
+        className="w-full"        
         />
+    
+      {/* Added layer to make an opacity */}
+      <div className="flex flex-col justify-center pb-2 bg-black opacity-60 h-40 z-10 w-screen" 
+      style={{position: 'absolute'}}>
 
-    <div className="flex flex-col justify-center pb-2 text-white" 
-    style={{position: 'absolute', top: '12%', 
+      </div>
+    <div className="flex flex-col justify-center pb-2 text-white h-40 z-20" 
+    style={{position: 'absolute', 
     color: 'white', fontWeight: 'bold'}}>
-      
       <div className="text-center mb-1">
         <span className="font-bold underline text-2xl">{title}</span>
       </div>

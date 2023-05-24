@@ -83,7 +83,9 @@ export default function SubmitMainThread() {
 
   const handleMainThreadSubmit = async (event) => {
     event.preventDefault();
+    let submitConfirm = confirm("Are you ready to sumit?")
 
+    if(submitConfirm){
     const data = {
       title: event.target.title.value,
       genre: [event.target.genre.value],
@@ -118,6 +120,9 @@ export default function SubmitMainThread() {
     if (!error) {
       router.push(`/threads/${thread.id}`);
     }
+  }else{
+    return;
+  }
   };
 
   return (
@@ -131,14 +136,15 @@ export default function SubmitMainThread() {
           <div className="">
             <div className="max-w-50 px-3 mb-6">
               <label className="pl-1 block uppercase tracking-wide text-gray-700 text-xs font-mono mb-2">
-                Title
+                Title<span style={{position: "relative" , bottom:"5px"}}>*</span>
               </label>
               <input
                 name="title"
-                className="py-3 px-4 mb-2 appearance-none block w-full bg-gray-50 text-gray-700 border border-red-500 rounded leading-tight focus:outline-none focus:bg-white"
+                className="py-3 px-4 mb-2 appearance-none block w-full bg-gray-50 text-gray-700 border rounded leading-tight focus:outline-none focus:bg-white"
                 id="grid-first-name"
                 type="text"
-                placeholder="Title of your story"
+                placeholder="Title of your story (1 - 100 letters)"
+                pattern=".{1,100}"
                 required
               />
             </div>
@@ -146,8 +152,8 @@ export default function SubmitMainThread() {
 
           <div className="flex mb-6">
             <div className="max-w-50 px-3">
-              <label className="pl-1 mb-2 block uppercase tracking-wide text-gray-700 text-xs font-mono">
-                Genre
+              <label className="pl-1 mb-6 block uppercase tracking-wide text-gray-700 font-mono text-xs">
+                Genre<span style={{position: "relative" , bottom:"5px"}}>*</span>
               </label>
 
               <div className="relative">
@@ -155,7 +161,9 @@ export default function SubmitMainThread() {
                   name="genre"
                   className="block appearance-none w-full bg-gray-50 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   id="grid-state"
+                  required
                 >
+                  <option value="" selected="selected">Select</option>
                   <option>thriller</option>
                   <option>fantasy</option>
                   <option>history</option>
@@ -166,7 +174,7 @@ export default function SubmitMainThread() {
                   <option>sports</option>
                   <option>travel</option>
                   <option>comedy</option>
-                  <option>sifi</option>
+                  <option>science-fiction</option>
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                   <svg
@@ -181,8 +189,8 @@ export default function SubmitMainThread() {
             </div>
 
             <div className="max-w-50 px-3">
-              <label className="pl-1 mb-2 block uppercase text-gray-700 text-xs font-mono">
-                Number of Characters
+              <label className="pl-1 mb-2 block uppercase text-gray-700 font-mono text-xs">
+                Number of Characters<span style={{position: "relative" , bottom:"5px"}}>*</span>
               </label>
               <input
                 name="numberOfCharacters"
@@ -199,7 +207,7 @@ export default function SubmitMainThread() {
 
           <div className="w-full px-3">
             <label className="pl-1 mb-2 block uppercase tracking-wide text-xs font-mono text-gray-700">
-              Main Thread
+              Main Story<span style={{position: "relative" , bottom:"5px"}}>*</span>
             </label>
 
             <textarea
