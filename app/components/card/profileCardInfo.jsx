@@ -25,7 +25,7 @@ return (
 
   <div className="relative mb-5 flex flex-col overflow-hidden shadow-xl bg-white items-center h-40 w-screen">
     
-    <Image src={`/bookCover/${genre}.png`}
+    <Image src={`/bookCover/${genre[0]}.png`}
         fill={true}
         sizes="100vw"
         alt="bookCover"
