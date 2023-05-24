@@ -1,24 +1,23 @@
-"use client"
-import Image from 'next/image';
-import React from 'react';
-import {useEffect, useState} from 'react';
+"use client";
+import Image from "next/image";
+import React from "react";
+import { useEffect, useState } from "react";
 
 const ProfileCardInfo = ({ genre, userId, mainCharacter, title, phase }) => {
-  const [user , setUser] = useState({});
+  const [user, setUser] = useState({});
+  console.log(genre);
 
-useEffect(()=> {
-  const endpoint = `/api/user/${userId}`
+  useEffect(() => {
+    const endpoint = `/api/user/${userId}`;
 
-  fetch(endpoint, {
-    method:"GET"
-  }).then(
-    (res) => res.json()
-  ).then(
-    ({user}) => {
-      setUser(user)            
-    }
-  )
-  },[])
+    fetch(endpoint, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then(({ user }) => {
+        setUser(user);
+      });
+  }, []);
 
 return (
 <>
@@ -45,31 +44,34 @@ return (
         <span className="font-bold underline text-2xl">{title}</span>
       </div>
 
-      <div className="text-center mb-1">
-        <span className="font-bold text-sm">{genre} / </span>
-        <span className="font-bold text-sm">{mainCharacter}</span>
-        <span className="font-bold"> characters</span>
-      </div>
-      <div>
-      </div>
+            <div className="text-center mb-1">
+              <span className="font-bold text-sm">{genre[0]} / </span>
+              <span className="font-bold text-sm">{mainCharacter}</span>
+              <span className="font-bold"> characters</span>
+            </div>
+            <div></div>
 
-      <div>
-        <span className="font-bold text-sm">Phase {phase}</span>
+            <div>
+              <span className="font-bold text-sm">Phase {phase}</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex justify-center">
+          <Image
+            src={user.image}
+            alt="user profile photo"
+            width={50}
+            height={100}
+            className="rounded-full border-solid border-white border-2 "
+          />
+        </div>
+        <div className="text-center">
+          <h3 className="text-black text-sm font-bold">{user.penName}</h3>
+        </div>
       </div>
-    </div>
-  </div>
-
-    <div className="flex justify-center">
-    <Image src={user.image} alt="user profile photo" width={50} height={100} className="rounded-full border-solid border-white border-2 " />
-    </div>
-    <div className="text-center">
-      <h3 className="text-black text-sm font-bold">{user.penName}</h3>
-    </div>
-
-</div>
-</>
-);
+    </>
+  );
 };
 
 export default ProfileCardInfo;
-

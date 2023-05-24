@@ -8,7 +8,7 @@ import EasterEggBBY19Trigger from "@/app/components/EasterEggTrigger/EasterEggBB
 import EasterEggCatTrigger from "@/app/components/EasterEggTrigger/EasterEggCatTrigger";
 
 export default function Page() {
-  const [mainThreadMapping, setMainThreadMapping] = useState([]);  
+  const [mainThreadMapping, setMainThreadMapping] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("");
   const [selectedTag, setSelectedTag] = useState("");
   const [user, setUser] = useState(null);
@@ -64,7 +64,7 @@ export default function Page() {
       method: "GET",
     })
       .then((res) => res.json())
-      .then(({ randomMainThreads }) => {        
+      .then(({ randomMainThreads }) => {
         setMainThreadMapping(randomMainThreads);
       });
   };
@@ -144,7 +144,7 @@ export default function Page() {
               <div className="sm:h-60 overflow-hidden curor-pointer border border-gray-400 rounded-lg hover:shadow-md hover:border-opacity-0 transform hover:-translate-y-1 transition-all duration-200">
                 <Image
                   className="object-cover"
-                  src={`/bookCover/${item.genre}.png`}
+                  src={`/bookCover/${item.genre[0]}.png`}
                   alt="nature"
                   width={200}
                   height={50}
@@ -165,7 +165,7 @@ export default function Page() {
                       : `${item.title}`
                     }                                       
                   </p>
-                  <h3 className="text-md">{item.genre}</h3>
+                  <h3 className="text-md">{item.genre.join(", ")}</h3>
                   <p className="font-light font-mono text-sm text-gray-700 hover:text-gray-900 transition-all duration-200">
                     {item.user.penName}
                   </p>
@@ -223,7 +223,7 @@ export default function Page() {
                   ) : null}
                   {easterEggTrigger === ":catjam:" ? (
                     <EasterEggCatTrigger />
-                  ) : null}                  
+                  ) : null}
                 </div>
               </div>
             </div>
