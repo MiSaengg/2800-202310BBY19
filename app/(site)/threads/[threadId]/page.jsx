@@ -14,6 +14,7 @@ import LikesCompleteButton from "@/app/components/button/LikesCompleteButton";
 export default function Page({ params }) {
   const [branchThread, setBranchThread] = useState([]);
   const [mainThread, setMainThread] = useState({});
+  const [mainThreadGenre, setMainThreadGenre] = useState([]);
   const [userId, setUserId] = useState("");
   const [branchThreadNo, setBranchThreadNo] = useState(0);
   const [bodies, setBodies] = useState([]);
@@ -21,6 +22,7 @@ export default function Page({ params }) {
   const [mainUserImage, setMainUserImage] = useState("");
   const [loginUserId, setLoginUserId] = useState("");
   const [AIGenre, setAIGenre] = useState(""); // This is the AI Genre
+  const [refresh, setRefresh] = useState(false); // New state for refreshing
 
   let arrayThing = [
     {
@@ -59,6 +61,7 @@ export default function Page({ params }) {
         var values = Object.values(data);
         setBranchThread(values);
         setMainThread(mainThread);
+        setMainThreadGenre(mainThread.genre);
         setUserId(mainThread.userId);
         setBranchThreadNo(Object.keys(mainThread.phaseStage).length);
         const bodies = Object.values(content).map((item) => item.body);
@@ -143,21 +146,16 @@ export default function Page({ params }) {
     ) {
       const newGenreList = [...mainThread.genre, davinciAIGenre];
 
-      console.log(newGenreList);
-      console.log(mainThread.genre);
-
       const endpoint = `/api/threads/${mainThread.id}`;
       fetch(endpoint, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ genre: davinciAIGenre }),
+        body: JSON.stringify({ genre: newGenreList }),
       })
         .then(async (response) => {
-          console.log(response)
           const data = await response.json();
-          console.log(data);
 
           if (!response.ok) {
             throw new Error(
@@ -169,7 +167,7 @@ export default function Page({ params }) {
         })
         .then((data) => {
           setMainThread(data);
-          console.log(data);
+          setRefresh(true);
         })
         .catch((error) => console.error("Error:", error));
     }
@@ -181,9 +179,16 @@ export default function Page({ params }) {
     }
   }, [mainThread.phase, handleAIGenreGenerate]);
 
+  useEffect(() => {
+    if (refresh) {
+      location.reload();
+      setRefresh(false);
+    }
+  }, [refresh]);
+
   return (
     <>
-      {mainThread.phase === 6 || mainThread.tag === "complete" ? (
+      {mainThread.phase > 5 || mainThread.tag === "Complete" ? (
         <>
           <div className="flex flex-row justify-between">
             <div className="basis-1/2"></div>
@@ -250,7 +255,7 @@ export default function Page({ params }) {
             >
               {userId ? (
                 <ProfileCardInfo
-                  genre={mainThread.genre}
+                  genre={mainThreadGenre}
                   userId={userId}
                   mainCharacter={mainThread.mainCharacter}
                   title={mainThread.title}
