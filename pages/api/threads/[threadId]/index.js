@@ -1,6 +1,20 @@
 import { getMainThreadById } from "@/lib/prisma/mainThreads";
 import { updateMainThread } from "@/lib/prisma/mainThreads";
 
+/**
+ * getMainThreadById
+ *
+ * @description Get main thread by id.
+ * @param {string} mainThreadId
+ * @returns {Promise<{mainThread: any}>}
+ *
+ * updateMainThread
+ *
+ * @description Update main thread.
+ * @param {string} mainThreadId
+ * @param {any} data
+ * @returns {Promise<{thread: any}>}
+ */
 const handler = async (req, res) => {
   if (req.method === "GET") {
     try {
@@ -35,7 +49,7 @@ const handler = async (req, res) => {
       return res.status(500).json({ error: error.message });
     }
   }
-  
+
   res.setHeader("Allow", ["GET", "POST", "PATCH"]);
   res.status(425).end(`Method ${req.method} is not allowed.`);
 };
