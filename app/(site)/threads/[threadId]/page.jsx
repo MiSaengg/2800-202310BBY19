@@ -122,7 +122,7 @@ export default function Page({ params }) {
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
       },
       body: JSON.stringify({
-        model: "text-davinci-003",
+        model: "text-davinci-002",
         prompt: `Given the genre: ${firstUniqueWord} , only if ${firstUniqueWord} is not found in list, [thriller, fanatasy, history, horror, crime, romance, psychology, sports, travel, comedy, science-fiction], choose from the list that best matches the ${firstUniqueWord}. If ${firstUniqueWord} is found in the list, return ${firstUniqueWord} \n\n###\n\n]`,
         temperature: 0.3,
         max_tokens: 100,
@@ -137,11 +137,11 @@ export default function Page({ params }) {
     const davinciAIGenre = davinciChoices[0].text.trim().toLowerCase(); // Trim and lower case for case insensitive comparison
 
     if (
-      !mainThread.genre
+      !mainThreadGenre
         .map((genre) => genre.toLowerCase())
         .includes(davinciAIGenre.toLowerCase())
     ) {
-      const newGenreList = [...mainThread.genre, davinciAIGenre];
+      const newGenreList = [...mainThreadGenre, davinciAIGenre];
 
       const endpoint = `/api/threads/${mainThread.id}`;
       fetch(endpoint, {
@@ -167,13 +167,17 @@ export default function Page({ params }) {
         })
         .catch((error) => console.error("Error:", error));
     }
-  }, []);
+      
+    
+  }, [mainThread.id]);
 
-  useEffect(() => {
-    if (mainThread.phase === 6) {
-      handleAIGenreGenerate();
+  useEffect(() => {    
+    if (mainThread.phase === 6) {      
+      handleAIGenreGenerate().then(()=>{
+        location.reload();
+      });
     }
-  }, []);
+  }, [mainThread.phase, handleAIGenreGenerate]);
   
 
   return (
