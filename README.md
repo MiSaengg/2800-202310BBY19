@@ -53,14 +53,9 @@
 
 ## How to use?
 
-#### 1. Create Story
-<img src="https://user-images.githubusercontent.com/111412548/241064059-6648a2ec-c6b6-4da9-855d-d7c2ee88b066.gif"  width="300" height="300" />
-
-#### 2. Join to Story
-<img src="https://user-images.githubusercontent.com/111412548/241064042-aafbe5df-c271-4199-8ceb-25c21e22e955.gif"  width="300" height="300" />
-
-#### 3. Merge the story
-<img src="https://user-images.githubusercontent.com/111412548/241064069-ae3429a1-c9d0-40ff-8ac8-e1b43218f2c0.gif"  width="300" height="300" />
+| 1. Create New story | 2. Collaborate to story | 3. Merge the story |
+|---|---|---|
+|<img src="https://user-images.githubusercontent.com/111412548/241064059-6648a2ec-c6b6-4da9-855d-d7c2ee88b066.gif"  width="100%" height="300" />|<img src="https://user-images.githubusercontent.com/111412548/241064042-aafbe5df-c271-4199-8ceb-25c21e22e955.gif"  width="100%" height="300" />|<img src="https://user-images.githubusercontent.com/111412548/241064069-ae3429a1-c9d0-40ff-8ac8-e1b43218f2c0.gif"  width="100%" height="300" />|
 
 ## Technology used
 
