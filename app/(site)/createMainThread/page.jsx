@@ -163,7 +163,7 @@ export default function SubmitMainThread() {
                   id="grid-state"
                   required
                 >
-                  <option value="" selected="selected">Select</option>
+                  <option value="" >Select</option>
                   <option>thriller</option>
                   <option>fantasy</option>
                   <option>history</option>

@@ -20,9 +20,7 @@ export default function Page({ params }) {
   const [bodies, setBodies] = useState([]);
   const [users, setUsers] = useState([]);
   const [mainUserImage, setMainUserImage] = useState("");
-  const [loginUserId, setLoginUserId] = useState("");
-  const [AIGenre, setAIGenre] = useState(""); // This is the AI Genre
-  const [refresh, setRefresh] = useState(false); // New state for refreshing
+  const [loginUserId, setLoginUserId] = useState("");    
 
   let arrayThing = [
     {
@@ -86,8 +84,7 @@ export default function Page({ params }) {
       });
   }, []);
 
-  const handleAIGenreGenerate = useCallback(async () => {
-    setAIGenre("");
+  const handleAIGenreGenerate = useCallback(async () => {    
     const contentBody = mainThread.contentBody;
     const endpoint = "https://api.openai.com/v1/completions";
 
@@ -166,30 +163,23 @@ export default function Page({ params }) {
           return data;
         })
         .then((data) => {
-          setMainThread(data);
-          setRefresh(true);
+          setMainThread(data);             
         })
         .catch((error) => console.error("Error:", error));
     }
-  }, [mainThread]);
+  }, []);
 
   useEffect(() => {
     if (mainThread.phase === 6) {
       handleAIGenreGenerate();
     }
-  }, [mainThread.phase, handleAIGenreGenerate]);
-
-  useEffect(() => {
-    if (refresh) {
-      location.reload();
-      setRefresh(false);
-    }
-  }, [refresh]);
+  }, []);
+  
 
   return (
-    <>
-      {mainThread.phase > 5 || mainThread.tag === "Complete" ? (
-        <>
+    <>    
+      {mainThread.phase > 5 || mainThread.tag === "Complete"? (
+        <>          
           <div className="flex flex-row justify-between">
             <div className="basis-1/2"></div>
             <div className="basis-1/3 flex justify-center mr-2">
