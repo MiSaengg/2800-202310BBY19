@@ -199,13 +199,11 @@ export default function Page({ params }) {
                   userId={userId}
                   mainCharacter={mainThread.mainCharacter}
                   title={mainThread.title}
-                  phase={mainThread.phase}
                 />
               ) : null}
             </div>
-              <div className="flex flex-row justify-between">
-                <div className="basis-1/2"></div>
-                <div className="basis-1/3 flex justify-center mr-2">
+              <div className="flex flex-row justify-center mb-10">
+                <div className="flex justify-center">
                   <Contributors
                     mainUserImage={mainUserImage}
                     contributorsImg={users}
@@ -267,7 +265,7 @@ export default function Page({ params }) {
                   userId={userId}
                   mainCharacter={mainThread.mainCharacter}
                   title={mainThread.title}
-                  phase={mainThread.phase}
+                  phase={"Phase: " + mainThread.phase}
                 />
               ) : null}
             </div>
