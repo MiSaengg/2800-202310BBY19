@@ -159,13 +159,14 @@ export default function Page() {
                   </span>
                 )}
                 <div className="m-2">
-                  <p className="text-lg" style={{height:"55px"}}>                    
-                    { item.title.length > 20 ?
-                      `${item.title.substring(0,20)}...`
-                      : `${item.title}`
-                    }                                       
+                  <p className="text-lg" style={{ height: "55px" }}>
+                    {item.title.length > 20
+                      ? `${item.title.substring(0, 20)}...`
+                      : `${item.title}`}
                   </p>
-                  <h3 className="text-md">{item.genre.join(", ")}</h3>
+                  <h3 className="text-md" style={{ height: "55px" }}>
+                    {item.genre.join(", ")}
+                  </h3>
                   <p className="font-light font-mono text-sm text-gray-700 hover:text-gray-900 transition-all duration-200">
                     {item.user.penName}
                   </p>
