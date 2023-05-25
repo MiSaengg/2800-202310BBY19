@@ -82,7 +82,7 @@ export default function Profile() {
           
 
           <div className="mt-10 pb-5">
-              <h1 className="text-xl font-mono text-gray-700">Likes Thread</h1>
+              <h1 className="text-xl font-mono text-gray-700">Likes Stories</h1>
               <hr className="mt-1"></hr>
           </div>
 
@@ -99,7 +99,7 @@ export default function Profile() {
           </div>
 
           <div className="mt-10 pb-5">
-              <h1 className="text-xl font-mono text-gray-700">Owned Thread</h1>
+              <h1 className="text-xl font-mono text-gray-700">Owned Stories</h1>
               <hr className="mt-1"></hr>
           </div>
 

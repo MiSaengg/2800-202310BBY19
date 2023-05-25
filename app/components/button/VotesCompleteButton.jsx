@@ -1,61 +1,71 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-export default function VotesCompleteButton({ mainThreadId, branchThreadId, votedBranchThread , currentUserId , numVotes}) {  
+export default function VotesCompleteButton({
+  mainThreadId,
+  branchThreadId,
+  votedBranchThread,
+  currentUserId,
+  numVotes,
+}) {
   const [votes, setVotes] = useState(numVotes);
-  const [voted, setVoted] = useState(votedBranchThread.includes(branchThreadId));    
+  const [voted, setVoted] = useState(
+    votedBranchThread.includes(branchThreadId)
+  );
 
-  useEffect(()=> {
-    const endpoint = `/api/threads/${mainThreadId}`
+  useEffect(() => {
+    const endpoint = `/api/threads/${mainThreadId}`;
     fetch(endpoint, {
-      method: "GET"
-    }).then((res) => res.json())
-    .then(({mainThread}) => {
-      const mainThreadPhaseStage = mainThread.phaseStage
-      const targetBranchThread = mainThreadPhaseStage[branchThreadId]
-      const votesData = targetBranchThread["votes"]
-      setVotes(votesData)
+      method: "GET",
     })
-
-  }, [votes])
+      .then((res) => res.json())
+      .then(({ mainThread }) => {
+        const mainThreadPhaseStage = mainThread.phaseStage;
+        const targetBranchThread = mainThreadPhaseStage[branchThreadId];
+        const votesData = targetBranchThread["votes"];
+        setVotes(votesData);
+      });
+  }, [voted]);
 
   const votesSubmit = () => {
-    setVoted(voted => !voted)    
+    setVoted((voted) => !voted);
     // vote function
-    if(voted === false){
-      const endpoint = `/api/threads/mainThread/vote?mainThreadId=${mainThreadId}&branchThreadId=${branchThreadId}&userId=${currentUserId}`  
+    if (voted === false) {
+      const endpoint = `/api/threads/mainThread/vote?mainThreadId=${mainThreadId}&branchThreadId=${branchThreadId}&userId=${currentUserId}`;
       fetch(endpoint, {
-        method : 'PATCH',
-        headers:{
-          'Content-Type': 'application/json'
-        }
-      }).then(res => res.json())
-      .then(({votedMainThread}) => {
-        const votedMainThreadPhaseStage = votedMainThread.phaseStage
-        const targetBranchThread = votedMainThreadPhaseStage[branchThreadId]
-        const voteData = targetBranchThread["votes"]
-        setVotes(voteData)
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
-      
-      
-      
-      // unvote function  
-    }else{
-      const endpoint = `/api/threads/mainThread/unvote?mainThreadId=${mainThreadId}&branchThreadId=${branchThreadId}&userId=${currentUserId}`  
-      fetch(endpoint, {
-        method : 'PATCH',
-        headers:{
-          'Content-Type': 'application/json'
-        }
-      }).then(res => res.json())
-      .then(({unvotedMainThread}) => {
-        const unvotedMainThreadPhaseStage = unvotedMainThread.phaseStage
-        const targetBranchThread = unvotedMainThreadPhaseStage[branchThreadId]
-        const unvoteData = targetBranchThread["votes"]
-        setVotes(unvoteData)
-      })
-    }
+        .then((res) => res.json())
+        .then(({ votedMainThread }) => {
+          const votedMainThreadPhaseStage = votedMainThread.phaseStage;
+          const targetBranchThread = votedMainThreadPhaseStage[branchThreadId];
+          const voteData = targetBranchThread["votes"];
+          setVotes(voteData);
+          location.reload();
+        });
 
+      // unvote function
+    } else {
+      const endpoint = `/api/threads/mainThread/unvote?mainThreadId=${mainThreadId}&branchThreadId=${branchThreadId}&userId=${currentUserId}`;
+      fetch(endpoint, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then(({ unvotedMainThread }) => {
+          const unvotedMainThreadPhaseStage = unvotedMainThread.phaseStage;
+          const targetBranchThread =
+            unvotedMainThreadPhaseStage[branchThreadId];
+          const unvoteData = targetBranchThread["votes"];
+          setVotes(unvoteData);
+          location.reload();
+        });
+    }
   };
 
   return (
