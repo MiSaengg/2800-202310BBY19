@@ -13,6 +13,7 @@ export default function VotesCompleteButton({
     votedBranchThread.includes(branchThreadId)
   );
 
+  //Use Effect for fetching votes data
   useEffect(() => {
     const endpoint = `/api/threads/${mainThreadId}`;
     fetch(endpoint, {
@@ -27,9 +28,9 @@ export default function VotesCompleteButton({
       });
   }, [voted]);
 
+  // Vote and Unvote Functions
   const votesSubmit = () => {
     setVoted((voted) => !voted);
-    // vote function
     if (voted === false) {
       const endpoint = `/api/threads/mainThread/vote?mainThreadId=${mainThreadId}&branchThreadId=${branchThreadId}&userId=${currentUserId}`;
       fetch(endpoint, {
@@ -46,8 +47,6 @@ export default function VotesCompleteButton({
           setVotes(voteData);
           location.reload();
         });
-
-      // unvote function
     } else {
       const endpoint = `/api/threads/mainThread/unvote?mainThreadId=${mainThreadId}&branchThreadId=${branchThreadId}&userId=${currentUserId}`;
       fetch(endpoint, {
@@ -72,7 +71,7 @@ export default function VotesCompleteButton({
     <>
       <button
         onClick={votesSubmit}
-        className="button float-right fixed bottom-28 right-2.5 z-50"
+        className="button float-right fixed bottom-40 right-5 z-50"
       >
         {voted ? (
           <Image

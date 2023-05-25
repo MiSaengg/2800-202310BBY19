@@ -1,7 +1,6 @@
 "use client";
 
 import React, { use, useEffect, useState } from "react";
-import StoryCard from "./../../components/card/StoryCard";
 import Link from "next/link";
 import Image from "next/image";
 import EasterEggBBY19Trigger from "@/app/components/EasterEggTrigger/EasterEggBBY19Trigger";
@@ -15,8 +14,7 @@ export default function Page() {
   const [easterEggModal, setEasterEggModal] = useState(false);
   const [easterEggTrigger, setEasterEggTrigger] = useState("");
 
-  //Get Method -> query? & Post Method
-
+  //UseEffect for fetching user data
   useEffect(() => {
     const endpoint = `/api/threads/mainThread`;
 
@@ -29,6 +27,7 @@ export default function Page() {
       });
   }, []);
 
+  // Search Function
   const handleSearchSubmit = (event) => {
     event.preventDefault();
     //Easter Egg Implement Section
@@ -50,6 +49,7 @@ export default function Page() {
         });
     }
   };
+  //Genre and Tag Change Functions
   const handleGenreChange = (event) => {
     setSelectedGenre(event.target.value);
   };
@@ -57,6 +57,7 @@ export default function Page() {
     setSelectedTag(event.target.value);
   };
 
+  //Refresh Function
   const handleRefreshChange = (event) => {
     event.preventDefault();
     const endpoint = `/api/threads/mainThread`;
@@ -69,6 +70,7 @@ export default function Page() {
       });
   };
 
+  //Close Modal Function
   const closeModalEvent = (event) => {
     setEasterEggModal(false);
   };
@@ -125,7 +127,7 @@ export default function Page() {
               <option value="sports">Sports</option>
               <option value="travel">Travel</option>
               <option value="comedy">Comedy</option>
-              <option value="sifi">Science-Fiction</option>
+              <option value="science-fiction">Science-Fiction</option>
             </select>
             <select
               value={selectedTag}

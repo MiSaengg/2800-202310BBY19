@@ -14,11 +14,13 @@ export default function SubmitMainThread() {
   const bodyRef = useRef("");
   const [showButtons, setShowButtons] = useState(true);
 
+  //Use Effect to get the user ID
   useEffect(() => {
     const userID = localStorage.getItem("userID");
     setUserId(userID);
   }, [userId]);
 
+  //Use Effect for the loading dots
   useEffect(() => {
     if (isLoading) {
       const timer = setInterval(() => {
@@ -29,6 +31,7 @@ export default function SubmitMainThread() {
     }
   }, [isLoading]);
 
+  //AI Generate function
   const handleAIGenerate = async (event) => {
     event.preventDefault();
     bodyRef.current = "";
@@ -81,6 +84,7 @@ export default function SubmitMainThread() {
     setIsLoading(false);
   };
 
+  //Thread Submit function
   const handleMainThreadSubmit = async (event) => {
     event.preventDefault();
     let submitConfirm = confirm("Are you ready to submit?");
@@ -134,7 +138,7 @@ export default function SubmitMainThread() {
           className="w-full"
         >
           <div className="">
-            <div className="max-w-50 px-3 mb-6">
+            <div className="max-w-50 px-3 mb-3">
               <label className="pl-1 block uppercase tracking-wide text-gray-700 text-xs font-mono mb-2">
                 Title
                 <span style={{ position: "relative", bottom: "5px" }}>*</span>
@@ -151,8 +155,8 @@ export default function SubmitMainThread() {
             </div>
           </div>
 
-          <div className="flex mb-6">
-            <div className="max-w-50 px-3">
+          <div className="flex flex-row items-end mb-6">
+            <div className="px-3 flex flex-col">
               <label className="pl-1 mb-2 block uppercase tracking-wide text-gray-700 font-mono text-xs">
                 Genre
                 <span style={{ position: "relative", bottom: "5px" }}>*</span>
@@ -165,7 +169,7 @@ export default function SubmitMainThread() {
                   id="grid-state"
                   required
                 >
-                  <option value="" >Select</option>
+                  <option value="">Select</option>
                   <option>thriller</option>
                   <option>fantasy</option>
                   <option>history</option>
@@ -190,7 +194,7 @@ export default function SubmitMainThread() {
               </div>
             </div>
 
-            <div className="max-w-50 px-3">
+            <div className="w-1/3 px-3">
               <label className="pl-1 mb-2 block uppercase text-gray-700 font-mono text-xs">
                 Number of Characters
                 <span style={{ position: "relative", bottom: "5px" }}>*</span>
@@ -217,7 +221,7 @@ export default function SubmitMainThread() {
             <textarea
               name="pilot"
               id="message"
-              rows="10"
+              rows="9"
               className="mb-5 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
               placeholder="Write your thoughts here..."
               required
@@ -226,13 +230,15 @@ export default function SubmitMainThread() {
               readOnly={isLoading}
             ></textarea>
           </div>
-          <div className="absolute left-3 px-3">
-            {showButtons && (
-              <Button text="AI Generate" onClick={handleAIGenerate} />
-            )}{" "}
-          </div>
-          <div className="absolute right-3 px-3">
-            {showButtons && <Button text="Upload" />}{" "}
+          <div className="flex flex-row justify-between">
+            <div className="px-3">
+              {showButtons && (
+                <Button text="AI Generate" onClick={handleAIGenerate} />
+              )}{" "}
+            </div>
+            <div className="px-3">
+              {showButtons && <Button text="Upload" />}{" "}
+            </div>
           </div>
         </form>
       </div>

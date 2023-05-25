@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 const ProfileCardInfo = ({ genre, userId, mainCharacter, title, phase }) => {
   const [user, setUser] = useState({});
 
+  //Use Effect for fetching user data
   useEffect(() => {
     const endpoint = `/api/user/${userId}`;
 

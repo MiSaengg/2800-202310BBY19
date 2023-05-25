@@ -1,5 +1,18 @@
-import { createUser, getUserById} from "@/lib/prisma/users";
+import { createUser, getUserById } from "@/lib/prisma/users";
 
+/**
+ * getUserById
+ *
+ * @description Get user by id.
+ * @param {string} userId
+ * @returns {Promise<{user: any}>}
+ *
+ * createUser
+ *
+ * @description Create user.
+ * @param {string} data
+ * @returns {Promise<{user: any}>}
+ */
 const handler = async (req, res) => {
   if (req.method === "GET") {
     try {

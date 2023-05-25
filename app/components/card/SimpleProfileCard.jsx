@@ -9,7 +9,7 @@ const SimpleProfileCardInfo = ({
   branchThreadIdParam,
   mainThreadIdParam,
   ownerUserId,
-  loginUserId,  
+  loginUserId,
 }) => {
   const [userImg, setUserImg] = useState("");
   const [penName, setPenName] = useState("");
@@ -18,6 +18,7 @@ const SimpleProfileCardInfo = ({
   const [numVotes, setNumVotes] = useState(0);
   const [currentUserId, setCurrentUserId] = useState(null);
 
+  // Click Event for Branch Card
   const clickBranchCard = (e) => {
     e.preventDefault();
     const fetchMainThreadData = async () => {
@@ -38,6 +39,7 @@ const SimpleProfileCardInfo = ({
     setShowModal(true);
   };
 
+  // Click Event for Close Modal
   const closeModalEvent = (e) => {
     e.preventDefault();
 
@@ -56,6 +58,7 @@ const SimpleProfileCardInfo = ({
     setShowModal(false);
   };
 
+  // Event for merging branch thread to main thread
   const mergeBranchThreadToMainThread = async (e) => {
     e.preventDefault();
     const confirmed = window.confirm("Are you sure you want to merge?");
@@ -63,7 +66,7 @@ const SimpleProfileCardInfo = ({
     if (confirmed) {
       const data = {
         mainThreadId: mainThreadIdParam,
-        branchThreadId: branchThreadIdParam,        
+        branchThreadId: branchThreadIdParam,
       };
 
       const JSONdata = JSON.stringify(data);
@@ -91,6 +94,7 @@ const SimpleProfileCardInfo = ({
     }
   };
 
+  // Event for deleting branch thread
   const deleteBranchThread = async (e) => {
     e.preventDefault();
     const confirmed = window.confirm("Are you sure you want to delete?");
@@ -124,6 +128,7 @@ const SimpleProfileCardInfo = ({
     }
   };
 
+  // Use Effect for fetching user data
   useEffect(() => {
     setCurrentUserId(loginUserId);
     const fetchUserData = async () => {
@@ -139,6 +144,7 @@ const SimpleProfileCardInfo = ({
       }
     };
 
+    // Fetch current user data
     const fetchCurrentUserData = async () => {
       const endpoint = `/api/users/${loginUserId}`;
       try {
@@ -151,6 +157,7 @@ const SimpleProfileCardInfo = ({
       }
     };
 
+    // Fetch main thread data
     const fetchMainThreadData = async () => {
       const endpoint = `/api/threads/${mainThreadIdParam}`;
       try {
@@ -196,7 +203,7 @@ const SimpleProfileCardInfo = ({
           <div className="relative max-w-full max-h-full">
             <div className="relative bg-white rounded-lg shadow">
               <div className="flex items-start justify-between p-5 border-b rounded-t">
-                <h3 className="text-xl font-mono text-gray-900">Title</h3>
+                
                 <VotesCompleteButton
                   mainThreadId={mainThreadIdParam}
                   branchThreadId={branchThreadIdParam}

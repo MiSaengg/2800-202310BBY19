@@ -2,7 +2,7 @@
 @tailwind component;
 @tailwind utilities;
 
-@layer base{
+@layer base {
   #__next {
     @apply contents;
   }
@@ -12,9 +12,7 @@
   }
 
   body {
-    @apply flex h-full flex-col;    
-    
-    
+    @apply flex h-full flex-col;
   }
 
   main {

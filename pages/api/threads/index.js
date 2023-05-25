@@ -1,10 +1,17 @@
-import {
-  createThread,
-  getThreads,
-  likeThread,
-  unLikeThread,
-} from "@/lib/prisma/threads";
+import { createThread, getThreads } from "@/lib/prisma/threads";
 
+/**
+ * createThread
+ *
+ * @description Create thread.
+ * @param {string} data
+ * @returns {Promise<{thread: any}>}
+ *
+ * getThreads
+ *
+ * @description Get threads.
+ * @returns {Promise<{threads: any}>}
+ */
 const handler = async (req, res) => {
   if (req.method === "GET") {
     try {
