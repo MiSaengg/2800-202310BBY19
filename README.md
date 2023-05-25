@@ -1,3 +1,22 @@
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>            
+        <a href="#contributors">Contributors</a>      
+    </li>
+    <li>
+      <a href="#technology-used">Technology used</a>      
+    </li>
+    <li><a href="#how-did-we-use-ai">How did we use AI</a></li>
+    <li><a href="#getting-started">Getting started</a></li>
+    <li><a href="#file-contents-of-folder">File Contents of folder</a></li>
+    <li><a href="#learn-more">Learn More</a></li>
+    <li><a href="#references">References</a></li>
+    <li><a href="#credits">Credits</a></li>
+    <li><a href="#licence">Licence</a></li>
+  </ol>
+</details>
 <br />
 <div align="center">
   <a href="https://github.com/MiSaengg/2800-202310BBY19">
@@ -22,6 +41,7 @@
 </div>
 
 
+
 ## Contributors
 
 | Jasper                                   | David                                                       | Noel              | Juan                    |
@@ -29,6 +49,18 @@
 | _Hi, My name is Jasper, Let's do this! _ | _Hi, my name is David, time to harness the power of AI :D _ | _Hi, my name is Noel, We got this o2o _ | _Hi, my name is Juan! _ |
 | `Team Lead Fullstack`                            | `Fullstack`                                               | `Fullstack`     | `Fullstack`           |
 | ✉️`ohyj0906@gmail.com` | ✉️`gunheedavidcho@gmail.com`  | ✉️`dndyd4924@gmail.com` | ✉️`juanchung7v@gmail.com`|
+
+
+## How to use?
+
+#### 1. Create Story
+<img src="https://user-images.githubusercontent.com/111412548/241064059-6648a2ec-c6b6-4da9-855d-d7c2ee88b066.gif"  width="300" height="300" />
+
+#### 2. Join to Story
+<img src="https://user-images.githubusercontent.com/111412548/241064042-aafbe5df-c271-4199-8ceb-25c21e22e955.gif"  width="300" height="300" />
+
+#### 3. Merge the story
+<img src="https://user-images.githubusercontent.com/111412548/241064069-ae3429a1-c9d0-40ff-8ac8-e1b43218f2c0.gif"  width="300" height="300" />
 
 ## Technology used
 
@@ -45,7 +77,10 @@
 [![VScode Badge](https://img.shields.io/badge/VSCode-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white)](https://javascript.info/)
 
 ## How did we use AI?
-
+1. AI played a pivotal role in the creation of our app, particularly in the coding phase. We employed OpenAI's Codex model, also known as Co-Pilot, which enhanced our development efficiency and ensured the application of best practices. This model provided real-time code suggestions, assisted in debugging, and served as an invaluable tool for problem-solving, thereby expediting the coding process and bolstering the overall quality of the app.
+2. In addition to aiding in the app's creation, AI was integral in preparing the data needed for our app. We incorporated OpenAI's Ada model into a Python-based data processing pipeline for dataset fine-tuning. The Ada model helped clean and organize the dataset by identifying and correcting inaccuracies, eliminating duplicates, and filling in missing values. This meticulous dataset preparation improved the data quality, tailoring it to our application's needs and contributing to the app's overall performance.
+3. Our app harnesses the power of AI for several functions. One of its key applications is in text completion, where we utilize OpenAI's text-davinci-003 and 002 model. As users embark on their creative writing journey, the AI model suggests potential progressions for their story, aiding them in their creativity. Another critical function of AI in our app is in genre detection. The app analyses user-generated text and assigns it to a predefined genre. This capability not only assists in organizing the content but also paves the way for personalized recommendations.
+4. Despite these advancements, we encountered a few challenges along the way, primarily dealing with the variability and ambiguity of human language. Our genre detection feature, given the subjectivity and context-dependence of language, found it challenging to always correctly categorize the genre. However, we took these limitations as opportunities for improvement. We diversified our training datasets and used user feedback for model fine-tuning. We also allowed users to manually correct the AI-detected genre, and their corrections were fed back into the model for future learning. This iterative process helped the model learn from its mistakes and adapt to user inputs, thereby continually improving over time.
 
 ## Getting Started
 
@@ -264,3 +299,20 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+## References
+
+[NextJS](https://nextjs.org/)
+[Prisma](https://www.prisma.io/)
+[Tailwind css](https://tailwindcss.com/)
+[NextAuth](https://next-auth.js.org/)
+[OpenAI](https://openai.com/)
+[Vercel](https://vercel.com/docs)
+[MongoDB](https://www.mongodb.com/)
+
+## Credits
+
+<img src="https://issp.bcit.ca/BCIT_logo.png"  width="100" height="100" />
+
+## Licence
+[MIT Licence](https://www.mit.edu/~amini/LICENSE.md)
