@@ -37,22 +37,35 @@ const ProfileCardInfo = ({ genre, userId, mainCharacter, title, phase }) => {
           ></div>
           <div
             className="flex flex-col justify-center pb-2 text-white h-40 z-20"
-            style={{ position: "absolute", color: "white"}}
+            style={{ position: "absolute", color: "white" }}
           >
             <div className="text-center mb-1">
               <span className="font-bold underline text-2xl">{title}</span>
             </div>
 
             <div className="flex flex-col text-center">
-              <span className="text-sm">Original Genre: <span className="text-md font-bold">{genre[0]}</span></span>
-              <span className="text-sm">AI Recommended Genre: <span className="text-md font-bold">Genre</span></span>
-              <span className="text-sm">Number of Characters: <span className="text-md font-bold">{mainCharacter}</span></span>
-              <span className="text-sm"><span className="text-md font-bold">{phase}</span></span>
+              <span className="text-sm">
+                Original Genre:{" "}
+                <span className="text-md font-bold">{genre[0]}</span>
+              </span>
+              {/* Added condition to show AI Recommended Genre if genre[1] exists */}
+              {genre[1] && (
+                <span className="text-sm">
+                  AI Recommended Genre:{" "}
+                  <span className="text-md font-bold">{genre[1]}</span>
+                </span>
+              )}{" "}
+              <span className="text-sm">
+                Number of Characters:{" "}
+                <span className="text-md font-bold">{mainCharacter}</span>
+              </span>
+              <span className="text-sm">
+                <span className="text-md font-bold">{phase}</span>
+              </span>
             </div>
             <div></div>
 
-            <div>
-            </div>
+            <div></div>
           </div>
         </div>
 
