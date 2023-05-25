@@ -48,7 +48,7 @@
 | ---------------------------------------- | ----------------------------------------------------------- | ----------------- | ----------------------- |
 | _Hi, My name is Jasper, Let's do this! _ | _Hi, my name is David, time to harness the power of AI :D _ | _Hi, my name is Noel, We got this o2o _ | _Hi, my name is Juan! _ |
 | `Team Lead Fullstack`                            | `Fullstack`                                               | `Fullstack`     | `Fullstack`           |
-| ✉️`ohyj0906@gmail.com` | ✉️`gunheedavidcho@gmail.com`  | ✉️`dndyd4924@gmail.com` | ✉️`juanchung7v@gmail.com`|
+
 
 
 ## How to use?
@@ -67,13 +67,13 @@
 ![image](https://user-images.githubusercontent.com/63331153/241052172-540c6ca9-2f07-4a00-bc50-85104ec67bbb.png)
 
 ![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
-![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma^4.13.0-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)
 [![JavaScript Badge](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white)](https://javascript.info/)
 [![Node Badge](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://javascript.info/)
-![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
-![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Next JS](https://img.shields.io/badge/Next^13.3.2-black?style=for-the-badge&logo=next.js&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss^3.3.2-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" height="20px" style="border : 1px solid black; padding: 5px">
-![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB^6.0-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
 [![VScode Badge](https://img.shields.io/badge/VSCode-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white)](https://javascript.info/)
 
 ## How did we use AI?
@@ -316,3 +316,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Licence
 [MIT Licence](https://www.mit.edu/~amini/LICENSE.md)
+
+## Contact Info
+| Jasper                                   | David                                                       | Noel              | Juan                    |
+|-----|-----|-----|-----|
+| ✉️`ohyj0906@gmail.com` | ✉️`gunheedavidcho@gmail.com`  | ✉️`dndyd4924@gmail.com` | ✉️`juanchung7v@gmail.com`|
