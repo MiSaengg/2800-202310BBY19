@@ -181,20 +181,37 @@ export default function Page({ params }) {
     <>    
       {mainThread.phase > 5 || mainThread.tag === "Complete"? (
         <>          
-          <div className="flex flex-row justify-between">
-            <div className="basis-1/2"></div>
-            <div className="basis-1/3 flex justify-center mr-2">
-              <Contributors
-                mainUserImage={mainUserImage}
-                contributorsImg={users}
-              />
-            </div>
-          </div>
-          <h4 style={{ textAlign: "center", fontSize: "20px", margin: "20px" }}>
+          {/* <h4 style={{ textAlign: "center", fontSize: "20px", margin: "20px" }}>
             {"< "}
             {mainThread.title}
             {" >"}            
-          </h4>
+          </h4> */}
+                      <div
+              style={{
+                display: "flex",
+                justifyContent: "space-evenly",
+                marginBottom: "15px",
+              }}
+            >
+              {userId ? (
+                <ProfileCardInfo
+                  genre={mainThreadGenre}
+                  userId={userId}
+                  mainCharacter={mainThread.mainCharacter}
+                  title={mainThread.title}
+                  phase={mainThread.phase}
+                />
+              ) : null}
+            </div>
+              <div className="flex flex-row justify-between">
+                <div className="basis-1/2"></div>
+                <div className="basis-1/3 flex justify-center mr-2">
+                  <Contributors
+                    mainUserImage={mainUserImage}
+                    contributorsImg={users}
+                  />
+                </div>
+              </div>
           <RReadTextBox
             body={mainThread.pilot}
             image={mainUserImage}
