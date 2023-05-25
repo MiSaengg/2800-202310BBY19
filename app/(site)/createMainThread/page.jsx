@@ -1,12 +1,12 @@
 "use client";
-import { useRouter } from "next/navigation";
+
+import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
 import Button from "./../../components/button/Button";
 
 export default function SubmitMainThread() {
   const router = useRouter();
   const [userId, setUserId] = useState(null);
-  const [pilot, setPilot] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [dots, setDots] = useState("");
   const formRef = useRef();
@@ -14,21 +14,24 @@ export default function SubmitMainThread() {
   const bodyRef = useRef("");
   const [showButtons, setShowButtons] = useState(true);
 
+  // Get user Id from local storage
   useEffect(() => {
     const userID = localStorage.getItem("userID");
     setUserId(userID);
   }, [userId]);
 
+  // Update loading status
   useEffect(() => {
     if (isLoading) {
       const timer = setInterval(() => {
         setDots((dots) => (dots.length < 4 ? dots + "." : ""));
       }, 300);
-
       return () => clearInterval(timer);
     }
   }, [isLoading]);
 
+
+    // Use OpenAI API to generate text
   const handleAIGenerate = async (event) => {
     event.preventDefault();
     bodyRef.current = "";
@@ -80,7 +83,7 @@ export default function SubmitMainThread() {
     }
     setIsLoading(false);
   };
-
+  // Submit the main thread and redirect to the thread's page
   const handleMainThreadSubmit = async (event) => {
     event.preventDefault();
     let submitConfirm = confirm("Are you ready to submit?");

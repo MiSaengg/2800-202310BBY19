@@ -1,32 +1,37 @@
 "use client";
-import { redirect, useRouter } from "next/navigation";
-
+import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import { useEffect} from "react";
-
+import { useEffect } from "react";
 
 export default function MemberLayout({ children }) {
   const { data: session, status } = useSession();
-  const {push} = useRouter();
+  const router = useRouter();
+  
   useEffect(() => {
+    // If the session status is not 'loading', perform checks
     if (status !== "loading") {
+      // If there is a session (user is authenticated), save the userId in localStorage and fetch user data
       if (session) {
         localStorage.setItem("userID", session.user.id);        
         const endpoint = `/api/user/${session.user.id}`
         fetch(endpoint , {
           method: "GET"
-        }).then((res) => res.json())
+        })
+        .then((res) => res.json())
         .then(({user}) => {
+          // If the user has not set a penName, redirect them to the newUser page
           if(!user.penName || user.penName === ""){
-            push("/newUser")
+            router.push("/newUser")
           }
         })
       } else {
-        redirect("/");
+        // If there's no session (user is not authenticated), redirect them to the homepage
+        router.push("/");
       }
     }
   }, [session]);
 
+  // If there is a session, return the children elements
   if (session) {
     return <div> {children} </div>;
   }

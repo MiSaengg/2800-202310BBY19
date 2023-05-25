@@ -1,16 +1,18 @@
-// Because we're using react thing in line 3.
-'use client'
+// Import the necessary modules from NextAuth and Next.js Image component.
 import { useSession, signIn, signOut } from 'next-auth/react'
 import Image from 'next/image'
 
 const SignInButton = () => {
+  // Use the useSession hook from NextAuth to get the current user's session.
   const { data: session } = useSession()
-  
 
+  // If the user is signed in (session is not null), display the user's profile image
+  // and a sign out button.
   if (session) {
     return (
       <>
       <div className='flex flex-col justify-center items-center'>
+        {/* If the user has a profile image, display it. */}
         {session?.user?.image ? (
           <div className='relative h-12 w-12'>
             <Image
@@ -21,6 +23,7 @@ const SignInButton = () => {
             />
           </div>
         ) : (
+          // If the user does not have a profile image, display a placeholder SVG.
           <span className='inline-block h-12 w-12 overflow-hidden rounded-full bg-gray-100'>
             <svg
               className='h-full w-full text-gray-300'
@@ -35,7 +38,9 @@ const SignInButton = () => {
           <button
             className='text-sm font-medium tracking-wider uppercase text-stone-500'
             onClick={() => {
+              // Sign the user out and redirect to the root ("/") page.
               signOut(({ redirect : true, callbackUrl: "/"}))
+              // Remove the user ID from the local storage.
               localStorage.removeItem("userID")
             }}
           >
@@ -48,6 +53,7 @@ const SignInButton = () => {
     )
   }
 
+  // If the user is not signed in, display a sign in button.
   return (
     <button
       className='text-sm font-medium tracking-wider uppercase text-stone-500 text-center'

@@ -11,13 +11,15 @@ const SimpleProfileCardInfo = ({
   ownerUserId,
   loginUserId,  
 }) => {
-  const [userImg, setUserImg] = useState("");
-  const [penName, setPenName] = useState("");
-  const [showModal, setShowModal] = useState(false);
-  const [votedBranchThread, setVotedBranchThread] = useState([]);
-  const [numVotes, setNumVotes] = useState(0);
-  const [currentUserId, setCurrentUserId] = useState(null);
+  // useState hooks for handling component state
+  const [userImg, setUserImg] = useState(""); // user image URL
+  const [penName, setPenName] = useState(""); // user pen name
+  const [showModal, setShowModal] = useState(false); // control modal visibility
+  const [votedBranchThread, setVotedBranchThread] = useState([]);  // array for voted branch threads
+  const [numVotes, setNumVotes] = useState(0);  // number of votes
+  const [currentUserId, setCurrentUserId] = useState(null); // id of the current user
 
+  
   const clickBranchCard = (e) => {
     e.preventDefault();
     const fetchMainThreadData = async () => {
