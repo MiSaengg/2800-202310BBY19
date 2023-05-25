@@ -58,9 +58,7 @@ const SimpleProfileCardInfo = ({
 
   const mergeBranchThreadToMainThread = async (e) => {
     e.preventDefault();
-    const confirmed = window.confirm(
-      "Are you sure you want to merge?"
-    );
+    const confirmed = window.confirm("Are you sure you want to merge?");
 
     if (confirmed) {
       const data = {
@@ -95,9 +93,7 @@ const SimpleProfileCardInfo = ({
 
   const deleteBranchThread = async (e) => {
     e.preventDefault();
-    const confirmed = window.confirm(
-      "Are you sure you want to delete?"
-    );
+    const confirmed = window.confirm("Are you sure you want to delete?");
     if (confirmed) {
       const endpoint = `/api/threads/branchThread?branchthreadId=${branchThreadIdParam}`;
       const options = {
@@ -155,9 +151,24 @@ const SimpleProfileCardInfo = ({
       }
     };
 
+    const fetchMainThreadData = async () => {
+      const endpoint = `/api/threads/${mainThreadIdParam}`;
+      try {
+        const response = await fetch(endpoint);
+        const { mainThread } = await response.json();
+
+        const mainThreadPhaseStage = mainThread.phaseStage;
+        const targetBranchThread = mainThreadPhaseStage[branchThreadIdParam];
+        setNumVotes(targetBranchThread["votes"]);
+      } catch (error) {
+        console.error("Failed to fetch user data:", error);
+      }
+    };
+
     fetchUserData();
     fetchCurrentUserData();
-  }, [userId]);
+    fetchMainThreadData();
+  }, [userId, mainThreadIdParam, branchThreadIdParam]);
 
   const cardWidth = 135;
 
@@ -171,6 +182,8 @@ const SimpleProfileCardInfo = ({
         <Image src={userImg} width={500} height={300} className="w-full" />
         <div className="text-center px-3 pb-6 pt-2">
           <h3 className="text-black text-sm font-bold font-sans">{penName}</h3>
+          <h2 className="text-black text-xl font-bold font-sans">🙌</h2>
+          <h3 className="text-black text-sm font-bold font-sans">{numVotes}</h3>
         </div>
         <div className="flex justify-center pb-3 text-black"></div>
       </div>
@@ -183,9 +196,7 @@ const SimpleProfileCardInfo = ({
           <div className="relative max-w-full max-h-full">
             <div className="relative bg-white rounded-lg shadow">
               <div className="flex items-start justify-between p-5 border-b rounded-t">
-                <h3 className="text-xl font-mono text-gray-900">
-                  Title
-                </h3>
+                <h3 className="text-xl font-mono text-gray-900">Title</h3>
                 <VotesCompleteButton
                   mainThreadId={mainThreadIdParam}
                   branchThreadId={branchThreadIdParam}
