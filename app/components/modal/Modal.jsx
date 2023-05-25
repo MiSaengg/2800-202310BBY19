@@ -5,7 +5,6 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 
-
 const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
   const [showModal, setShowModal] = useState(false);
   const [showInnerModal, setShowInnerModal] = useState(false);
@@ -18,11 +17,13 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
   const bodyRef = useRef("");
   const [showButtons, setShowButtons] = useState(true);
 
+  //Use Effect to get the user ID
   useEffect(() => {
     const userID = localStorage.getItem("userID");
     setUserId(userID);
   }, [userId]);
 
+  //Use Effect for the loading dots
   useEffect(() => {
     if (isLoading) {
       const timer = setInterval(() => {
@@ -33,6 +34,7 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
     }
   }, [isLoading]);
 
+  //Use Effect to get the main thread content
   useEffect(() => {
     const endpoint = `/api/threads/${mainThreadId.threadId}`;
     fetch(endpoint, {
@@ -50,6 +52,7 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
       });
   }, [mainThreadId]);
 
+  //Event handler for the AI Generate button
   const handleAIGenerate = async (event) => {
     event.preventDefault();
 
@@ -112,58 +115,60 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
     setShowModal(false);
   };
 
+  //Event handler for the submit button
   const submitBranchThread = async (e) => {
     e.preventDefault();
-    const branchThreadSumbitConfirm = confirm("Are you ready to submit?")
+    const branchThreadSumbitConfirm = confirm("Are you ready to submit?");
 
-    if (branchThreadSumbitConfirm){
-    const data = {
-      body: e.target.branchContext.value,
-      userId: userId,
-      mainThreadId: mainThreadId.threadId,
-    };
+    if (branchThreadSumbitConfirm) {
+      const data = {
+        body: e.target.branchContext.value,
+        userId: userId,
+        mainThreadId: mainThreadId.threadId,
+      };
 
-    const JSONdata = JSON.stringify(data);
+      const JSONdata = JSON.stringify(data);
 
-    const endpoint = "/api/threads/branchThread";
+      const endpoint = "/api/threads/branchThread";
 
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSONdata,
-    };
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSONdata,
+      };
 
-    const response = await fetch(endpoint, options);
+      const response = await fetch(endpoint, options);
 
-    const { threadFromDB, error } = await response.json();
+      const { threadFromDB, error } = await response.json();
 
-    if (!error) {
-      location.reload();
-      setShowModal(false);
+      if (!error) {
+        location.reload();
+        setShowModal(false);
+      } else {
+        location.reload();
+        return;
+      }
     } else {
-      location.reload();
       return;
     }
-  }else{
-    return;
-  }
   };
 
+  //Event handler for voice generated content
   const submitVoice = (e) => {
     e.preventDefault();
 
     const data = {
-      body: e.target.voiceGeneratedContent.value
+      body: e.target.voiceGeneratedContent.value,
     };
 
     setBody(data.body);
     closeInnerModal();
   };
 
+  //Event handler for the show inner modal
   const InnerModal = ({ setShowInnerModal }) => {
-
     const {
       transcript,
       listening,
@@ -183,7 +188,8 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
     return (
       <div className="fixed -top-32 left-0 w-full h-full flex items-center justify-center bg-gray bg-opacity-40 z-40">
         <div className="flex flex-col border-solid border-2 items-center bg-white px-10 pt-3 pb-5">
-          <button onClick={closeInnerModal}
+          <button
+            onClick={closeInnerModal}
             type="button"
             className="text-sm p-1.5 mb-5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg"
             data-modal-hide="defaultModal"
@@ -206,9 +212,26 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
           </button>
           <div className="mb-5">microphone: {listening ? "on" : "off"}</div>
           <div className="flex flex-row mb-5 justify-evenly">
-            <Button type="button" text="Start" onClick={() => SpeechRecognition.startListening({ continuous: true, language: 'en-CA' })}></Button>
-            <Button type="button" text="Stop" onClick={SpeechRecognition.stopListening}></Button>
-            <Button type="button" text="Reset" onClick={resetTranscript}></Button>
+            <Button
+              type="button"
+              text="Start"
+              onClick={() =>
+                SpeechRecognition.startListening({
+                  continuous: true,
+                  language: "en-CA",
+                })
+              }
+            ></Button>
+            <Button
+              type="button"
+              text="Stop"
+              onClick={SpeechRecognition.stopListening}
+            ></Button>
+            <Button
+              type="button"
+              text="Reset"
+              onClick={resetTranscript}
+            ></Button>
           </div>
           <form className="mx-3" onSubmit={submitVoice}>
             <label
@@ -231,15 +254,13 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
       </div>
     );
   };
-
+  // Event handler for the show inner modal
   const openInnerModal = (e) => {
     e.preventDefault();
-    
     setShowInnerModal(true);
   };
-
+  // Event handler for the close inner modal
   const closeInnerModal = (e) => {
-
     setShowInnerModal(false);
   };
 
@@ -338,7 +359,11 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
                   </div>
                   <div className="mb-2">
                     {showButtons && (
-                      <Button type="button" text="Voice-to-Text" onClick={() => setShowInnerModal(true)}/>
+                      <Button
+                        type="button"
+                        text="Voice-to-Text"
+                        onClick={() => setShowInnerModal(true)}
+                      />
                     )}
                   </div>
                 </div>
@@ -353,7 +378,6 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
       ) : null}
 
       {showInnerModal && <InnerModal setShowInnerModal={setShowInnerModal} />}
-
     </>
   );
 };

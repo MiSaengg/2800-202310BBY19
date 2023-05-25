@@ -1,5 +1,4 @@
 "use client";
-// import { getMainThreadById } from "@/lib/prisma/mainThreads";
 import React, { useEffect, useState, useCallback } from "react";
 import { ArcherContainer, ArcherElement } from "react-archer";
 import Modal from "@/app/components/modal/Modal";
@@ -20,8 +19,8 @@ export default function Page({ params }) {
   const [bodies, setBodies] = useState([]);
   const [users, setUsers] = useState([]);
   const [mainUserImage, setMainUserImage] = useState("");
-  const [loginUserId, setLoginUserId] = useState("");    
-  const [genreSelectedByAI , setGenreSelectedByAI] = useState([])
+  const [loginUserId, setLoginUserId] = useState("");
+  const [genreSelectedByAI, setGenreSelectedByAI] = useState([]);
 
   let arrayThing = [
     {
@@ -44,6 +43,7 @@ export default function Page({ params }) {
     },
   ];
 
+  //UseEffect for Main Thread
   useEffect(() => {
     const userIdLogin = localStorage.getItem("userID");
     setLoginUserId(userIdLogin);
@@ -83,10 +83,10 @@ export default function Page({ params }) {
             console.log("Error fetching users:", error);
           });
       });
-      
   }, []);
 
-  const handleAIGenreGenerate = useCallback(async () => {    
+  // AI Genre Generator Function
+  const handleAIGenreGenerate = useCallback(async () => {
     const contentBody = mainThread.contentBody;
     const endpoint = "https://api.openai.com/v1/completions";
 
@@ -137,7 +137,7 @@ export default function Page({ params }) {
       await davinciResponse.json();
 
     const davinciAIGenre = davinciChoices[0].text.trim().toLowerCase(); // Trim and lower case for case insensitive comparison
-    setGenreSelectedByAI(davinciAIGenre)
+    setGenreSelectedByAI(davinciAIGenre);
     if (
       !mainThreadGenre
         .map((genre) => genre.toLowerCase())
@@ -163,53 +163,46 @@ export default function Page({ params }) {
           }
 
           return data;
-        })        
+        })
         .catch((error) => console.error("Error:", error));
-    }          
-  });
-  
-  useEffect(()=>{
-    if(mainThread.phase === 6){
-      handleAIGenreGenerate();
-      // location.reload()
     }
-  },[mainThread.phase])
-  
-  
+  });
+
+  // UseEffect for AI Genre Generator when phase is 6
+  useEffect(() => {
+    if (mainThread.phase === 6) {
+      handleAIGenreGenerate();
+    }
+  }, [mainThread.phase]);
 
   return (
-    <>    
-      {mainThread.phase > 5 || mainThread.tag === "Complete"? (
-        <>          
-          {/* <h4 style={{ textAlign: "center", fontSize: "20px", margin: "20px" }}>
-            {"< "}
-            {mainThread.title}
-            {" >"}            
-          </h4> */}
-                      <div
-              style={{
-                display: "flex",
-                justifyContent: "space-evenly",
-                marginBottom: "15px",
-              }}
-            >
-              {userId ? (
-                <ProfileCardInfo
-                  genre={mainThreadGenre}
-                  userId={userId}
-                  mainCharacter={mainThread.mainCharacter}
-                  title={mainThread.title}
-                />
-              ) : null}
+    <>
+      {mainThread.phase > 5 || mainThread.tag === "Complete" ? (
+        <>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-evenly",
+              marginBottom: "15px",
+            }}
+          >
+            {userId ? (
+              <ProfileCardInfo
+                genre={mainThreadGenre}
+                userId={userId}
+                mainCharacter={mainThread.mainCharacter}
+                title={mainThread.title}
+              />
+            ) : null}
+          </div>
+          <div className="flex flex-row justify-center mb-10">
+            <div className="flex justify-center">
+              <Contributors
+                mainUserImage={mainUserImage}
+                contributorsImg={users}
+              />
             </div>
-              <div className="flex flex-row justify-center mb-10">
-                <div className="flex justify-center">
-                  <Contributors
-                    mainUserImage={mainUserImage}
-                    contributorsImg={users}
-                  />
-                </div>
-              </div>
+          </div>
           <RReadTextBox
             body={mainThread.pilot}
             image={mainUserImage}
@@ -301,7 +294,6 @@ export default function Page({ params }) {
                         mainThreadIdParam={a.mainThreadId}
                         ownerUserId={userId}
                         loginUserId={loginUserId}
-                        
                       />
                     </div>
                   </ArcherElement>

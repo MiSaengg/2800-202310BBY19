@@ -4,7 +4,6 @@ import { useState } from "react";
 import LoginButton from "./components/auth/SignInButton";
 import Image from "next/image";
 import EasterEggPop from "./components/EasterEggTrigger/EasterEggPop";
-import Link from "next/link";
 
 const Header = () => {
   const headerColor = "stone-100";
