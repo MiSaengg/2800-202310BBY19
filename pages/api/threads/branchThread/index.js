@@ -6,6 +6,36 @@ import {
   deleteBranchThread,
 } from "@/lib/prisma/branchThread";
 
+/**
+ * getBranchThread
+ *
+ * @description Get branch thread.
+ * @returns {Promise<{threads: any}>}
+ *
+ * createBranchThread
+ *
+ * @description Create branch thread.
+ * @param {string} data
+ * @returns {Promise<{threadFromDB: any}>}
+ *
+ * voteBranchThread
+ *
+ * @description Vote branch thread.
+ * @param {string} data
+ * @returns {Promise<{threadFromDB: any}>}
+ *
+ * unVoteBranchThread
+ *
+ * @description Unvote branch thread.
+ * @param {string} data
+ * @returns {Promise<{threadFromDB: any}>}
+ *
+ * deleteBranchThread
+ *
+ * @description Delete branch thread.
+ * @param {string} data
+ * @returns {Promise<{threadFromDB: any}>}
+ */
 const handler = async (req, res) => {
   if (req.method === "GET") {
     try {
@@ -20,11 +50,14 @@ const handler = async (req, res) => {
   if (req.method === "POST") {
     try {
       const data = req.body;
-      const mainThreadId = req.body.mainThreadId;      
-      const { threadFromDB , error } = await createBranchThread(data, mainThreadId);
-      
+      const mainThreadId = req.body.mainThreadId;
+      const { threadFromDB, error } = await createBranchThread(
+        data,
+        mainThreadId
+      );
+
       if (error) throw new Error(error);
-      return res.status(200).json({threadFromDB});
+      return res.status(200).json({ threadFromDB });
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

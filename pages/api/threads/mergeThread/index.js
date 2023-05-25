@@ -1,11 +1,12 @@
 import { mergeTwoThreadsByIds } from "@/lib/prisma/mainThreads";
 
 /**
- * handler function that diverse by the POST or GET Method.
+ * mergeTwoThreadsByIds
  *
- * @param {*} req
- * @param {*} res
- * @returns
+ * @description Merge two threads by ids.
+ * @param {string} mainThreadId
+ * @param {string} branchThreadId
+ * @returns {Promise<{updateMainThread: any}>}
  */
 const handler = async (req, res) => {
   if (req.method === "POST") {
