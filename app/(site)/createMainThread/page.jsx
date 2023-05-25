@@ -14,11 +14,13 @@ export default function SubmitMainThread() {
   const bodyRef = useRef("");
   const [showButtons, setShowButtons] = useState(true);
 
+  //Use Effect to get the user ID
   useEffect(() => {
     const userID = localStorage.getItem("userID");
     setUserId(userID);
   }, [userId]);
 
+  //Use Effect for the loading dots
   useEffect(() => {
     if (isLoading) {
       const timer = setInterval(() => {
@@ -29,6 +31,7 @@ export default function SubmitMainThread() {
     }
   }, [isLoading]);
 
+  //AI Generate function
   const handleAIGenerate = async (event) => {
     event.preventDefault();
     bodyRef.current = "";
@@ -81,6 +84,7 @@ export default function SubmitMainThread() {
     setIsLoading(false);
   };
 
+  //Thread Submit function
   const handleMainThreadSubmit = async (event) => {
     event.preventDefault();
     let submitConfirm = confirm("Are you ready to submit?");
@@ -165,7 +169,7 @@ export default function SubmitMainThread() {
                   id="grid-state"
                   required
                 >
-                  <option value="" >Select</option>
+                  <option value="">Select</option>
                   <option>thriller</option>
                   <option>fantasy</option>
                   <option>history</option>

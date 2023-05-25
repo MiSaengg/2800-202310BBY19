@@ -1,7 +1,5 @@
-// Because we're using react thing in line 4.
 "use client";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import {
   HomeIcon,
   PlusCircleIcon,
@@ -14,6 +12,7 @@ export default function Footer() {
 
   const [userId, setUserId] = useState(null);
 
+  // UseEffect for fetching user data
   useEffect(() => {
     const userID = localStorage.getItem("userID");
     setUserId(userID);

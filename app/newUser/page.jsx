@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -11,6 +9,7 @@ export default function AddPenName() {
   const router = useRouter();
   const [penNameError, setPenNameError] = useState("");
 
+  // Pen Name Submit Function
   const handlePenNameSubmit = async (event) => {
     event.preventDefault();
 
