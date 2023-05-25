@@ -9,7 +9,7 @@ const SimpleProfileCardInfo = ({
   branchThreadIdParam,
   mainThreadIdParam,
   ownerUserId,
-  loginUserId,
+  loginUserId,  
 }) => {
   const [userImg, setUserImg] = useState("");
   const [penName, setPenName] = useState("");
@@ -65,7 +65,7 @@ const SimpleProfileCardInfo = ({
     if (confirmed) {
       const data = {
         mainThreadId: mainThreadIdParam,
-        branchThreadId: branchThreadIdParam,
+        branchThreadId: branchThreadIdParam,        
       };
 
       const JSONdata = JSON.stringify(data);
