@@ -196,7 +196,7 @@ const SimpleProfileCardInfo = ({
           <div className="relative max-w-full max-h-full">
             <div className="relative bg-white rounded-lg shadow">
               <div className="flex items-start justify-between p-5 border-b rounded-t">
-                <h3 className="text-xl font-mono text-gray-900">Title</h3>
+                
                 <VotesCompleteButton
                   mainThreadId={mainThreadIdParam}
                   branchThreadId={branchThreadIdParam}

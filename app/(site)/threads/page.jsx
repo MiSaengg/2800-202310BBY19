@@ -125,7 +125,7 @@ export default function Page() {
               <option value="sports">Sports</option>
               <option value="travel">Travel</option>
               <option value="comedy">Comedy</option>
-              <option value="sifi">Science-Fiction</option>
+              <option value="science-fiction">Science-Fiction</option>
             </select>
             <select
               value={selectedTag}
