@@ -25,7 +25,7 @@ export default function VotesCompleteButton({
         const votesData = targetBranchThread["votes"];
         setVotes(votesData);
       });
-  }, [votes]);
+  }, [voted]);
 
   const votesSubmit = () => {
     setVoted((voted) => !voted);
@@ -44,6 +44,7 @@ export default function VotesCompleteButton({
           const targetBranchThread = votedMainThreadPhaseStage[branchThreadId];
           const voteData = targetBranchThread["votes"];
           setVotes(voteData);
+          location.reload();
         });
 
       // unvote function
@@ -62,6 +63,7 @@ export default function VotesCompleteButton({
             unvotedMainThreadPhaseStage[branchThreadId];
           const unvoteData = targetBranchThread["votes"];
           setVotes(unvoteData);
+          location.reload();
         });
     }
   };
