@@ -3,9 +3,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from "react";
 
-// penName, emailAddress
-// like > title, genre, status
-// owned > title, genre, status
 
 export default function Profile() {
   const [user, setUser] = useState({});

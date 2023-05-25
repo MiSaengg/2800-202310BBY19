@@ -72,7 +72,7 @@ export default function VotesCompleteButton({
     <>
       <button
         onClick={votesSubmit}
-        className="button float-right fixed bottom-28 right-2.5 z-50"
+        className="button float-right fixed bottom-40 right-5 z-50"
       >
         {voted ? (
           <Image
