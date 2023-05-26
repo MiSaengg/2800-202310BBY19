@@ -100,7 +100,7 @@ export default function Page({ params }) {
         model: "ada:ft-personal-2023-05-02-07-34-38",
         prompt: `${contentBody} \n\n###\n\n`,
         temperature: 0.5,
-        max_tokens: 100,
+        max_tokens: 2000,
       }),
     };
 
@@ -124,9 +124,9 @@ export default function Page({ params }) {
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
       },
       body: JSON.stringify({
-        model: "text-davinci-002",
-        prompt: `Given the genre: ${firstUniqueWord} , only if ${firstUniqueWord} is not found in list, [thriller, fanatasy, history, horror, crime, romance, psychology, sports, travel, comedy, science-fiction], choose from the list that best matches the ${firstUniqueWord}. If ${firstUniqueWord} is found in the list, return ${firstUniqueWord} \n\n###\n\n]`,
-        temperature: 0.3,
+        model: "text-davinci-003",
+        prompt: `Given the genre: ${firstUniqueWord} , only if ${firstUniqueWord} is not found in list, [thriller, fanatasy, history, horror, crime, romance, psychology, sports, travel, comedy, science-fiction], choose from the list that best matches ${firstUniqueWord}. \n\n###\n\n]`,
+        temperature: 0.7,
         max_tokens: 100,
       }),
     };
