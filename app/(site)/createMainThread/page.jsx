@@ -54,8 +54,8 @@ export default function SubmitMainThread() {
       body: JSON.stringify({
         model: "text-davinci-002",
         prompt: `Given title: ${title} , genre: ${genre} , and number of main characters: ${numberOfCharacters} , write a paragraph of only three sentences to start the story.`,
-        temperature: 0.5,
-        max_tokens: 100,
+        temperature: 1.0,
+        max_tokens: 200,
       }),
     };
 

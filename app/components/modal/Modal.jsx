@@ -72,10 +72,10 @@ const Modal = ({ branchThread, mainThreadId, phaseStage }) => {
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
       },
       body: JSON.stringify({
-        model: "text-davinci-002",
-        prompt: `Given the summary: ${contentBody}, and ${storyGenre} continue the story by writing a paragraph of only three sentences.`,
-        temperature: 1.0,
-        max_tokens: 100,
+        model: "text-davinci-003",
+        prompt: `Given the summary: ${contentBody}, and ${storyGenre} continue the story by writing a paragraph consisting of ONLY three sentences.`,
+        temperature: 0.5,
+        max_tokens: 1000,
       }),
     };
 
