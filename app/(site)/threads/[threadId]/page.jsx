@@ -43,7 +43,8 @@ export default function Page({ params }) {
       style: { strokeDasharray: "5,5" },
     },
   ];
-
+  // This useEffect code should be replaced by useSWR.
+  
   useEffect(() => {
     const userIdLogin = localStorage.getItem("userID");
     setLoginUserId(userIdLogin);
